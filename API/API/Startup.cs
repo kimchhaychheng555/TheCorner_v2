@@ -97,7 +97,7 @@ namespace API
             var odataBuilder = new ODataConventionModelBuilder();
             odataBuilder.EntitySet<CategoryModel>("Category");
             odataBuilder.EntitySet<DocumentModel>("Document");
-            odataBuilder.EntitySet<PermissionModel>(" Permission");
+            odataBuilder.EntitySet<PermissionModel>("Permission");
             odataBuilder.EntitySet<PrintModel>("Print");
             odataBuilder.EntitySet<ProductModel>("Product");
             odataBuilder.EntitySet<RoleModel>("Role");

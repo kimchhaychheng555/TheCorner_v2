@@ -13,6 +13,24 @@ namespace API
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(decimal)))
+            {
+                 
+                property.SetColumnType("decimal(19,5)");
+                
+            }
+
+            foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(string)))
+            {
+                property.SetCollation("Khmer_100_BIN");
+            }
+        }
+
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<DocumentModel> Documents { get; set; }
         public DbSet<PermissionModel> Permissions { get; set; }
