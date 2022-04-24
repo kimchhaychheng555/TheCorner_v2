@@ -23,7 +23,7 @@ namespace API.Controllers
         [EnableQuery]
         public IQueryable<UserModel> Get()
         {
-            return db.User;
+            return db.Users;
 
         } 
     }

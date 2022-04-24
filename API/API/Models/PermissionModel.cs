@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("data_user")]
-    public class UserModel : CoreModel
+    [Table("data_permission")]
+    public class PermissionModel : CoreModel
     {
         public Guid id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string profile { get; set; }
+        public string slug { get; set; }
+        public string description { get; set; }
 
         public Guid role_id { get; set; }
+
         [ForeignKey("role_id")]
         public RoleModel role { get; set; }
 
