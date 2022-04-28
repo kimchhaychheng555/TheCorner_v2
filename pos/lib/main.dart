@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,10 +11,10 @@ void main() async {
 
 //
   if (Platform.isWindows) {
-    const initialSize = Size(1366, 768);
-    appWindow.minSize = initialSize;
-    appWindow.size = initialSize;
-    appWindow.show();
+    // const initialSize = Size(1366, 768);
+    // appWindow.minSize = initialSize;
+    // appWindow.size = initialSize;
+    // appWindow.show();
 
     var dir = Directory.current.path;
     var fullPath = "$dir\\cache";
