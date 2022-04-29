@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/screens/splash_screen.dart';
+import 'package:pos/translation/translate_text.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +37,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      translations: TranslateText(),
+      locale: const Locale('en'),
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: "Roboto",
         backgroundColor: primaryColor,
         primarySwatch: Colors.blue,
       ),
