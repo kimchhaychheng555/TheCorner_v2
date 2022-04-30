@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/screens/splash_screen.dart';
+import 'package:pos/services/app_service.dart';
 import 'package:pos/translation/translate_text.dart';
 
 void main() async {
@@ -12,11 +12,6 @@ void main() async {
 
 //
   if (Platform.isWindows) {
-    // const initialSize = Size(1366, 768);
-    // appWindow.minSize = initialSize;
-    // appWindow.size = initialSize;
-    // appWindow.show();
-
     var dir = Directory.current.path;
     var fullPath = "$dir\\cache";
     if (!Directory(fullPath).existsSync()) {
@@ -36,12 +31,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      onInit: AppService.onAppStartUp,
       debugShowCheckedModeBanner: false,
       translations: TranslateText(),
-      locale: const Locale('en'),
-      title: 'Flutter Demo',
+      locale: AppService.getLanguage,
+      title: 'Sale POS',
       theme: ThemeData(
-        fontFamily: "Roboto",
+        fontFamily: AppService.getFont,
         backgroundColor: primaryColor,
         primarySwatch: Colors.blue,
       ),

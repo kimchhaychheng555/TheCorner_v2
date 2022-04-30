@@ -7,7 +7,7 @@ class MainController extends GetxController {
   @override
   void onInit() async {
     await Future.delayed(const Duration(seconds: 5));
-    Get.to(() => const LoginScreen());
+    Get.to(() => LoginScreen());
     super.onInit();
   }
 }

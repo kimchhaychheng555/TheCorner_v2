@@ -48,6 +48,7 @@ dependencies:
   uuid: ^3.0.6
   pull_to_refresh: ^2.0.0
   flutter_spinkit: ^5.1.0
+  encrypt: ^5.0.1
 
 dev_dependencies:
   flutter_test:
@@ -100,6 +101,9 @@ flutter:
           weight: 600
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
+    - family: Siemreap
+      fonts:
+        - asset: assets/fonts/KhmerOSsiemreap.ttf
   
   #
   # For details regarding fonts from package dependencies,
