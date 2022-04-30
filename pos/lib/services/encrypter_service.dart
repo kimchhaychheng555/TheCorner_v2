@@ -6,14 +6,14 @@ class EncrypterService {
   static final _key = Key.fromUtf8(keyEncrypt);
   static final _encrypter = Encrypter(AES(_key));
 
-  static encrypt(String encrypt) {
+  static String encrypt(String encrypt) {
     final encrypted = _encrypter.encrypt(encrypt, iv: _iv);
-    print(encrypted.base16);
+    return encrypted.base16;
   }
 
-  static decrypt(String decrypt) {
+  static String decrypt(String decrypt) {
     var _encrypt = Encrypted.fromBase16(decrypt);
     var decrypted = _encrypter.decrypt(_encrypt, iv: _iv);
-    print(decrypted);
+    return decrypted;
   }
 }

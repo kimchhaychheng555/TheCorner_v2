@@ -9,9 +9,5 @@ class LoginController extends GetxController {
 
   void onRememberMeChanged(bool? _val) => isRememberMe(!isRememberMe.value);
 
-  void onLoginPressed() {
-    print("<===================>");
-    print("Username: " + usernameCtrl.text);
-    print("Password: " + passwordCtrl.text);
-  }
+  void onLoginPressed() {}
 }
