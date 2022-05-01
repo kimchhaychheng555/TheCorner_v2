@@ -25,6 +25,40 @@ namespace API.Controllers
         {
             return db.Categories;
 
-        } 
+        }
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 0)]
+        public SingleResult<CategoryModel> Get([FromODataUri] Guid key)
+        {
+            var c = db.Categories.Where(r => r.id == key).AsQueryable();
+            return SingleResult.Create(c);
+        }
+
+
+        [HttpPost("save")]
+        public async Task<ActionResult<CategoryModel>> Save([FromBody] CategoryModel model)
+        {
+            try
+            {
+                if (model.id == Guid.Empty)
+                {
+                    model.id = Guid.NewGuid();
+                    model.created_date = DateTime.Now;
+                    db.Categories.Add(model);
+                }
+                else
+                {
+                    db.Categories.Update(model);
+                }
+
+                await db.SaveChangesAsync();
+                return Ok(model);
+            }
+            catch (Exception _ex)
+            {
+                return BadRequest(_ex.Message);
+            }
+        }
     }
 }

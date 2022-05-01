@@ -25,6 +25,42 @@ namespace API.Controllers
         {
             return db.SaleProducts;
 
-        } 
+        }
+
+
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 0)]
+        public SingleResult<SaleProductModel> Get([FromODataUri] Guid key)
+        {
+            var c = db.SaleProducts.Where(r => r.id == key).AsQueryable();
+            return SingleResult.Create(c);
+        }
+
+
+        [HttpPost("save")]
+        public async Task<ActionResult<string>> Save([FromBody] SaleProductModel model)
+        {
+            try
+            {
+                if (model.id == Guid.Empty)
+                {
+                    model.id = Guid.NewGuid();
+                    model.created_date = DateTime.Now;
+                    db.SaleProducts.Add(model);
+                }
+                else
+                {
+                    db.SaleProducts.Update(model);
+                }
+
+                await db.SaveChangesAsync();
+                return Ok(model);
+            }
+            catch (Exception _ex)
+            {
+                return BadRequest(_ex.Message);
+            }
+        }
     }
 }

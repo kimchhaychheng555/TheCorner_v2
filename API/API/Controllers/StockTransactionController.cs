@@ -25,6 +25,42 @@ namespace API.Controllers
         {
             return db.StockTransactions;
 
-        } 
+        }
+
+
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 0)]
+        public SingleResult<StockTransactionModel> Get([FromODataUri] Guid key)
+        {
+            var c = db.StockTransactions.Where(r => r.id == key).AsQueryable();
+            return SingleResult.Create(c);
+        }
+
+
+        [HttpPost("save")]
+        public async Task<ActionResult<string>> Save([FromBody] StockTransactionModel model)
+        {
+            try
+            {
+                if (model.id == Guid.Empty)
+                {
+                    model.id = Guid.NewGuid();
+                    model.created_date = DateTime.Now;
+                    db.StockTransactions.Add(model);
+                }
+                else
+                {
+                    db.StockTransactions.Update(model);
+                }
+
+                await db.SaveChangesAsync();
+                return Ok(model);
+            }
+            catch (Exception _ex)
+            {
+                return BadRequest(_ex.Message);
+            }
+        }
     }
 }

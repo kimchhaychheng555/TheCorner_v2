@@ -17,6 +17,12 @@ namespace API
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<CoreModel>()
+            .Property(p => p.is_deleted)
+            .HasDefaultValue(false);
+
+
+
 
             foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(decimal)))
             {
