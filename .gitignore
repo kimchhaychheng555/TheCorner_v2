@@ -326,7 +326,7 @@ __pycache__/
 *.xsd.cs
 
 # OpenCover UI analysis results
-OpenCover/
+cache/
 
 # Azure Stream Analytics local run output
 ASALocalRun/
@@ -351,3 +351,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+
+# Customer Ignore
+

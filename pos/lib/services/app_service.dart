@@ -6,6 +6,8 @@ class AppService {
   static String currentLanguage = "en";
   static GetStorage storage = GetStorage("setting");
 
+  // Storage Option
+
   // ===========================================================
   // on app startup
   static void onAppStartUp() {
