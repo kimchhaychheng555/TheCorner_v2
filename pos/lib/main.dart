@@ -10,7 +10,6 @@ import 'package:pos/translation/translate_text.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
 //
   if (Platform.isWindows) {
     var dir = Directory.current.path;
