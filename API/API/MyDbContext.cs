@@ -17,9 +17,9 @@ namespace API
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<CoreModel>()
-            .Property(p => p.is_deleted)
-            .HasDefaultValue(false);
+            //builder.Entity<CoreModel>()
+            //.Property(p => p.is_deleted)
+            //.HasDefaultValue(false);
 
 
 

@@ -31,15 +31,15 @@ namespace API.Controllers
 
         [HttpGet]
         [EnableQuery(MaxExpansionDepth = 0)]
-        public SingleResult<ProductModel> Get([FromODataUri] Guid key)
+        public SingleResult<UserModel> Get([FromODataUri] Guid key)
         {
-            var c = db.Products.Where(r => r.id == key).AsQueryable();
+            var c = db.Users.Where(r => r.id == key).AsQueryable();
             return SingleResult.Create(c);
         }
 
 
         [HttpPost("save")]
-        public async Task<ActionResult<string>> Save([FromBody] ProductModel model)
+        public async Task<ActionResult<string>> Save([FromBody] UserModel model)
         {
             try
             {
@@ -47,11 +47,11 @@ namespace API.Controllers
                 {
                     model.id = Guid.NewGuid();
                     model.created_date = DateTime.Now;
-                    db.Products.Add(model);
+                    db.Users.Add(model);
                 }
                 else
                 {
-                    db.Products.Update(model);
+                    db.Users.Update(model);
                 }
 
                 await db.SaveChangesAsync();
@@ -64,28 +64,18 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] ProductModel model)
+        [EnableQuery(MaxExpansionDepth = 0)]
+        public SingleResult<UserModel> Login([FromBody] UserModel model)
         {
-            try
-            {
-                if (model.id == Guid.Empty)
-                {
-                    model.id = Guid.NewGuid();
-                    model.created_date = DateTime.Now;
-                    db.Products.Add(model);
-                }
-                else
-                {
-                    db.Products.Update(model);
-                }
 
-                await db.SaveChangesAsync();
-                return Ok(model);
-            }
-            catch (Exception _ex)
-            {
-                return BadRequest(_ex.Message);
-            }
+            var _username = model.username;
+            var _password = model.password;
+
+            var c = db.Users.Where(r => r.username == _username && 
+                                        r.password == _password &&
+                                        r.is_deleted == false).AsQueryable();
+
+            return SingleResult.Create(c);
         }
     }
 }

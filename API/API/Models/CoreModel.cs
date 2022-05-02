@@ -12,7 +12,7 @@ namespace API.Models
         public DateTime? created_date { get; set; }
         public string created_by { get; set; }
 
-        public bool is_deleted { get; set; }
+        public bool? is_deleted { get; set; }
 
         public DateTime? deleted_date { get; set; }
         public string deleted_by { get; set; }

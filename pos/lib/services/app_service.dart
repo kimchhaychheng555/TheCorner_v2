@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos/models/user_models/user_model.dart';
 
 class AppService {
+  static String apiApp = "http://localhost:9090/api/";
   static String currentLanguage = "en";
+  static UserModel? currentUser;
   static GetStorage storage = GetStorage("setting");
 
   // Storage Option
