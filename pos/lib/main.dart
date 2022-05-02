@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos/constants/constants.dart';
-import 'package:pos/screens/splash_screen.dart';
+import 'package:pos/main_screen.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/translation/translate_text.dart';
 
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: primaryColor,
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      home: const MainScreen(),
     );
   }
 }
