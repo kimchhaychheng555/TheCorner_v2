@@ -9,7 +9,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _controller = Get.put(MainController());
+    MainController _controller = Get.find();
     return Obx(() {
       return _controller.isLoading.value ? const SplashScreen() : LoginScreen();
     });

@@ -5,6 +5,7 @@ class MainController extends GetxController {
 
   @override
   void onInit() async {
+    print("==========> On Init");
     isLoading(true);
     await Future.delayed(const Duration(seconds: 5));
     isLoading(false);

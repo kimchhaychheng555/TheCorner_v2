@@ -11,7 +11,7 @@ class LoginScreen extends GetResponsiveView<dynamic> {
 
   @override
   Widget builder() {
-    var _controller = Get.put(LoginController());
+    LoginController _controller = Get.find();
     return Obx(
       () => Scaffold(
         body: Material(
