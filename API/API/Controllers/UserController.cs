@@ -30,7 +30,7 @@ namespace API.Controllers
 
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 8)]
+        [EnableQuery(MaxExpansionDepth = 8)]        
         [Route("findOne")]
         public async Task<SingleResult<UserModel>> Get([FromODataUri] Guid key)
         {
