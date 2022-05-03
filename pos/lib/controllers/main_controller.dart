@@ -7,6 +7,7 @@ import 'package:pos/services/app_service.dart';
 
 class MainController extends GetxController {
   var isLoading = false.obs;
+  var isAuth = false.obs;
 
   @override
   void onInit() async {

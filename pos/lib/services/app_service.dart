@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos/models/user_models/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class AppService {
   static String apiApp = "http://localhost:9090/api/";
@@ -15,6 +18,7 @@ class AppService {
   // on app startup
   static void onAppStartUp() {
     _onLanguageStartUp();
+    _onAutoAuthUser();
   }
 
   static void _onLanguageStartUp() {
@@ -22,6 +26,15 @@ class AppService {
       currentLanguage = storage.read("language");
     } else {
       storage.write("language", currentLanguage);
+    }
+  }
+
+  static void _onAutoAuthUser() {
+    if (storage.hasData("account_store")) {
+      String _userData = storage.read("account_store");
+      var _user = UserModel.fromJson(jsonDecode(_userData));
+      _user.id = const Uuid().v4();
+      currentUser = _user;
     }
   }
 
