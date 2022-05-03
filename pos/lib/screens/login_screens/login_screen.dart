@@ -9,6 +9,8 @@ import 'package:pos/widgets/text_widget.dart';
 class LoginScreen extends GetResponsiveView<dynamic> {
   LoginScreen({Key? key}) : super(key: key);
 
+  static const String routeName = "/login";
+
   @override
   Widget builder() {
     LoginController _controller = Get.find();

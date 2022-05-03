@@ -1,23 +1,29 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pos/binding.dart';
-import 'package:pos/constants/constants.dart';
-import 'package:pos/main_screen.dart';
+import 'package:pos/helper/app_bindings.dart';
+import 'package:pos/helper/app_routes.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/themes/light_theme.dart';
 import 'package:pos/translation/translate_text.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 //
-  if (Platform.isWindows) {
-    var dir = Directory.current.path;
-    var fullPath = "$dir\\cache";
-    if (!Directory(fullPath).existsSync()) {
-      Directory(fullPath).createSync(recursive: true);
+
+  if (!kIsWeb) {
+    if (Platform.isWindows) {
+      var dir = Directory.current.path;
+      var fullPath = "$dir\\cache";
+      if (!Directory(fullPath).existsSync()) {
+        Directory(fullPath).createSync(recursive: true);
+      }
+      await GetStorage("setting", fullPath).initStorage;
+    } else {
+      await GetStorage("setting").initStorage;
     }
-    await GetStorage("setting", fullPath).initStorage;
   } else {
     await GetStorage("setting").initStorage;
   }
@@ -36,13 +42,10 @@ class MyApp extends StatelessWidget {
       translations: TranslateText(),
       locale: AppService.getLanguage,
       title: 'Sale POS',
-      theme: ThemeData(
-        fontFamily: AppService.getFont,
-        backgroundColor: primaryColor,
-        primarySwatch: Colors.blue,
-      ),
-      home: const MainScreen(),
-      initialBinding: CustomBinding(),
+      theme: AppTheme.getTheme,
+      getPages: AppRoute.getPages,
+      initialRoute: AppRoute.initialRoute,
+      initialBinding: AppBindings(),
     );
   }
 }
