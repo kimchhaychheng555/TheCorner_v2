@@ -353,6 +353,3 @@ MigrationBackup/
 .ionide/
 
 
-# Custom Ignore
-/cache/
-
