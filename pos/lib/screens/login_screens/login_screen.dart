@@ -61,8 +61,7 @@ class LoginScreen extends GetResponsiveView<dynamic> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: primaryColor, width: 2),
+                              borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
@@ -91,8 +90,7 @@ class LoginScreen extends GetResponsiveView<dynamic> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: primaryColor, width: 2),
+                              borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),

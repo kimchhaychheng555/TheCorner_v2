@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
 
-abstract class AppService {
+class AppService {
   static String apiApp = "http://localhost:9090/api/";
   static bool isApiConnected = false;
   static String currentLanguage = "en";
@@ -33,15 +33,7 @@ abstract class AppService {
     }
   }
 
-  Future<void> onChangeLanguage({String lang = ""});
-  Future<void> onLanguageStartUp();
-  Future<void> onAppStartUpConfiguration();
-  Future<bool> onTestConnectionApi();
-}
-
-class AppServiceImpletment implements AppService {
-  @override
-  Future<bool> onTestConnectionApi() async {
+  static Future<bool> onTestConnectionApi() async {
     var _resp = await APIService.get("connection");
     if (_resp.isSuccess) {
       return true;
@@ -49,15 +41,17 @@ class AppServiceImpletment implements AppService {
     return false;
   }
 
-  @override
-  Future<void> onAppStartUpConfiguration() async {
+  static Future<void> onSaveConnectionApi() async {
+    await _onAPIUrlLoadStartUp();
+  }
+
+  static Future<void> onAppStartUpConfiguration() async {
     await Future.delayed(const Duration(seconds: 1));
     await onLanguageStartUp();
     await _onAPIUrlLoadStartUp();
   }
 
-  @override
-  Future<void> onLanguageStartUp() async {
+  static Future<void> onLanguageStartUp() async {
     if (AppService.storage.hasData("language")) {
       AppService.currentLanguage = AppService.storage.read("language");
     } else {
@@ -65,7 +59,7 @@ class AppServiceImpletment implements AppService {
     }
   }
 
-  Future<void> _onAPIUrlLoadStartUp() async {
+  static Future<void> _onAPIUrlLoadStartUp() async {
     if (AppService.storage.hasData("api")) {
       AppService.apiApp = AppService.storage.read("api");
       var _resp = await APIService.get("connection");
@@ -82,8 +76,8 @@ class AppServiceImpletment implements AppService {
 
 //   // ===========================================================
 //   // Language Option
-  @override
-  Future<void> onChangeLanguage({String lang = ""}) async {
+
+  static Future<void> onChangeLanguage({String lang = ""}) async {
     if (lang != "") {
       AppService.currentLanguage = lang;
     } else {

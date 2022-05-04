@@ -1,1 +1,1 @@
-{"language":"kh","api":"http://localhost:9090/api/"}
+{"language":"en","api":"http://localhost:22/api/"}
