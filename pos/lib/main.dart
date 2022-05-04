@@ -23,10 +23,10 @@ void main() async {
       }
       await GetStorage("setting", fullPath).initStorage;
     } else {
-      await GetStorage("setting").initStorage;
+      await GetStorage.init("setting");
     }
   } else {
-    await GetStorage("setting").initStorage;
+    await GetStorage.init("setting");
   }
 
   setPathUrlStrategy();
