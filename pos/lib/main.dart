@@ -6,11 +6,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pos/helper/app_bindings.dart';
 import 'package:pos/helper/app_routes.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/services/service_locator.dart';
 import 'package:pos/themes/light_theme.dart';
 import 'package:pos/translation/translate_text.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupDependencyLocator();
 //
 
   if (!kIsWeb) {
@@ -37,7 +39,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      onInit: AppService.onAppStartUp,
       debugShowCheckedModeBanner: false,
       translations: TranslateText(),
       locale: AppService.getLanguage,

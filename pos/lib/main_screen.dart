@@ -4,6 +4,7 @@ import 'package:pos/controllers/main_controller.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/screens/splash_screen.dart';
+import 'package:pos/widgets/api_input_url_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -14,9 +15,11 @@ class MainScreen extends StatelessWidget {
     return Obx(() {
       return _controller.isLoading.value
           ? const SplashScreen()
-          : _controller.isAuth.value
-              ? SmartHomeScreen()
-              : LoginScreen();
+          : _controller.isApiConnected.value
+              ? const APIInputUrlWidget()
+              : _controller.isAuth.value
+                  ? SmartHomeScreen()
+                  : LoginScreen();
     });
   }
 }
