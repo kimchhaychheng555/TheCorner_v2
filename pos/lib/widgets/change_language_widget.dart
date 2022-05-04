@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:get/get.dart';
+import 'package:pos/services/service_locator.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ChangeLanguageWidget extends StatelessWidget {
@@ -16,7 +17,8 @@ class ChangeLanguageWidget extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          onPressed: () => AppService.onChangeLanguage(lang: "kh"),
+          onPressed: () =>
+              dependencyLocator<AppService>().onChangeLanguage(lang: "kh"),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
@@ -35,7 +37,8 @@ class ChangeLanguageWidget extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          onPressed: () => AppService.onChangeLanguage(lang: "en"),
+          onPressed: () =>
+              dependencyLocator<AppService>().onChangeLanguage(lang: "en"),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
