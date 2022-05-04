@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/login_controllers/login_controller.dart';
@@ -20,7 +19,7 @@ class LoginScreen extends GetResponsiveView<dynamic> {
         isLoading: _controller.isLoading.value,
         child: Scaffold(
           body: Material(
-            color: HexColor("#104c8a"),
+            color: primaryColor,
             child: SafeArea(
               child: Padding(
                 padding:

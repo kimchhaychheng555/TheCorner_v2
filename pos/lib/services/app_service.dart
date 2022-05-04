@@ -34,6 +34,7 @@ abstract class AppService {
   }
 
   Future<void> onChangeLanguage({String lang = ""});
+  Future<void> onLanguageStartUp();
   Future<void> onAppStartUpConfiguration();
   Future<bool> onTestConnectionApi();
 }
@@ -50,12 +51,13 @@ class AppServiceImpletment implements AppService {
 
   @override
   Future<void> onAppStartUpConfiguration() async {
-    await Future.delayed(const Duration(seconds: 5));
-    await _onLanguageStartUp();
+    await Future.delayed(const Duration(seconds: 1));
+    await onLanguageStartUp();
     await _onAPIUrlLoadStartUp();
   }
 
-  Future<void> _onLanguageStartUp() async {
+  @override
+  Future<void> onLanguageStartUp() async {
     if (AppService.storage.hasData("language")) {
       AppService.currentLanguage = AppService.storage.read("language");
     } else {

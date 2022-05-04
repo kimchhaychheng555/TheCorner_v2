@@ -9,18 +9,23 @@ class APIService {
   static const int _timeoutDuration = 20;
 
   static Future<GETResponse> get(String url) async {
-    var apiUrl = Uri.parse(AppService.apiApp + url);
-    final response = await http
-        .get(apiUrl)
-        .timeout(const Duration(seconds: _timeoutDuration), onTimeout: () {
-      return http.Response.bytes([], 408);
-    });
+    try {
+      var apiUrl = Uri.parse(AppService.apiApp + url);
+      final response = await http
+          .get(apiUrl)
+          .timeout(const Duration(seconds: _timeoutDuration), onTimeout: () {
+        return http.Response.bytes([], 408);
+      });
 
-    GETResponse resp = GETResponse(response.statusCode.toInt());
-    if (resp.isSuccess) {
-      resp.content = response.body.toString();
-      return resp;
-    } else {
+      GETResponse resp = GETResponse(response.statusCode.toInt());
+      if (resp.isSuccess) {
+        resp.content = response.body.toString();
+        return resp;
+      } else {
+        GETResponse _resp = GETResponse(600);
+        return _resp;
+      }
+    } catch (_) {
       GETResponse _resp = GETResponse(600);
       return _resp;
     }

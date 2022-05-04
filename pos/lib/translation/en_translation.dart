@@ -7,4 +7,5 @@ Map<String, String> get enTranslation => {
       "password": "Password",
       "khmer": "ភាសាខ្មែរ",
       "english": "English",
+      "url_server": "URL Server",
     };

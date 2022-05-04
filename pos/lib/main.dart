@@ -7,7 +7,7 @@ import 'package:pos/helper/app_bindings.dart';
 import 'package:pos/helper/app_routes.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/services/service_locator.dart';
-import 'package:pos/themes/light_theme.dart';
+import 'package:pos/themes/theme.dart';
 import 'package:pos/translation/translate_text.dart';
 
 void main() async {
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      onInit: dependencyLocator<AppService>().onLanguageStartUp,
       debugShowCheckedModeBanner: false,
       translations: TranslateText(),
       locale: AppService.getLanguage,

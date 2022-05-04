@@ -7,4 +7,5 @@ Map<String, String> get khTranslation => {
       "password": "លេខសម្ងាត់",
       "khmer": "ភាសាខ្មែរ",
       "english": "English",
+      "url_server": "URL Server",
     };

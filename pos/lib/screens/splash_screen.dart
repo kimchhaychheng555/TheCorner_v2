@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/constants/constants.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Material(
-        color: HexColor("#104c8a"),
+        color: primaryColor,
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

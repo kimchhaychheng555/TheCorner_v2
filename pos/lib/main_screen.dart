@@ -9,6 +9,8 @@ import 'package:pos/widgets/api_input_url_widget.dart';
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
+  static const String routeName = "/home";
+
   @override
   Widget build(BuildContext context) {
     MainController _controller = Get.find();
@@ -16,10 +18,10 @@ class MainScreen extends StatelessWidget {
       return _controller.isLoading.value
           ? const SplashScreen()
           : _controller.isApiConnected.value
-              ? const APIInputUrlWidget()
-              : _controller.isAuth.value
+              ? _controller.isAuth.value
                   ? SmartHomeScreen()
-                  : LoginScreen();
+                  : LoginScreen()
+              : const APIInputUrlWidget();
     });
   }
 }
