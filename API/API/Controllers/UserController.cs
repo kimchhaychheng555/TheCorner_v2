@@ -30,8 +30,7 @@ namespace API.Controllers
 
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 8)]        
-        [Route("findOne")]
+        [EnableQuery(MaxExpansionDepth = 8)]
         public async Task<SingleResult<UserModel>> Get([FromODataUri] Guid key)
         {
             return await Task.Factory.StartNew(() => SingleResult.Create<UserModel>(db.Users.Where(r => r.id == key).AsQueryable()));
