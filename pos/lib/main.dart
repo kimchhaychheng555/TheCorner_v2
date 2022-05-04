@@ -12,7 +12,6 @@ import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-//
 
   if (!kIsWeb) {
     if (Platform.isWindows) {
