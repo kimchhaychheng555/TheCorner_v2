@@ -35,9 +35,9 @@ class MainController extends GetxController {
 
     if (isApiConnected.value) {
       if (isAuth.value) {
-        Get.toNamed(SmartHomeScreen.routeName);
+        Get.offAndToNamed(SmartHomeScreen.routeName);
       } else {
-        Get.toNamed(LoginScreen.routeName);
+        Get.offAndToNamed(LoginScreen.routeName);
       }
     }
     // print(_resp);
