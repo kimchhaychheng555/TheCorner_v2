@@ -15,18 +15,23 @@ class LoginController extends GetxController {
   void onRememberMeChanged(bool? _val) => isRememberMe(!isRememberMe.value);
 
   void onLoginPressed() async {
+    isLoading(true);
     var _loginModel = LoginModel(
       username: usernameCtrl.text,
       password: passwordCtrl.text,
       assign_date: DateTime.now(),
     );
 
+    print(jsonEncode(_loginModel));
     var _resp = await APIService.post("user/login", jsonEncode(_loginModel));
     if (_resp.isSuccess) {
       if (isRememberMe.value) {
         String _encrypt = EncrypterService.encrypt(jsonEncode(_loginModel));
         AppService.storage.write("account_store", _encrypt);
       }
+    } else {
+      Get.snackbar("error", "Error");
     }
+    isLoading(false);
   }
 }

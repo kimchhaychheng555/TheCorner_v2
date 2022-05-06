@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : ODataController
     {
         private readonly MyDbContext db;
         public UserController(MyDbContext _db)
@@ -37,44 +38,44 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("save")]
-        public async Task<ActionResult<string>> Save([FromBody] UserModel model)
-        {
-            try
-            {
-                if (model.id == Guid.Empty)
-                {
-                    model.id = Guid.NewGuid();
-                    model.created_date = DateTime.Now;
-                    db.Users.Add(model);
-                }
-                else
-                {
-                    db.Users.Update(model);
-                }
+        //[HttpPost("save")]
+        //public async Task<ActionResult<string>> Save([FromBody] UserModel model)
+        //{
+        //    try
+        //    {
+        //        if (model.id == Guid.Empty)
+        //        {
+        //            model.id = Guid.NewGuid();
+        //            model.created_date = DateTime.Now;
+        //            db.Users.Add(model);
+        //        }
+        //        else
+        //        {
+        //            db.Users.Update(model);
+        //        }
 
-                await db.SaveChangesAsync();
-                return Ok(model);
-            }
-            catch (Exception _ex)
-            {
-                return BadRequest(_ex.Message);
-            }
-        }
+        //        await db.SaveChangesAsync();
+        //        return Ok(model);
+        //    }
+        //    catch (Exception _ex)
+        //    {
+        //        return BadRequest(_ex.Message);
+        //    }
+        //}
 
         [HttpPost("login")]
-        [EnableQuery(MaxExpansionDepth = 0)]
-        public SingleResult<UserModel> Login([FromBody] UserModel model)
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public async Task<SingleResult<UserModel>> Login([FromBody] UserModel model)
         {
-
             var _username = model.username;
             var _password = model.password;
 
-            var c = db.Users.Where(r => r.username == _username && 
+            var c = db.Users.Where(r => r.username == _username &&
                                         r.password == _password &&
                                         r.is_deleted == false).AsQueryable();
 
-            return SingleResult.Create(c);
+            return await Task.Factory.StartNew(() => SingleResult.Create<UserModel>(c));
         }
+
     }
 }
