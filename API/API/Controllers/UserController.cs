@@ -64,8 +64,7 @@ namespace API.Controllers
         //}
 
         [HttpPost("login")]
-        [EnableQuery(MaxExpansionDepth = 8)]
-        public async Task<SingleResult<UserModel>> Login([FromBody] UserModel model)
+        public ActionResult<string> Login([FromBody] UserModel model)
         {
             var _username = model.username;
             var _password = model.password;
@@ -74,7 +73,11 @@ namespace API.Controllers
                                         r.password == _password &&
                                         r.is_deleted == false).AsQueryable();
 
-            return await Task.Factory.StartNew(() => SingleResult.Create<UserModel>(c));
+            if (c.Any())
+            {
+                return Ok(model);
+            }
+            return BadRequest();
         }
 
     }
