@@ -38,32 +38,32 @@ namespace API.Controllers
         }
 
 
-        //[HttpPost("save")]
-        //public async Task<ActionResult<string>> Save([FromBody] UserModel model)
-        //{
-        //    try
-        //    {
-        //        if (model.id == Guid.Empty)
-        //        {
-        //            model.id = Guid.NewGuid();
-        //            model.created_date = DateTime.Now;
-        //            db.Users.Add(model);
-        //        }
-        //        else
-        //        {
-        //            db.Users.Update(model);
-        //        }
+        [HttpPost("save")]
+        public async Task<ActionResult<string>> Save([FromBody] UserModel model)
+        {
+            try
+            {
+                if (model.id == Guid.Empty)
+                {
+                    model.id = Guid.NewGuid();
+                    model.created_date = DateTime.Now;
+                    db.Users.Add(model);
+                }
+                else
+                {
+                    db.Users.Update(model);
+                }
 
-        //        await db.SaveChangesAsync();
-        //        return Ok(model);
-        //    }
-        //    catch (Exception _ex)
-        //    {
-        //        return BadRequest(_ex.Message);
-        //    }
-        //}
+                await db.SaveChangesAsync();
+                return Ok(model);
+            }
+            catch (Exception _ex)
+            {
+                return BadRequest(_ex.Message);
+            }
+            //}
 
-        [HttpPost("login")]
+            [HttpPost("login")]
         public ActionResult<string> Login([FromBody] UserModel model)
         {
             var _username = model.username;
