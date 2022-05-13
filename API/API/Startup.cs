@@ -33,8 +33,10 @@ namespace API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-            
         {
+
+            services.AddControllersWithViews();
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAnyOrigin",
@@ -44,6 +46,7 @@ namespace API
                     .AllowAnyHeader());
             });
 
+            // Sql Server
             if (Configuration.GetSection("Database").Value == "SqlServer")
             {
                 services.AddDbContext<MyDbContext>(options =>
@@ -54,8 +57,10 @@ namespace API
             {
                 services.AddDbContext<MyDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySqlConnection")));
             }
+            // End Database
 
-            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); 
+
+            //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); 
             services.AddMvc();
             services.AddOData(); 
         }
@@ -68,14 +73,13 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-
             app.UseRouting();
+
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
