@@ -61,9 +61,9 @@ namespace API.Controllers
             {
                 return BadRequest(_ex.Message);
             }
-            //}
+        }
 
-            [HttpPost("login")]
+        [HttpPost("login")]
         public ActionResult<string> Login([FromBody] UserModel model)
         {
             var _username = model.username;
