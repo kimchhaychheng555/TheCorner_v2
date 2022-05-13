@@ -19,65 +19,59 @@ namespace API.Controllers
             db = _db;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(db.Users);
+        }
 
         [HttpGet]
-        [EnableQuery]
-        public IQueryable<UserModel> Get()
+        [EnableQuery(MaxExpansionDepth = 8)] 
+        public IActionResult Get([FromODataUri] Guid key)
         {
-            return db.Users;
+            var people = db.Users.Where(p => p.id == key);
 
+            if (!people.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(people));
+        }
+
+        [HttpPost]
+        [ODataRoute("User/Save")]
+        public System.Web.Http.IHttpActionResult Save([FromBody] UserModel person)
+        {
+            if (!ModelState.IsValid)
+            {
+                return (System.Web.Http.IHttpActionResult)BadRequest(ModelState);
+            }
+
+            // add the person to the People collection
+            db.Users.Add(person);
+            db.SaveChanges();
+
+            // return the created person
+            return (System.Web.Http.IHttpActionResult)Ok(person);
         }
 
 
-
-        [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 8)]
-        public async Task<SingleResult<UserModel>> Get([FromODataUri] Guid key)
+        [HttpPost]
+        [Route("Login")]
+        public ActionResult LoginUser([FromBody] UserModel person)
         {
-            return await Task.Factory.StartNew(() => SingleResult.Create<UserModel>(db.Users.Where(r => r.id == key).AsQueryable()));
-        }
-
-
-        [HttpPost("save")]
-        public async Task<ActionResult<string>> Save([FromBody] UserModel model)
-        {
-            try
+            if (!ModelState.IsValid)
             {
-                if (model.id == Guid.Empty)
-                {
-                    model.id = Guid.NewGuid();
-                    model.created_date = DateTime.Now;
-                    db.Users.Add(model);
-                }
-                else
-                {
-                    db.Users.Update(model);
-                }
-
-                await db.SaveChangesAsync();
-                return Ok(model);
+                return BadRequest(ModelState);
             }
-            catch (Exception _ex)
-            {
-                return BadRequest(_ex.Message);
-            }
-        }
 
-        [HttpPost("login")]
-        public ActionResult<string> Login([FromBody] UserModel model)
-        {
-            var _username = model.username;
-            var _password = model.password;
+            // add the person to the People collection
+            db.Users.Add(person);
+            db.SaveChanges();
 
-            var c = db.Users.Where(r => r.username == _username &&
-                                        r.password == _password &&
-                                        r.is_deleted == false).AsQueryable();
-
-            if (c.Any())
-            {
-                return Ok(model);
-            }
-            return BadRequest();
+            // return the created person
+            return Ok(person);
         }
 
     }
