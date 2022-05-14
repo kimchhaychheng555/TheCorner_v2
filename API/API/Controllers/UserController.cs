@@ -40,38 +40,19 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [ODataRoute("User/Save")]
-        public System.Web.Http.IHttpActionResult Save([FromBody] UserModel person)
+        public async Task<IActionResult> Post([FromBody] UserModel user)
         {
-            if (!ModelState.IsValid)
-            {
-                return (System.Web.Http.IHttpActionResult)BadRequest(ModelState);
-            }
-
-            // add the person to the People collection
-            db.Users.Add(person);
-            db.SaveChanges();
-
-            // return the created person
-            return (System.Web.Http.IHttpActionResult)Ok(person);
+            user.id = Guid.NewGuid();
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
+            return Ok(user);
         }
 
 
-        [HttpPost]
-        [Route("Login")]
-        public ActionResult LoginUser([FromBody] UserModel person)
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] UserModel user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // add the person to the People collection
-            db.Users.Add(person);
-            db.SaveChanges();
-
-            // return the created person
-            return Ok(person);
+            return Ok(user);
         }
 
     }
