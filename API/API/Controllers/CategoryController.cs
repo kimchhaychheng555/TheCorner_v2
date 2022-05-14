@@ -43,7 +43,6 @@ namespace API.Controllers
             {
                 if (model.id == Guid.Empty)
                 {
-                    model.id = Guid.NewGuid();
                     model.created_date = DateTime.Now;
                     db.Categories.Add(model);
                 }

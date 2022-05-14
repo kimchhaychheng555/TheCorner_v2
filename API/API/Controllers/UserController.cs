@@ -39,20 +39,49 @@ namespace API.Controllers
             return Ok(SingleResult.Create(people));
         }
 
-        [HttpPost]
+        [HttpPost("Save")]
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
-            user.id = Guid.NewGuid();
-            db.Users.Add(user);
-            await db.SaveChangesAsync();
+            if(user.id == Guid.Empty)
+            {
+                var checkUser = db.Users.Where(r => r.username == user.username && r.is_deleted == false);
+                if (checkUser.Any())
+                {
+                    return BadRequest(new BadRequestModel() { message = "username_has_already_exists" });
+                }
+
+
+                user.created_date = DateTime.Now;
+                user.is_deleted = false;
+                db.Users.Add(user);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                var checkUser = db.Users.Where(r => r.username == user.username && r.is_deleted == false);
+                if (checkUser.Any())
+                {
+                    return BadRequest(new BadRequestModel() { message = "username_has_already_exists" });
+                }
+
+                db.Users.Update(user);
+                await db.SaveChangesAsync();
+            }
+            
             return Ok(user);
         }
 
 
         [HttpPost("Login")]
-        public IActionResult Login([FromBody] UserModel user)
+        public IActionResult Login([FromBody] UserModel model)
         {
-            return Ok(user);
+            var user = db.Users.Where(u => u.username == model.username && u.password == model.password && u.is_deleted == false);
+            if (user.Any())
+            {
+                return Ok(user);
+            }
+
+            return NotFound();
         }
 
     }
