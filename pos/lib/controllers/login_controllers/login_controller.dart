@@ -28,8 +28,9 @@ class LoginController extends GetxController {
       if (isRememberMe.value) {
         String _encrypt = EncrypterService.encrypt(jsonEncode(_loginModel));
         AppService.storage.write("account_store", _encrypt);
-        Get.offAndToNamed(SmartHomeScreen.routeName);
       }
+
+      Get.offAndToNamed(SmartHomeScreen.routeName);
     } else {
       Get.snackbar("error", "Error");
     }

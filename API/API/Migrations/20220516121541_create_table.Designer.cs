@@ -3,49 +3,47 @@ using System;
 using API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220502160305_asljdf")]
-    partial class asljdf
+    [Migration("20220516121541_create_table")]
+    partial class create_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.16")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.16");
 
             modelBuilder.Entity("API.Models.CategoryModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
@@ -55,20 +53,20 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.DocumentModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("key_name")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<string>("label")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<string>("value")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
@@ -78,36 +76,37 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.PermissionModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid>("role_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("role_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("slug")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
@@ -119,33 +118,34 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.PrintModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("key")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<Guid>("sale_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("sale_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.HasKey("id");
 
@@ -156,43 +156,44 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.ProductModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
-                    b.Property<Guid>("category_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("category_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("image")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(19,5)");
 
                     b.Property<bool>("stockable")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("id");
 
@@ -203,29 +204,29 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.RoleModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
@@ -235,56 +236,57 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.SaleModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<decimal>("discount")
                         .HasColumnType("decimal(19,5)");
 
                     b.Property<string>("discount_type")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<decimal>("grand_total")
                         .HasColumnType("decimal(19,5)");
 
                     b.Property<string>("invoice_number")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("is_paid")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("sale_date")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool>("status")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("sub_total")
                         .HasColumnType("decimal(19,5)");
 
-                    b.Property<Guid>("table_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("table_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<decimal>("vat")
                         .HasColumnType("decimal(19,5)");
@@ -298,44 +300,46 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.SaleProductModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("is_free")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("is_remove_stock_done")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(19,5)");
 
-                    b.Property<Guid>("product_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("product_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<decimal>("quantity")
                         .HasColumnType("decimal(19,5)");
 
-                    b.Property<Guid>("sale_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("sale_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.HasKey("id");
 
@@ -348,32 +352,33 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.StockInventoryModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("min_quantity")
                         .HasColumnType("decimal(19,5)");
 
-                    b.Property<Guid>("product_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("product_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<decimal>("quantity_stock")
                         .HasColumnType("decimal(19,5)");
@@ -387,35 +392,36 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.StockTransactionModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid>("product_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("product_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<decimal>("quantity")
                         .HasColumnType("decimal(19,5)");
 
                     b.Property<string>("type")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
@@ -427,29 +433,29 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.TableModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
@@ -459,40 +465,41 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.UserModel", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<byte[]>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("created_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("deleted_by")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("password")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<string>("profile")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<Guid>("role_id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("role_id")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("username")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .UseCollation("Khmer_100_BIN");
 
                     b.HasKey("id");
