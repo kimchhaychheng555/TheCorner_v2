@@ -8,4 +8,5 @@ Map<String, String> get khTranslation => {
       "khmer": "ភាសាខ្មែរ",
       "english": "English",
       "url_server": "URL Server",
+      "home": "ទំព័រដើម",
     };
