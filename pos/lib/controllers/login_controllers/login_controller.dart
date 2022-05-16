@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/user_models/login_model.dart';
+import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_service.dart';
@@ -23,10 +24,6 @@ class LoginController extends GetxController {
       password: passwordCtrl.text,
       assign_date: DateTime.now(),
     );
-
-    LogService.sendLog(
-        user: AppService.currentUser?.fullname ?? "",
-        logAction: "This user login to system.");
     var _resp = await APIService.post("user/login", jsonEncode(_loginModel));
     if (_resp.isSuccess) {
       if (isRememberMe.value) {
@@ -34,7 +31,13 @@ class LoginController extends GetxController {
         AppService.storage.write("account_store", _encrypt);
       }
 
+      AppService.currentUser = UserModel.fromJson(jsonDecode(_resp.content));
+
       Get.offAndToNamed(SmartHomeScreen.routeName);
+
+      LogService.sendLog(
+          user: AppService.currentUser?.fullname ?? "",
+          logAction: "This user login to system.");
     } else {
       Get.snackbar("error", "Error");
     }
