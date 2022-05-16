@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
+import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_service.dart';
 
 class MainController extends GetxController {
@@ -30,17 +32,15 @@ class MainController extends GetxController {
   }
 
   Future<void> _onUserAuthLogin() async {
-    // var _resp =
-    //     await APIService.post("user/login", jsonEncode(AppService.currentUser));
-
     if (isApiConnected.value) {
-      if (isAuth.value) {
+      var _resp =
+          await APIService.post("user/login", jsonEncode(AppService.loginUser));
+      if (_resp.isSuccess) {
         Get.offAndToNamed(SmartHomeScreen.routeName);
       } else {
         Get.offAndToNamed(LoginScreen.routeName);
       }
     }
-    // print(_resp);
   }
 
   void onConnectPressed() async {

@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/encrypter_service.dart';
 
 class AppService {
   static String apiApp = "http://localhost:9090/api/";
   static bool isApiConnected = false;
   static String currentLanguage = "en";
   static UserModel? currentUser;
+  static LoginModel? loginUser;
   static GetStorage storage = GetStorage("setting");
 
   static Locale get getLanguage {
@@ -49,6 +54,15 @@ class AppService {
     await Future.delayed(const Duration(seconds: 1));
     await onLanguageStartUp();
     await _onAPIUrlLoadStartUp();
+    await _onLoadLoginUserStartUp();
+  }
+
+  static Future<void> _onLoadLoginUserStartUp() async {
+    if (AppService.storage.hasData("account_store")) {
+      var _loginUser =
+          EncrypterService.decrypt(AppService.storage.read("account_store"));
+      AppService.loginUser = LoginModel.fromJson(jsonDecode(_loginUser));
+    }
   }
 
   static Future<void> onLanguageStartUp() async {
