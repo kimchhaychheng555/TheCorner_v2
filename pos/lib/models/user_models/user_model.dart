@@ -6,6 +6,7 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class UserModel {
   String? id;
+  String? fullname;
   String? username;
   String? password;
   String? profile;
@@ -18,6 +19,7 @@ class UserModel {
   RoleModel? role;
   UserModel({
     this.id,
+    this.fullname,
     this.username,
     this.password,
     this.profile,

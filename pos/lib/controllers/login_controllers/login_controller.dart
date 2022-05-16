@@ -6,6 +6,7 @@ import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/services/encrypter_service.dart';
+import 'package:pos/services/log_service.dart';
 
 class LoginController extends GetxController {
   var isLoading = false.obs;
@@ -23,6 +24,7 @@ class LoginController extends GetxController {
       assign_date: DateTime.now(),
     );
 
+    LogService.sendLog(user: AppService.currentUser.fullname, logAction: "This user login to system.");
     var _resp = await APIService.post("user/login", jsonEncode(_loginModel));
     if (_resp.isSuccess) {
       if (isRememberMe.value) {
