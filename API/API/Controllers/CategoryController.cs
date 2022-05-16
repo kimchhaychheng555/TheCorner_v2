@@ -28,36 +28,36 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 0)]
-        public SingleResult<CategoryModel> Get([FromODataUri] Guid key)
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get([FromODataUri] Guid key)
         {
-            var c = db.Categories.Where(r => r.id == key).AsQueryable();
-            return SingleResult.Create(c);
+            var category = db.Categories.Where(p => p.id == key);
+
+            if (!category.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(category));
         }
 
-
-        [HttpPost("save")]
-        public async Task<ActionResult<CategoryModel>> Save([FromBody] CategoryModel model)
+        [HttpPost("Save")]
+        public async Task<IActionResult> Post([FromBody] CategoryModel category)
         {
-            try
+            if (category.id == Guid.Empty)
             {
-                if (model.id == Guid.Empty)
-                {
-                    model.created_date = DateTime.Now;
-                    db.Categories.Add(model);
-                }
-                else
-                {
-                    db.Categories.Update(model);
-                }
-
+                category.created_date = DateTime.Now;
+                category.is_deleted = false;
+                db.Categories.Add(category);
                 await db.SaveChangesAsync();
-                return Ok(model);
             }
-            catch (Exception _ex)
+            else
             {
-                return BadRequest(_ex.Message);
+                db.Categories.Update(category);
+                await db.SaveChangesAsync();
             }
+
+            return Ok(category);
         }
     }
 }

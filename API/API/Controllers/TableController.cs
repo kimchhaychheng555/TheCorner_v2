@@ -30,37 +30,36 @@ namespace API.Controllers
 
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 0)]
-        public SingleResult<TableModel> Get([FromODataUri] Guid key)
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get([FromODataUri] Guid key)
         {
-            var c = db.Tables.Where(r => r.id == key).AsQueryable();
-            return SingleResult.Create(c);
+            var table = db.Tables.Where(p => p.id == key);
+
+            if (!table.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(table));
         }
 
-
-        [HttpPost("save")]
-        public async Task<ActionResult<string>> Save([FromBody] TableModel model)
+        [HttpPost("Save")]
+        public async Task<IActionResult> Post([FromBody] TableModel table)
         {
-            try
+            if (table.id == Guid.Empty)
             {
-                if (model.id == Guid.Empty)
-                {
-                    model.id = Guid.NewGuid();
-                    model.created_date = DateTime.Now;
-                    db.Tables.Add(model);
-                }
-                else
-                {
-                    db.Tables.Update(model);
-                }
-
+                table.created_date = DateTime.Now;
+                table.is_deleted = false;
+                db.Tables.Add(table);
                 await db.SaveChangesAsync();
-                return Ok(model);
             }
-            catch (Exception _ex)
+            else
             {
-                return BadRequest(_ex.Message);
+                db.Tables.Update(table);
+                await db.SaveChangesAsync();
             }
+
+            return Ok(si);
         }
     }
 }

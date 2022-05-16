@@ -30,37 +30,36 @@ namespace API.Controllers
 
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 0)]
-        public SingleResult<StockTransactionModel> Get([FromODataUri] Guid key)
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get([FromODataUri] Guid key)
         {
-            var c = db.StockTransactions.Where(r => r.id == key).AsQueryable();
-            return SingleResult.Create(c);
+            var st = db.StockTransactions.Where(p => p.id == key);
+
+            if (!st.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(st));
         }
 
-
-        [HttpPost("save")]
-        public async Task<ActionResult<string>> Save([FromBody] StockTransactionModel model)
+        [HttpPost("Save")]
+        public async Task<IActionResult> Post([FromBody] StockTransactionModel st)
         {
-            try
+            if (st.id == Guid.Empty)
             {
-                if (model.id == Guid.Empty)
-                {
-                    model.id = Guid.NewGuid();
-                    model.created_date = DateTime.Now;
-                    db.StockTransactions.Add(model);
-                }
-                else
-                {
-                    db.StockTransactions.Update(model);
-                }
-
+                st.created_date = DateTime.Now;
+                st.is_deleted = false;
+                db.StockTransactions.Add(st);
                 await db.SaveChangesAsync();
-                return Ok(model);
             }
-            catch (Exception _ex)
+            else
             {
-                return BadRequest(_ex.Message);
+                db.StockTransactions.Update(st);
+                await db.SaveChangesAsync();
             }
+
+            return Ok(st);
         }
     }
 }

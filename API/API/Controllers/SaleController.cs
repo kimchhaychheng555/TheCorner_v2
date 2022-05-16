@@ -30,37 +30,36 @@ namespace API.Controllers
 
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 0)]
-        public SingleResult<SaleModel> Get([FromODataUri] Guid key)
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get([FromODataUri] Guid key)
         {
-            var c = db.Sales.Where(r => r.id == key).AsQueryable();
-            return SingleResult.Create(c);
+            var sale = db.Sales.Where(p => p.id == key);
+
+            if (!sale.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(sale));
         }
 
-
-        [HttpPost("save")]
-        public async Task<ActionResult<SaleModel>> Save([FromBody] SaleModel model)
+        [HttpPost("Save")]
+        public async Task<IActionResult> Post([FromBody] SaleModel sale)
         {
-            try
+            if (sale.id == Guid.Empty)
             {
-                if (model.id == Guid.Empty)
-                {
-                    model.id = Guid.NewGuid();
-                    model.created_date = DateTime.Now;
-                    db.Sales.Add(model);
-                }
-                else
-                {
-                    db.Sales.Update(model);
-                }
-
+                sale.created_date = DateTime.Now;
+                sale.is_deleted = false;
+                db.Sales.Add(sale);
                 await db.SaveChangesAsync();
-                return Ok(model);
             }
-            catch (Exception _ex)
+            else
             {
-                return BadRequest(_ex.Message);
+                db.Sales.Update(sale);
+                await db.SaveChangesAsync();
             }
+
+            return Ok(sale);
         }
     }
 }

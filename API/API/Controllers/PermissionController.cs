@@ -25,6 +25,20 @@ namespace API.Controllers
         {
             return db.Permissions;
 
+        }
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get([FromODataUri] Guid key)
+        {
+            var permission = db.Permissions.Where(p => p.id == key);
+
+            if (!permission.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(permission));
         } 
     }
 }

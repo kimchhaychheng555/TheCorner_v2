@@ -25,6 +25,39 @@ namespace API.Controllers
         {
             return db.Roles;
 
-        } 
+        }
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get([FromODataUri] Guid key)
+        {
+            var role = db.Roles.Where(p => p.id == key);
+
+            if (!role.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(SingleResult.Create(role));
+        }
+
+        [HttpPost("Save")]
+        public async Task<IActionResult> Post([FromBody] RoleModel role)
+        {
+            if (role.id == Guid.Empty)
+            {
+                role.created_date = DateTime.Now;
+                role.is_deleted = false;
+                db.Roles.Add(role);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                db.Roles.Update(role);
+                await db.SaveChangesAsync();
+            }
+
+            return Ok(role);
+        }
     }
 }
