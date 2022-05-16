@@ -19,7 +19,7 @@ class AppRoute {
           binding: AppBindings(),
         ),
         GetPage(
-          page: () => LoginScreen(),
+          page: () => SmartHomeScreen(),
           name: SmartHomeScreen.routeName,
           binding: AppBindings(),
         ),

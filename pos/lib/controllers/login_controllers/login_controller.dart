@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/user_models/login_model.dart';
+import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/services/encrypter_service.dart';
@@ -22,12 +23,12 @@ class LoginController extends GetxController {
       assign_date: DateTime.now(),
     );
 
-    print(jsonEncode(_loginModel));
     var _resp = await APIService.post("user/login", jsonEncode(_loginModel));
     if (_resp.isSuccess) {
       if (isRememberMe.value) {
         String _encrypt = EncrypterService.encrypt(jsonEncode(_loginModel));
         AppService.storage.write("account_store", _encrypt);
+        Get.offAndToNamed(SmartHomeScreen.routeName);
       }
     } else {
       Get.snackbar("error", "Error");

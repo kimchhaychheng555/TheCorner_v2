@@ -42,7 +42,7 @@ class AppService {
   }
 
   static Future<void> onSaveConnectionApi() async {
-    await _onAPIUrlLoadStartUp();
+    await AppService.storage.write("api", AppService.apiApp);
   }
 
   static Future<void> onAppStartUpConfiguration() async {

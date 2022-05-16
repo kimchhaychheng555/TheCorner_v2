@@ -78,7 +78,7 @@ namespace API.Controllers
             var user = db.Users.Where(u => u.username == model.username && u.password == model.password && u.is_deleted == false);
             if (user.Any())
             {
-                return Ok(user);
+                return Ok(user.FirstOrDefault());
             }
 
             return NotFound();

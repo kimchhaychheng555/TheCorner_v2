@@ -59,7 +59,7 @@ namespace API.Controllers
                 await db.SaveChangesAsync();
             }
 
-            return Ok(si);
+            return Ok(table);
         }
     }
 }
