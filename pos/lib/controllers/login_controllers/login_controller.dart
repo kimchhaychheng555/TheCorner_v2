@@ -24,7 +24,9 @@ class LoginController extends GetxController {
       assign_date: DateTime.now(),
     );
 
-    LogService.sendLog(user: AppService.currentUser.fullname, logAction: "This user login to system.");
+    LogService.sendLog(
+        user: AppService.currentUser?.fullname ?? "",
+        logAction: "This user login to system.");
     var _resp = await APIService.post("user/login", jsonEncode(_loginModel));
     if (_resp.isSuccess) {
       if (isRememberMe.value) {
