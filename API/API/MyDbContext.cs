@@ -42,9 +42,11 @@ namespace API
         public DbSet<DocumentModel> Documents { get; set; }
         public DbSet<PermissionModel> Permissions { get; set; }
         public DbSet<PrintModel> Prints { get; set; }
+        public DbSet<PaymentMethodModel> PaymentMethods { get; set; }
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
         public DbSet<SaleModel> Sales { get; set; }
+        public DbSet<SalePaymentModel> SalePayments { get; set; }
         public DbSet<SaleProductModel> SaleProducts{ get; set; }
         public DbSet<StockInventoryModel> StockInventories { get; set; }
         public DbSet<StockTransactionModel> StockTransactions { get; set; }

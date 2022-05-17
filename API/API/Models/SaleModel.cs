@@ -28,5 +28,6 @@ namespace API.Models
         public TableModel table { get; set; }
 
         public List<SaleProductModel> sale_products { get; set; }
+        public List<SalePaymentModel> sale_payments { get; set; }
     }
 }
