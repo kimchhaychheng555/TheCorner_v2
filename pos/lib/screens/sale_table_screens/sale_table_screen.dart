@@ -99,6 +99,21 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
         SaleTableWidgetScreen(
           title: "10",
         ),
+        SaleTableWidgetScreen(
+          title: "11",
+        ),
+        SaleTableWidgetScreen(
+          title: "12",
+        ),
+        SaleTableWidgetScreen(
+          title: "13",
+        ),
+        SaleTableWidgetScreen(
+          title: "14",
+        ),
+        SaleTableWidgetScreen(
+          title: "15",
+        ),
       ]),
     );
   }

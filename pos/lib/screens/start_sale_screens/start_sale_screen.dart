@@ -14,7 +14,7 @@ class StartSaleScreen extends StatelessWidget {
               barrierColor: Colors.black26,
               context: context,
               builder: (context) {
-                return CustomAlertDialog(
+                return const CustomAlertDialog(
                   title: "Popup Dialog Title",
                   description: "Custom Popup dialog Description.",
                 );
