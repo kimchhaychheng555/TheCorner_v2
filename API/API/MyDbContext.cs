@@ -1,7 +1,9 @@
 ﻿using API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,10 +11,14 @@ namespace API
 {
     public class MyDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
-        {
+         
+        public MyDbContext(DbContextOptions<MyDbContext> options, IConfiguration configuration) : base(options) {
 
+            Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -21,7 +27,6 @@ namespace API
             //builder.Entity<CoreModel>()
             //.Property(p => p.is_deleted)
             //.HasDefaultValue(false);
-
 
 
 
@@ -36,6 +41,16 @@ namespace API
             {
                 property.SetCollation("Khmer_100_BIN");
             }
+
+            foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(Guid)))
+            {
+                     if (Configuration.GetSection("Database").Value == "MySql")
+                {
+                    property.SetColumnType("varbinary(36)");
+                } 
+            }
+
+          
         }
 
         public DbSet<CategoryModel> Categories { get; set; }

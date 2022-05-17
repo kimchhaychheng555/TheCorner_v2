@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("data_sale")]
+    [Table("data_sale_payment")]
     public class SalePaymentModel : CoreModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

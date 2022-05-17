@@ -11,7 +11,7 @@ namespace API.Migrations
                 name: "data_category",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
@@ -28,7 +28,7 @@ namespace API.Migrations
                 name: "data_document",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     key_name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     label = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     value = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN")
@@ -39,10 +39,27 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "data_payment_method",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
+                    payment_method_name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
+                    created_date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
+                    is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    deleted_date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    deleted_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_data_payment_method", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "data_role",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
@@ -59,7 +76,7 @@ namespace API.Migrations
                 name: "data_table",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
@@ -76,12 +93,12 @@ namespace API.Migrations
                 name: "data_product",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     price = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     image = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     stockable = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    category_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    category_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -103,10 +120,10 @@ namespace API.Migrations
                 name: "data_permission",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     slug = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     description = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
-                    role_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    role_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -128,11 +145,12 @@ namespace API.Migrations
                 name: "data_user",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
+                    fullname = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     username = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     password = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     profile = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
-                    role_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    role_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -154,7 +172,7 @@ namespace API.Migrations
                 name: "data_sale",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     invoice_number = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     vat = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     sub_total = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
@@ -164,7 +182,7 @@ namespace API.Migrations
                     is_paid = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     status = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     sale_date = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
-                    table_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    table_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -186,10 +204,10 @@ namespace API.Migrations
                 name: "data_stock_inventory",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     quantity_stock = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     min_quantity = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
-                    product_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    product_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -211,10 +229,10 @@ namespace API.Migrations
                 name: "data_stock_transaction",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     quantity = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     type = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
-                    product_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    product_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -236,9 +254,9 @@ namespace API.Migrations
                 name: "data_print",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     key = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
-                    sale_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    sale_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -257,16 +275,49 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "data_sale_payment",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
+                    payment_amount = table.Column<double>(type: "double", nullable: false),
+                    exchange_rate = table.Column<double>(type: "double", nullable: false),
+                    payment_method_name = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
+                    sale_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
+                    payment_method_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
+                    created_date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
+                    is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    deleted_date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    deleted_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_data_sale_payment", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_data_sale_payment_data_payment_method_payment_method_id",
+                        column: x => x.payment_method_id,
+                        principalTable: "data_payment_method",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_data_sale_payment_data_sale_sale_id",
+                        column: x => x.sale_id,
+                        principalTable: "data_sale",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "data_sale_product",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     quantity = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     price = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     is_free = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     is_remove_stock_done = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    sale_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    product_id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    sale_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
+                    product_id = table.Column<byte[]>(type: "varbinary(36)", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: true, collation: "Khmer_100_BIN"),
                     is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: true),
@@ -311,6 +362,16 @@ namespace API.Migrations
                 column: "table_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_data_sale_payment_payment_method_id",
+                table: "data_sale_payment",
+                column: "payment_method_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_data_sale_payment_sale_id",
+                table: "data_sale_payment",
+                column: "sale_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_data_sale_product_product_id",
                 table: "data_sale_product",
                 column: "product_id");
@@ -348,6 +409,9 @@ namespace API.Migrations
                 name: "data_print");
 
             migrationBuilder.DropTable(
+                name: "data_sale_payment");
+
+            migrationBuilder.DropTable(
                 name: "data_sale_product");
 
             migrationBuilder.DropTable(
@@ -358,6 +422,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "data_user");
+
+            migrationBuilder.DropTable(
+                name: "data_payment_method");
 
             migrationBuilder.DropTable(
                 name: "data_sale");
