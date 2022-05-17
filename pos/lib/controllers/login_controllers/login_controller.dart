@@ -36,8 +36,9 @@ class LoginController extends GetxController {
       Get.offAndToNamed(SmartHomeScreen.routeName);
 
       LogService.sendLog(
-          user: AppService.currentUser?.fullname ?? "",
-          logAction: "This user login to system.");
+        user: AppService.currentUser?.fullname ?? "",
+        logAction: "This user login to system.",
+      );
     } else {
       Get.snackbar("error", "Error");
     }
