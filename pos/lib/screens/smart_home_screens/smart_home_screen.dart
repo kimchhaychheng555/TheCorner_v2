@@ -34,8 +34,8 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
               children: [
                 Container(
                   color: Colors.red,
-                  child: const TextWidget(
-                    text: "1",
+                  child: TextWidget(
+                    text: "hello_world".tr,
                   ),
                 ),
                 Container(

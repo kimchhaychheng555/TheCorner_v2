@@ -6,8 +6,12 @@ class LogService {
     required String user,
     required String logAction,
   }) {
-    var _dateTime = DateFormat("yyyy-MM-dd hh:mm a").format(DateTime.now());
-    TelegramService.sendMessage(
-        "User: $user \nDate: $_dateTime \n==================================\n$logAction");
+    var allowSendLogToTelegram = true;
+
+    if (allowSendLogToTelegram) {
+      var _dateTime = DateFormat("yyyy-MM-dd hh:mm a").format(DateTime.now());
+      TelegramService.sendMessage(
+          "User: $user \nDate: $_dateTime \n==================================\n$logAction");
+    }
   }
 }
