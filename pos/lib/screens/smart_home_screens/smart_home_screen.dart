@@ -4,7 +4,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 
 import 'package:pos/screens/smart_home_screens/widgets/smart_home_button_widget.dart';
-import 'package:pos/screens/start_sale_screens/start_sale_screen.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class SmartHomeScreen extends GetResponsiveView<dynamic> {

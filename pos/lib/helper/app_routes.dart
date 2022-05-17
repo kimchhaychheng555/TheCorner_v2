@@ -25,7 +25,7 @@ class AppRoute {
           binding: AppBindings(),
         ),
         GetPage(
-          page: () => const SaleTableScreen(),
+          page: () => SaleTableScreen(),
           name: SaleTableScreen.routeName,
           binding: AppBindings(),
         ),

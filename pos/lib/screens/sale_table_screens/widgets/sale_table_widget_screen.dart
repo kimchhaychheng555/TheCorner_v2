@@ -13,7 +13,7 @@ class SaleTableWidgetScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100,
-      height: 130,
+      height: 120,
       decoration: BoxDecoration(
         color: HexColor("#FFFFFF"),
         borderRadius: BorderRadius.circular(5),

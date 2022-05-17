@@ -1,29 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/screens/sale_table_screens/widgets/sale_table_widget_screen.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
-class SaleTableScreen extends StatefulWidget {
-  const SaleTableScreen({
-    Key? key,
-  }) : super(key: key);
+class SaleTableScreen extends GetResponsiveView<dynamic> {
+  SaleTableScreen({Key? key}) : super(key: key);
 
-  // final String title;
-  static const String routeName = "/sale";
+  static const String routeName = "/tale";
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<SaleTableScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget builder() {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Sale"),
+          title: Text("table".tr),
         ),
-        body: _buildGridList());
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 15, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 130,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: HexColor("#F16023"),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 2,
+                            spreadRadius: 0.2,
+                            offset: const Offset(0, 2),
+                            color: HexColor("#898989").withOpacity(0.2),
+                          )
+                        ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add,
+                          size: 20,
+                          color: HexColor("#ffffff"),
+                        ),
+                        const SizedBox(width: 5),
+                        TextWidget(
+                          text: "Add Table",
+                          color: HexColor("#ffffff"),
+                          fontSize: 15,
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: _buildGridList(),
+            ),
+          ],
+        ));
   }
 
   Widget _buildGridList() {
