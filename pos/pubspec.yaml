@@ -52,6 +52,9 @@ dependencies:
   get_it: ^7.2.0 
   url_strategy: ^0.2.0
 
+  #responsive_grid
+  responsive_grid: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
