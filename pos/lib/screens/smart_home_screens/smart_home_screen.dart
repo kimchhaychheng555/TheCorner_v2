@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 
@@ -66,14 +67,17 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     title: "Sale".tr,
                   ),
                 ),
-                SmartHomeButtonWidget(
-                  icon: Icon(
-                    Icons.format_list_bulleted,
-                    size: 40,
-                    color: HexColor("#DF6260"),
+                InkWell(
+                  onTap: ((() => Get.toNamed(ProductScren.routeName))),
+                  child: SmartHomeButtonWidget(
+                    icon: Icon(
+                      Icons.format_list_bulleted,
+                      size: 40,
+                      color: HexColor("#DF6260"),
+                    ),
+                    backgroundColor: HexColor("#F7D6D5"),
+                    title: "Products".tr,
                   ),
-                  backgroundColor: HexColor("#F7D6D5"),
-                  title: "Products".tr,
                 ),
                 SmartHomeButtonWidget(
                   icon: Icon(
