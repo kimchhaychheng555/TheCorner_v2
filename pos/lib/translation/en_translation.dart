@@ -10,5 +10,6 @@ Map<String, String> get enTranslation => {
       "url_server": "URL Server",
       "home": "Home",
       "hello_world": "Hello World",
-      "table": "Table"
+      "table": "Table",
+      "sale": "Sale"
     };

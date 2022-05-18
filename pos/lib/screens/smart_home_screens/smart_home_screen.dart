@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 
 import 'package:pos/screens/smart_home_screens/widgets/smart_home_button_widget.dart';
@@ -39,7 +40,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
               children: [
                 InkWell(
                   onTap: (() {
-                    Get.offAndToNamed(SaleTableScreen.routeName);
+                    Get.toNamed(SaleTableScreen.routeName);
                   }),
                   child: SmartHomeButtonWidget(
                     icon: Icon(
@@ -51,14 +52,19 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     title: "Start Sale".tr,
                   ),
                 ),
-                SmartHomeButtonWidget(
-                  icon: Icon(
-                    Icons.shopping_cart_rounded,
-                    size: 40,
-                    color: HexColor("#309398"),
+                InkWell(
+                  onTap: (() {
+                    Get.toNamed(SaleScreen.routeName);
+                  }),
+                  child: SmartHomeButtonWidget(
+                    icon: Icon(
+                      Icons.shopping_cart_rounded,
+                      size: 40,
+                      color: HexColor("#309398"),
+                    ),
+                    backgroundColor: HexColor("#D5ECEC"),
+                    title: "Sale".tr,
                   ),
-                  backgroundColor: HexColor("#D5ECEC"),
-                  title: "Sale".tr,
                 ),
                 SmartHomeButtonWidget(
                   icon: Icon(

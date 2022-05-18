@@ -10,5 +10,6 @@ Map<String, String> get khTranslation => {
       "url_server": "URL Server",
       "home": "ទំព័រដើម",
       "hello_world": "សួស្តីពិភពលោក",
-      "table": "តុ"
+      "table": "តុ",
+      "sale": "ការលក់"
     };

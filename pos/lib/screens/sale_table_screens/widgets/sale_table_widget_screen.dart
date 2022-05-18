@@ -39,6 +39,7 @@ class SaleTableWidgetScreen extends StatelessWidget {
                   text: title ?? "",
                   fontSize: 20,
                   color: HexColor("#F16023"),
+                  fontWeight: FontWeight.bold,
                 )
               ],
             ),
