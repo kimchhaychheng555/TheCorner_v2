@@ -11,5 +11,6 @@ Map<String, String> get khTranslation => {
       "home": "ទំព័រដើម",
       "hello_world": "សួស្តីពិភពលោក",
       "table": "តុ",
-      "sale": "ការលក់"
+      "sale": "ការលក់",
+      "specail_offer": "ការផ្ដល់ជូនពិសេស",
     };

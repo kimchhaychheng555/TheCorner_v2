@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/screens/sale_screens/widgets/products_item.widget.dart';
 import 'package:pos/widgets/text_widget.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 
 class SaleScreen extends GetResponsiveView<dynamic> {
   SaleScreen({Key? key}) : super(key: key);
@@ -21,7 +24,7 @@ class SaleScreen extends GetResponsiveView<dynamic> {
             child: Container(
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 84, 18, 18),
+                color: HexColor("#FFFFFF"),
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -30,6 +33,35 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                     blurRadius: 5,
                     offset: const Offset(0, 0), // changes position of shadow
                   ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: HexColor("#B3CBFA"),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Center(
+                            child: TextWidget(
+                              text: "specail_offer".tr,
+                              color: HexColor("#091124"),
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildItemGridList(),
+                  )
                 ],
               ),
             ),
@@ -52,6 +84,43 @@ class SaleScreen extends GetResponsiveView<dynamic> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildItemGridList() {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child:
+          ResponsiveGridList(desiredItemWidth: 150, minSpacing: 10, children: [
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+        ProductsItemWidget(
+          name: "ឆាក្ដៅ",
+          price: 3.00,
+        ),
+      ]),
     );
   }
 }
