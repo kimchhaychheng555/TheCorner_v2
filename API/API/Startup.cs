@@ -105,12 +105,14 @@ namespace API
             var odataBuilder = new ODataConventionModelBuilder();
             odataBuilder.EntitySet<CategoryModel>("Category");
             odataBuilder.EntitySet<DocumentModel>("Document");
+            odataBuilder.EntitySet<PaymentMethodModel>("PaymentMethod");
             odataBuilder.EntitySet<PermissionModel>("Permission");
             odataBuilder.EntitySet<PrintModel>("Print");
             odataBuilder.EntitySet<ProductModel>("Product");
             odataBuilder.EntitySet<RoleModel>("Role");
             odataBuilder.EntitySet<SaleModel>("Sale");
             odataBuilder.EntitySet<SaleProductModel>("SaleProduct");
+            odataBuilder.EntitySet<SalePaymentModel>("SalePayment");
             odataBuilder.EntitySet<StockInventoryModel>("StockInventory");
             odataBuilder.EntitySet<StockTransactionModel>("StockTransaction");
             odataBuilder.EntitySet<TableModel>("Table");
