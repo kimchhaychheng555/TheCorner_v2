@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/controllers/sale_controllers/sale_controller.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ProductsItemWidget extends StatelessWidget {
@@ -15,6 +17,7 @@ class ProductsItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SaleController _controller = Get.find();
     return Center(
       child: Stack(
         // fit: StackFit.passthrough,

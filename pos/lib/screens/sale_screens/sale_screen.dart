@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pos/screens/sale_screens/widgets/products_item.widget.dart';
+import 'package:pos/controllers/sale_controllers/sale_controller.dart';
+import 'package:pos/screens/sale_screens/widgets/products_item_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
@@ -12,6 +13,7 @@ class SaleScreen extends GetResponsiveView<dynamic> {
 
   @override
   Widget builder() {
+    SaleController _controller = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: TextWidget(
@@ -37,6 +39,9 @@ class SaleScreen extends GetResponsiveView<dynamic> {
               ),
               child: Column(
                 children: [
+                  ElevatedButton(
+                      onPressed: () => _controller.onClick(),
+                      child: Text("Click")),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
