@@ -47,9 +47,7 @@ namespace API.Controllers
         public async Task<IActionResult> Post([FromBody] SalePaymentModel sale_payment)
         {
             if (sale_payment.id == Guid.Empty)
-            {
-                sale_payment.created_date = DateTime.Now;
-                sale_payment.is_deleted = false;
+            { 
                 db.SalePayments.Add(sale_payment);
                 await db.SaveChangesAsync();
             }

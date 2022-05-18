@@ -19,16 +19,8 @@ namespace API
 
         public IConfiguration Configuration { get; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
-            base.OnModelCreating(builder);
-            //builder.Entity<CoreModel>()
-            //.Property(p => p.is_deleted)
-            //.HasDefaultValue(false);
-
-
 
             foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(decimal)))
             {
@@ -44,13 +36,30 @@ namespace API
 
             foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(Guid)))
             {
-                     if (Configuration.GetSection("Database").Value == "MySql")
+                if (Configuration.GetSection("Database").Value == "MySql")
                 {
                     property.SetColumnType("varbinary(36)");
                 } 
             }
 
-          
+            foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()))
+            {
+                if(property.GetColumnBaseName() == "is_deleted")
+                {
+                    property.SetDefaultValue(false);
+                }
+
+                if (property.GetColumnBaseName() == "created_date")
+                {
+                    property.SetDefaultValueSql("getDate()");
+                }
+
+                if (property.GetColumnBaseName() == "deleted_date")
+                {
+                    property.SetDefaultValueSql("getDate()");
+                } 
+            }
+
         }
 
         public DbSet<CategoryModel> Categories { get; set; }

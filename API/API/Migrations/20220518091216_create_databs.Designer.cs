@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220517071039_create_table")]
-    partial class create_table
+    [Migration("20220518091216_create_databs")]
+    partial class create_databs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,17 +32,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)")
@@ -87,17 +93,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("payment_method_name")
                         .HasColumnType("nvarchar(max)")
@@ -119,21 +131,27 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<Guid>("role_id")
                         .HasColumnType("uniqueidentifier");
@@ -160,17 +178,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("key")
                         .HasColumnType("nvarchar(max)")
@@ -200,21 +224,27 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("image")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)")
@@ -244,17 +274,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)")
@@ -276,14 +312,18 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<decimal>("discount")
                         .HasColumnType("decimal(19,5)");
@@ -300,7 +340,9 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<bool>("is_paid")
                         .HasColumnType("bit");
@@ -339,20 +381,26 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<double>("exchange_rate")
                         .HasColumnType("float");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<double>("payment_amount")
                         .HasColumnType("float");
@@ -387,17 +435,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<bool>("is_free")
                         .HasColumnType("bit");
@@ -437,17 +491,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<decimal>("min_quantity")
                         .HasColumnType("decimal(19,5)");
@@ -476,17 +536,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<Guid>("product_id")
                         .HasColumnType("uniqueidentifier");
@@ -516,17 +582,23 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)")
@@ -548,21 +620,27 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("created_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("deleted_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
 
                     b.Property<string>("fullname")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<bool?>("is_deleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)")

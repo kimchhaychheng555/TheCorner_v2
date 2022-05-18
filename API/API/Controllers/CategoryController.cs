@@ -46,8 +46,6 @@ namespace API.Controllers
         {
             if (category.id == Guid.Empty)
             {
-                category.created_date = DateTime.Now;
-                category.is_deleted = false;
                 db.Categories.Add(category);
                 await db.SaveChangesAsync();
             }

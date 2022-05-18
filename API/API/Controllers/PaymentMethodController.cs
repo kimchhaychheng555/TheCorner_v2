@@ -48,8 +48,6 @@ namespace API.Controllers
         {
             if (pm.id == Guid.Empty)
             {
-                pm.created_date = DateTime.Now;
-                pm.is_deleted = false;
                 db.PaymentMethods.Add(pm);
                 await db.SaveChangesAsync();
             }

@@ -47,9 +47,7 @@ namespace API.Controllers
         public async Task<IActionResult> Post([FromBody] TableModel table)
         {
             if (table.id == Guid.Empty)
-            {
-                table.created_date = DateTime.Now;
-                table.is_deleted = false;
+            { 
                 db.Tables.Add(table);
                 await db.SaveChangesAsync();
             }

@@ -47,9 +47,7 @@ namespace API.Controllers
         public async Task<IActionResult> Post([FromBody] StockInventoryModel si)
         {
             if (si.id == Guid.Empty)
-            {
-                si.created_date = DateTime.Now;
-                si.is_deleted = false;
+            { 
                 db.StockInventories.Add(si);
                 await db.SaveChangesAsync();
             }

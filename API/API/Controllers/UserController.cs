@@ -50,9 +50,7 @@ namespace API.Controllers
                     return BadRequest(new BadRequestModel() { message = "username_has_already_exists" });
                 }
 
-
-                user.created_date = DateTime.Now;
-                user.is_deleted = false;
+                 
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
             }

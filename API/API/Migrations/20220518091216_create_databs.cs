@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class create_table : Migration
+    public partial class create_databs : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,10 @@ namespace API.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -44,10 +44,10 @@ namespace API.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     payment_method_name = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -61,10 +61,10 @@ namespace API.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -78,10 +78,10 @@ namespace API.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -99,10 +99,10 @@ namespace API.Migrations
                     image = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     stockable = table.Column<bool>(type: "bit", nullable: false),
                     category_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -124,10 +124,10 @@ namespace API.Migrations
                     slug = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     role_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -151,10 +151,10 @@ namespace API.Migrations
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     profile = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     role_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -183,10 +183,10 @@ namespace API.Migrations
                     status = table.Column<bool>(type: "bit", nullable: false),
                     sale_date = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     table_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -208,10 +208,10 @@ namespace API.Migrations
                     quantity_stock = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     min_quantity = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -233,10 +233,10 @@ namespace API.Migrations
                     quantity = table.Column<decimal>(type: "decimal(19,5)", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -257,10 +257,10 @@ namespace API.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     key = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     sale_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -284,10 +284,10 @@ namespace API.Migrations
                     payment_method_name = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
                     sale_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     payment_method_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>
@@ -318,10 +318,10 @@ namespace API.Migrations
                     is_remove_stock_done = table.Column<bool>(type: "bit", nullable: false),
                     sale_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    created_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN"),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: true),
-                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    deleted_date = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getDate()"),
                     deleted_by = table.Column<string>(type: "nvarchar(max)", nullable: true, collation: "Khmer_100_BIN")
                 },
                 constraints: table =>

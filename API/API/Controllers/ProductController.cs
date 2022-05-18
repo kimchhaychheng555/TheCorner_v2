@@ -46,8 +46,6 @@ namespace API.Controllers
         {
             if (product.id == Guid.Empty)
             {
-                product.created_date = DateTime.Now;
-                product.is_deleted = false;
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
             }

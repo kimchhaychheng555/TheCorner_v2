@@ -46,8 +46,6 @@ namespace API.Controllers
         {
             if (role.id == Guid.Empty)
             {
-                role.created_date = DateTime.Now;
-                role.is_deleted = false;
                 db.Roles.Add(role);
                 await db.SaveChangesAsync();
             }
