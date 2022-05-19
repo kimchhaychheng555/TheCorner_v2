@@ -5,6 +5,7 @@ import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
+import 'package:pos/screens/setting_screens/setting_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 
 class AppRoute {
@@ -39,6 +40,11 @@ class AppRoute {
         GetPage(
           page: () => ProductScren(),
           name: ProductScren.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => SettingScreen(),
+          name: SettingScreen.routeName,
           binding: AppBindings(),
         ),
       ];

@@ -13,4 +13,5 @@ Map<String, String> get enTranslation => {
       "table": "Table",
       "sale": "Sale",
       "specail_offer": "Specail Offer",
+      "setting": "Setting",
     };

@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
+import 'package:pos/screens/setting_screens/setting_screen.dart';
 
 import 'package:pos/screens/smart_home_screens/widgets/smart_home_button_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
@@ -115,14 +116,17 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   backgroundColor: HexColor("#D2F6EA"),
                   title: "Users".tr,
                 ),
-                SmartHomeButtonWidget(
-                  icon: Icon(
-                    Icons.tune,
-                    size: 40,
-                    color: HexColor("#E0CD65"),
+                InkWell(
+                  onTap: ((() => Get.toNamed(SettingScreen.routeName))),
+                  child: SmartHomeButtonWidget(
+                    icon: Icon(
+                      Icons.tune,
+                      size: 40,
+                      color: HexColor("#E0CD65"),
+                    ),
+                    backgroundColor: HexColor("#FBF6D8"),
+                    title: "Setting".tr,
                   ),
-                  backgroundColor: HexColor("#FBF6D8"),
-                  title: "Setting".tr,
                 ),
               ],
             ),

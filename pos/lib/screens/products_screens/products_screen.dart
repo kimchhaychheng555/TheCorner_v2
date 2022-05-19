@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ProductScren extends GetResponsiveView<dynamic> {
@@ -17,67 +18,114 @@ class ProductScren extends GetResponsiveView<dynamic> {
         children: [
           Container(
             alignment: Alignment.topCenter,
-            child: Container(
-              // width: 330,
-              // height: 300,
-              // color: Colors.red,
-              child: DataTable(
-                columns: const <DataColumn>[
-                  DataColumn(
-                    label: Text(
-                      'No',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+            child: SizedBox(
+                width: 1200,
+                // height: 300,
+                // color: Colors.red,
+                child: ListView(children: <Widget>[
+                  const SizedBox(height: 5),
+                  DataTable(
+                    headingRowColor: MaterialStateColor.resolveWith(
+                      (states) {
+                        return HexColor('#F2F5FA');
+                      },
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      '',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Name',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Price',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                ],
-                rows: const <DataRow>[
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text('1')),
-                      DataCell(
-                        Text('19'),
-                      ),
-                      DataCell(Text('Studesdfsdfdfnt')),
-                      DataCell(Text('Studensdfsdfsdfsdfdsft')),
+                    columns: [
+                      DataColumn(
+                          label: TextWidget(
+                        text: "No",
+                        fontSize: 16,
+                        color: HexColor("#000000"),
+                      )),
+                      DataColumn(
+                          label: TextWidget(
+                        text: "Name",
+                        fontSize: 16,
+                        color: HexColor("#000000"),
+                      )),
+                      DataColumn(
+                          label: TextWidget(
+                        text: "Price",
+                        fontSize: 16,
+                        color: HexColor("#000000"),
+                      )),
+                    ],
+                    rows: [
+                      DataRow(cells: [
+                        DataCell(TextWidget(
+                            text: "1",
+                            fontSize: 15,
+                            color: HexColor("#000000"))),
+                        DataCell(
+                          TextWidget(
+                              text: "បង្គាឆាពងទាប្រៃ",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                        DataCell(
+                          TextWidget(
+                              text: "3.00",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(TextWidget(
+                            text: "1",
+                            fontSize: 15,
+                            color: HexColor("#000000"))),
+                        DataCell(
+                          TextWidget(
+                              text: "បង្គាឆាពងទាប្រៃ",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                        DataCell(
+                          TextWidget(
+                              text: "3.00",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(TextWidget(
+                            text: "1",
+                            fontSize: 15,
+                            color: HexColor("#000000"))),
+                        DataCell(
+                          TextWidget(
+                              text: "បង្គាឆាពងទាប្រៃ",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                        DataCell(
+                          TextWidget(
+                              text: "3.00",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(TextWidget(
+                            text: "1",
+                            fontSize: 15,
+                            color: HexColor("#000000"))),
+                        DataCell(
+                          TextWidget(
+                              text: "បង្គាឆាពងទាប្រៃ",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                        DataCell(
+                          TextWidget(
+                              text: "3.00",
+                              fontSize: 15,
+                              color: HexColor("#000000")),
+                        ),
+                      ]),
                     ],
                   ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text('2')),
-                      DataCell(Text('43')),
-                      DataCell(Text('Student')),
-                      DataCell(Text('Professor')),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text('3')),
-                      DataCell(Text('27')),
-                      DataCell(Text('Student')),
-                      DataCell(Text('Associate Professor')),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                ])),
           ),
         ],
       ),

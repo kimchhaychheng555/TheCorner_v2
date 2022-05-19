@@ -13,4 +13,5 @@ Map<String, String> get khTranslation => {
       "table": "តុ",
       "sale": "ការលក់",
       "specail_offer": "ការផ្ដល់ជូនពិសេស",
+      "setting": "ការកំណត់",
     };
