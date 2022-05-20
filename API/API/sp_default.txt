@@ -1,0 +1,10 @@
+CREATE PROCEDURE sp_default
+AS	
+	
+	--Insert Role
+	INSERT INTO data_role(id,name) VALUES('00000000-0000-0000-0000-000000000000', 'Admin');
+
+	
+	--Insert User
+	INSERT INTO data_user(id,fullname,username,password,role_id) VALUES('00000000-0000-0000-0000-000000000000', 'Admin', 'admin', '123456', (SELECT TOP(1) id FROM data_role))
+GO
