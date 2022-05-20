@@ -21,5 +21,6 @@ Map<String, String> get khTranslation => {
       "agree": "យល់ព្រម",
       "disagree": "មិនយល់ព្រម",
       "vat": "ពន្ធលើតម្លៃបន្ថែម",
-      "log_out": "ចាកចេញពីកម្មវិធី"
+      "log_out": "ចាកចេញពីកម្មវិធី",
+      "privacy_setting": "ការកំណត់ឯកជនភាព",
     };

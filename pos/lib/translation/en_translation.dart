@@ -21,5 +21,6 @@ Map<String, String> get enTranslation => {
       "agree": "Agree",
       "disagree": "Disagree",
       "vat": "Allow VAT",
-      "log_out": "Log Out"
+      "log_out": "Log Out",
+      "privacy_setting": "PRIVACY SETTING",
     };
