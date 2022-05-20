@@ -21,5 +21,15 @@ Map<String, String> get enTranslation => {
       "agree": "Agree",
       "disagree": "Disagree",
       "vat": "Allow VAT",
-      "log_out": "Log Out"
+      "log_out": "Log Out",
+      "start_sale": "Start Sale",
+      "products": "Products",
+      "report": "Report",
+      "permission": "Permission",
+      "business_report": "Business Report",
+      "users": "Users",
+      "are_you_sure_you_want_to_start_sale":
+          "Are you sure you want to start sale ?",
+      "no": "No",
+      "yes": "Yes",
     };
