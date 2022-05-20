@@ -14,4 +14,12 @@ Map<String, String> get enTranslation => {
       "sale": "Sale",
       "specail_offer": "Specail Offer",
       "setting": "Setting",
+      "account_setting": "Account Setting",
+      "language": "Language",
+      "sent_telegram": "Sent Log To Telegram",
+      "logout": "Logout",
+      "agree": "Agree",
+      "disagree": "Disagree",
+      "vat": "Allow VAT",
+      "log_out": "Log Out"
     };
