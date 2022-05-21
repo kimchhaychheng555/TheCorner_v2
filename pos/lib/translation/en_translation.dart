@@ -9,6 +9,7 @@ Map<String, String> get enTranslation => {
       "english": "English",
       "url_server": "URL Server",
       "home": "Home",
+      "the_corner": "The Corner",
       "hello_world": "Hello World",
       "table": "Table",
       "sale": "Sale",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ProductScreenItem extends StatelessWidget {
@@ -20,18 +21,12 @@ class ProductScreenItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: TextWidget(
             text: value,
-            color: Colors.black,
+            color: HexColor("#000000"),
             fontFamily: "Siemreap",
             fontSize: 15,
             // fontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
-          )
-          // Text(
-          //   value,
-          //   style:
-          //       isRowHeader ? const TextStyle(fontWeight: FontWeight.w200) : null,
-          // ),
-          ),
+          )),
     );
   }
 }

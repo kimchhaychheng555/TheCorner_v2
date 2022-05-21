@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ProductScreenWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class ProductScreenWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: TextWidget(
             text: value,
-            color: Colors.black,
+            color: HexColor("#000000"),
             fontSize: 16,
             fontWeight: FontWeight.w500,
             textAlign: TextAlign.center,

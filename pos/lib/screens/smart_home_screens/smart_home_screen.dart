@@ -18,8 +18,12 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
         backgroundColor: const Color(0xFFF0F2FE),
         appBar: AppBar(
           title: Text(
-            "home".tr,
+            "the_corner".tr,
           ),
+          actions: const [
+            Icon(Icons.logout),
+            SizedBox(width: 20),
+          ],
         ),
         body: SafeArea(
           child: Center(

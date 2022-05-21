@@ -9,6 +9,7 @@ Map<String, String> get khTranslation => {
       "english": "English",
       "url_server": "URL Server",
       "home": "ទំព័រដើម",
+      "the_corner": "ដឺ ខណឺ",
       "hello_world": "សួស្តីពិភពលោក",
       "table": "តុ",
       "sale": "ការលក់",
