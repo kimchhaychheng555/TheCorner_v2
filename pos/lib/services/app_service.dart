@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
@@ -15,6 +16,7 @@ class AppService {
   static UserModel? currentUser;
   static LoginModel? loginUser;
   static GetStorage storage = GetStorage("setting");
+  static StartSaleModel? currentStartSale;
 
   static Locale get getLanguage {
     switch (currentLanguage) {

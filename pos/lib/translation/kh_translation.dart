@@ -22,9 +22,7 @@ Map<String, String> get khTranslation => {
       "disagree": "មិនយល់ព្រម",
       "vat": "ពន្ធលើតម្លៃបន្ថែម",
       "log_out": "ចាកចេញពីកម្មវិធី",
-<<<<<<< HEAD
       "privacy_setting": "ការកំណត់ឯកជនភាព",
-=======
       "start_sale": "ចាប់ផ្តើមលក់",
       "products": "ទំនិញ",
       "report": "របាយការណ៍",
@@ -32,5 +30,4 @@ Map<String, String> get khTranslation => {
       "business_report": "របាយការណ៍ Business",
       "users": "អ្នកប្រើប្រាស់",
       "are_you_sure_you_want_to_start_sale": "តើអ្នកចង់ចាប់ផ្តើមលក់មែនទេ ?",
->>>>>>> 62e343ad187e0e17693551a4818401a685b2fab3
     };

@@ -49,7 +49,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "start_sale".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onSalePressed,
                   icon: Icon(
@@ -61,7 +60,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "sale".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onProductPressed,
                   icon: Icon(
@@ -73,7 +71,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "products".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onReportPressed,
                   icon: Icon(
@@ -85,7 +82,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "report".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onPermissionPressed,
                   icon: Icon(
@@ -97,7 +93,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "permission".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onBusinessReportPressed,
                   icon: Icon(
@@ -109,7 +104,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "business_report".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onUsersPressed,
                   icon: Icon(
@@ -121,7 +115,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "users".tr,
                   borderRadius: 5,
                 ),
-
                 SmartHomeButtonWidget(
                   onPressed: _controller.onSettingPressed,
                   icon: Icon(
@@ -133,18 +126,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   title: "setting".tr,
                   borderRadius: 5,
                 ),
-                // InkWell(
-                //   onTap: ((() => Get.toNamed(SettingScreen.routeName))),
-                //   child: SmartHomeButtonWidget(
-                //     icon: Icon(
-                //       Icons.tune,
-                //       size: 40,
-                //       color: HexColor("#E0CD65"),
-                //     ),
-                //     backgroundColor: HexColor("#FBF6D8"),
-                //     title: "Setting".tr,
-                //   ),
-                // ),
               ],
             ),
           ),
