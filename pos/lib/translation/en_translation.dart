@@ -39,4 +39,8 @@ Map<String, String> get enTranslation => {
       "please_start_sale": "Please Start Sale",
       "start_sale_success": "Start Sale Successfully",
       "add_table": "Add Table",
+      "add_product": "Add Products",
+      "n_o": "No",
+      "name_of_product": "Name Of Product",
+      "price": "Price",
     };

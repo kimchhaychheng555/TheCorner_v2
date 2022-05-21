@@ -66,7 +66,7 @@ class ProductScren extends GetResponsiveView<dynamic> {
                               ),
                               const SizedBox(width: 5),
                               TextWidget(
-                                text: "Add Products",
+                                text: "add_product".tr,
                                 color: HexColor("#ffffff"),
                                 fontSize: 15,
                               )
@@ -79,13 +79,15 @@ class ProductScren extends GetResponsiveView<dynamic> {
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       ProductScreenWidget(
-                          isRowHeader: true, flex: 2, value: "No"),
+                          isRowHeader: true, flex: 2, value: "n_o".tr),
                       ProductScreenWidget(
-                          isRowHeader: true, flex: 3, value: "Name of Product"),
+                          isRowHeader: true,
+                          flex: 3,
+                          value: "name_of_product".tr),
                       ProductScreenWidget(
-                          isRowHeader: true, flex: 3, value: "Price"),
+                          isRowHeader: true, flex: 3, value: "price".tr),
                     ],
                   ),
                   const SizedBox(height: 15),
