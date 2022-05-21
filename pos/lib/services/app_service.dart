@@ -41,10 +41,7 @@ class AppService {
   }
 
   static void back() {
-    if (Get.isSnackbarOpen) {
-      Get.back();
-    }
-    Get.back();
+    Get.back(closeOverlays: true);
   }
 
   static Future<bool> onTestConnectionApi() async {

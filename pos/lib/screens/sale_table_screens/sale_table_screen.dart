@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
+import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/screens/sale_table_screens/widgets/sale_table_widget.dart';
+import 'package:pos/widgets/loading_overlay_widget.dart';
 
 class SaleTableScreen extends GetResponsiveView<dynamic> {
   SaleTableScreen({Key? key}) : super(key: key);
@@ -31,55 +33,64 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
                                         ? _grid = 11
                                         : _grid = 12;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("table".tr),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+    SaleTableController _controller = Get.find();
+
+    return Obx(
+      () => LoadingOverlayWidget(
+        isLoading: _controller.isLoading.value,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("table".tr),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
               children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      secondaryColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          secondaryColor,
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: SizedBox(
+                        height: 40,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.add),
+                            const SizedBox(width: 15),
+                            Text("add_table".tr),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  onPressed: () {},
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.add),
-                        const SizedBox(width: 15),
-                        Text("add_table".tr),
-                      ],
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: GridView(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: _grid,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
                     ),
+                    children: [
+                      ..._controller.tableList.map(
+                        (table) => SaleTableWidget(
+                          title: table.name ?? "",
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: GridView(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: _grid,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
-                children: [
-                  for (var i = 0; i < 20; i++)
-                    SaleTableWidget(
-                      onPressed: () {},
-                    ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

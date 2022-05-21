@@ -131,6 +131,8 @@ class SmartHomeController extends GetxController {
       var _ss = StartSaleModel.fromJson(jsonDecode(_doc.value ?? "{}"));
       AppService.currentStartSale = _ss;
       isStartSale(AppService.currentStartSale?.isStart);
+      //
+      AppAlert.successAlert(title: "stop_sale_success".tr);
     }
   }
 
