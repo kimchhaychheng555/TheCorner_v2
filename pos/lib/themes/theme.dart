@@ -7,6 +7,15 @@ class AppTheme {
   static ThemeData get getTheme => ThemeData(
         fontFamily: AppService.getFont,
         backgroundColor: primaryColor,
-        primarySwatch: myColorSwatch,
+        primarySwatch: AppService.buildMaterialColor(primaryColor),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+          ),
+          iconTheme: IconThemeData(
+            size: 20,
+            color: Colors.white,
+          ),
+        ),
       );
 }

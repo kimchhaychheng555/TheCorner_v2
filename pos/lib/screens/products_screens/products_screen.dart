@@ -12,7 +12,7 @@ class ProductScren extends GetResponsiveView<dynamic> {
   Widget builder() {
     return Scaffold(
       appBar: AppBar(
-        title: TextWidget(text: "Products".tr),
+        title: Text("Products".tr),
       ),
       body: Stack(
         children: [
@@ -76,7 +76,7 @@ class ProductScren extends GetResponsiveView<dynamic> {
                   ),
                   const SizedBox(height: 20),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       width: 1000,
                       height: 500,
                       child: ListView(children: [

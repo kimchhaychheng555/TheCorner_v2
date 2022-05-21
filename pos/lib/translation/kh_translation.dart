@@ -32,4 +32,6 @@ Map<String, String> get khTranslation => {
       "are_you_sure_you_want_to_start_sale": "តើអ្នកចង់ចាប់ផ្តើមលក់មែនទេ ?",
       "stop_sale": "បញ្ឈប់ការលក់",
       "are_you_sure_you_want_to_stop_sale": "តើអ្នកចង់បញ្ឈប់ការលក់មែនទេ ?",
+      "start_sale_success": "ចាប់ផ្តើមការលក់បានជោគជ័យ",
+      "add_table": "បង្កើតតុ",
     };

@@ -44,10 +44,10 @@ class SmartHomeController extends GetxController {
         ButtonActionWidget(
           confirmText: "yes".tr,
           cancelText: "no".tr,
-          onCancelPressed: () => Get.back(),
+          onCancelPressed: () => AppService.back(),
           onConfirmPressed: () {
             _onStartSaleProcess();
-            Get.back();
+            AppService.back();
           },
         ),
       ],
@@ -76,6 +76,8 @@ class SmartHomeController extends GetxController {
       var _ss = StartSaleModel.fromJson(jsonDecode(_doc.value ?? "{}"));
       AppService.currentStartSale = _ss;
       isStartSale(AppService.currentStartSale?.isStart);
+      //
+      AppAlert.successAlert(title: "start_sale_success".tr);
     }
   }
 
@@ -96,10 +98,10 @@ class SmartHomeController extends GetxController {
       middleText: "are_you_sure_you_want_to_stop_sale".tr,
       actions: [
         ButtonActionWidget(
-          onCancelPressed: () => Get.back(),
+          onCancelPressed: () => AppService.back(),
           onConfirmPressed: () {
             _onStopSaleProcess();
-            Get.back();
+            AppService.back();
           },
           confirmText: "yes".tr,
           cancelText: "no".tr,

@@ -12,7 +12,7 @@ class SettingScreen extends GetResponsiveView<dynamic> {
   Widget builder() {
     return Scaffold(
         appBar: AppBar(
-          title: TextWidget(text: "setting".tr),
+          title: Text("setting".tr),
         ),
         body: Stack(
           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos/constants/constants.dart';
 
 class ButtonActionWidget extends StatelessWidget {
   final String? confirmText, cancelText;
@@ -22,7 +23,7 @@ class ButtonActionWidget extends StatelessWidget {
         ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-                cancelBackground ?? Colors.red),
+                cancelBackground ?? errorColor),
           ),
           onPressed: onCancelPressed,
           child: Center(
@@ -36,7 +37,7 @@ class ButtonActionWidget extends StatelessWidget {
         ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-                confirmBackground ?? Colors.green),
+                confirmBackground ?? successColor),
           ),
           onPressed: onConfirmPressed,
           child: SizedBox(

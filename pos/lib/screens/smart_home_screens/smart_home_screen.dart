@@ -4,7 +4,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/controllers/smart_home_controller.dart';
 
 import 'package:pos/screens/smart_home_screens/widgets/smart_home_button_widget.dart';
-import 'package:pos/widgets/text_widget.dart';
 
 class SmartHomeScreen extends GetResponsiveView<dynamic> {
   SmartHomeScreen({Key? key}) : super(key: key);
@@ -18,8 +17,8 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
       () => Scaffold(
         backgroundColor: const Color(0xFFF0F2FE),
         appBar: AppBar(
-          title: TextWidget(
-            text: "home".tr,
+          title: Text(
+            "home".tr,
           ),
         ),
         body: SafeArea(
