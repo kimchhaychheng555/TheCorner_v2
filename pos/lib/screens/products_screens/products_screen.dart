@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/screens/products_screens/widgets/product_screen_item.dart';
+import 'package:pos/screens/products_screens/widgets/product_screen_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ProductScren extends GetResponsiveView<dynamic> {
@@ -64,7 +66,7 @@ class ProductScren extends GetResponsiveView<dynamic> {
                               ),
                               const SizedBox(width: 5),
                               TextWidget(
-                                text: "Add Products",
+                                text: "add_product".tr,
                                 color: HexColor("#ffffff"),
                                 fontSize: 15,
                               )
@@ -75,277 +77,40 @@ class ProductScren extends GetResponsiveView<dynamic> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Expanded(
-                    child: SizedBox(
-                      width: 1000,
-                      height: 500,
-                      child: ListView(children: [
-                        DataTable(
-                          headingRowColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              return HexColor("#F1F1F1");
-                            },
-                          ),
-                          columns: [
-                            DataColumn(
-                                label: TextWidget(
-                              text: "No",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: HexColor("#000000"),
-                            )),
-                            DataColumn(
-                                label: TextWidget(
-                              text: "Name",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: HexColor("#000000"),
-                            )),
-                            DataColumn(
-                                label: TextWidget(
-                              text: "Price",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: HexColor("#000000"),
-                            )),
-                          ],
-                          rows: [
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(TextWidget(
-                                  text: "1",
-                                  fontSize: 15,
-                                  fontFamily: 'Siemreap',
-                                  color: HexColor("#000000"))),
-                              DataCell(
-                                TextWidget(
-                                    text: "បង្គាឆាពងទាប្រៃ",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                              DataCell(
-                                TextWidget(
-                                    text: "3.00",
-                                    fontSize: 15,
-                                    fontFamily: 'Siemreap',
-                                    color: HexColor("#000000")),
-                              ),
-                            ]),
-                          ],
-                        ),
-                      ]),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ProductScreenWidget(
+                          isRowHeader: true, flex: 2, value: "n_o".tr),
+                      ProductScreenWidget(
+                          isRowHeader: true,
+                          flex: 3,
+                          value: "name_of_product".tr),
+                      ProductScreenWidget(
+                          isRowHeader: true, flex: 3, value: "price".tr),
+                    ],
                   ),
+                  const SizedBox(height: 15),
+                  Expanded(
+                      child: ListView.separated(
+                    itemCount: 25,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: const [
+                          ProductScreenItem(
+                              isRowHeader: true, flex: 2, value: "1"),
+                          ProductScreenItem(
+                              isRowHeader: true,
+                              flex: 3,
+                              value: "បង្គាឆាពងទាប្រៃ"),
+                          ProductScreenItem(
+                              isRowHeader: true, flex: 3, value: "3.00"),
+                        ],
+                      );
+                    },
+                  ))
                 ],
               ),
             ),

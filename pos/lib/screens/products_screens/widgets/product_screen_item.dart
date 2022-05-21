@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/widgets/text_widget.dart';
 
-class ProductScreenWidget extends StatelessWidget {
+class ProductScreenItem extends StatelessWidget {
   final int flex;
   final String value;
   final bool isRowHeader;
-  const ProductScreenWidget({
+  const ProductScreenItem({
     Key? key,
     required this.flex,
     required this.value,
@@ -22,16 +22,11 @@ class ProductScreenWidget extends StatelessWidget {
           child: TextWidget(
             text: value,
             color: HexColor("#000000"),
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+            fontFamily: "Siemreap",
+            fontSize: 15,
+            // fontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
-          )
-          // Text(
-          //   value,
-          //   style:
-          //       isRowHeader ? const TextStyle(fontWeight: FontWeight.w200) : null,
-          // ),
-          ),
+          )),
     );
   }
 }

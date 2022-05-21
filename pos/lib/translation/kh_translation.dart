@@ -9,6 +9,7 @@ Map<String, String> get khTranslation => {
       "english": "English",
       "url_server": "URL Server",
       "home": "ទំព័រដើម",
+      "the_corner": "ដឺ ខណឺ",
       "hello_world": "សួស្តីពិភពលោក",
       "table": "តុ",
       "sale": "ការលក់",
@@ -35,4 +36,8 @@ Map<String, String> get khTranslation => {
       "start_sale_success": "ចាប់ផ្តើមការលក់បានជោគជ័យ",
       "add_table": "បង្កើតតុ",
       "stop_sale_success": "បញ្ឈប់ការលក់បានជោគជ័យ",
+      "add_product": "បញ្ចូលបន្ថែម",
+      "n_o": "ល.រ",
+      "name_of_product": "ឈ្មោះទំនិញ",
+      "price": "តម្លៃ",
     };
