@@ -30,4 +30,6 @@ Map<String, String> get khTranslation => {
       "business_report": "របាយការណ៍ Business",
       "users": "អ្នកប្រើប្រាស់",
       "are_you_sure_you_want_to_start_sale": "តើអ្នកចង់ចាប់ផ្តើមលក់មែនទេ ?",
+      "stop_sale": "បញ្ឈប់ការលក់",
+      "are_you_sure_you_want_to_stop_sale": "តើអ្នកចង់បញ្ឈប់ការលក់មែនទេ ?",
     };

@@ -7,6 +7,6 @@ class AppTheme {
   static ThemeData get getTheme => ThemeData(
         fontFamily: AppService.getFont,
         backgroundColor: primaryColor,
-        primarySwatch: Colors.blue,
+        primarySwatch: myColorSwatch,
       );
 }

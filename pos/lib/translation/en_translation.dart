@@ -31,6 +31,10 @@ Map<String, String> get enTranslation => {
       "users": "Users",
       "are_you_sure_you_want_to_start_sale":
           "Are you sure you want to start sale ?",
+      "stop_sale": "Stop Sale",
+      "are_you_sure_you_want_to_stop_sale":
+          "Are you sure you want to stop sale ?",
       "no": "No",
       "yes": "Yes",
+      "please_start_sale": "Please Start Sale",
     };

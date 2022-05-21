@@ -28,7 +28,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
               ),
-              constraints: const BoxConstraints(maxWidth: 500),
+              constraints: const BoxConstraints(maxWidth: 450),
               height: double.infinity,
               alignment: Alignment.center,
               child: GridView(
@@ -54,10 +54,10 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   if (_controller.isStartSale.value)
                     SmartHomeButtonWidget(
                       flatColor: HexColor("#af231e"),
-                      onPressed: _controller.onStartSalePressed,
+                      onPressed: _controller.onStopSalePressed,
                       icon: Icon(
                         Icons.stop_circle,
-                        size: 30,
+                        size: 25,
                         color: HexColor("#af231e"),
                       ),
                       backgroundColor: HexColor("#ededed"),
@@ -69,7 +69,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onSalePressed,
                     icon: Icon(
                       Icons.shopping_cart_rounded,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#309398"),
                     ),
                     backgroundColor: HexColor("#D5ECEC"),
@@ -80,7 +80,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onProductPressed,
                     icon: Icon(
                       Icons.format_list_bulleted,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#DF6260"),
                     ),
                     backgroundColor: HexColor("#F7D6D5"),
@@ -91,7 +91,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onReportPressed,
                     icon: Icon(
                       Icons.feed,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#E9A268"),
                     ),
                     backgroundColor: HexColor("#FCEBDE"),
@@ -102,7 +102,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onPermissionPressed,
                     icon: Icon(
                       Icons.lock_reset,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#50B403"),
                     ),
                     backgroundColor: HexColor("#DCFAC5"),
@@ -113,7 +113,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onBusinessReportPressed,
                     icon: Icon(
                       Icons.insights,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#9190B1"),
                     ),
                     backgroundColor: HexColor("#E9E9F3"),
@@ -124,7 +124,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onUsersPressed,
                     icon: Icon(
                       Icons.supervisor_account,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#0FCD9E"),
                     ),
                     backgroundColor: HexColor("#D2F6EA"),
@@ -135,7 +135,7 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     onPressed: _controller.onSettingPressed,
                     icon: Icon(
                       Icons.tune,
-                      size: 30,
+                      size: 25,
                       color: HexColor("#E0CD65"),
                     ),
                     backgroundColor: HexColor("#FBF6D8"),

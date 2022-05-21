@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/models/document_models/document_model.dart';
@@ -11,6 +10,7 @@ import 'package:pos/screens/setting_screens/setting_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class SmartHomeController extends GetxController {
@@ -41,38 +41,14 @@ class SmartHomeController extends GetxController {
       title: "start_sale".tr,
       middleText: "are_you_sure_you_want_to_start_sale".tr,
       actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-              ),
-              onPressed: () => Get.back(),
-              child: Center(
-                child: SizedBox(
-                  height: 40,
-                  child: Center(child: Text("no".tr)),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-              ),
-              onPressed: () {
-                _onStartSaleProcess();
-                Get.back();
-              },
-              child: SizedBox(
-                height: 40,
-                child: Center(
-                  child: Text("yes".tr),
-                ),
-              ),
-            ),
-          ],
+        ButtonActionWidget(
+          confirmText: "yes".tr,
+          cancelText: "no".tr,
+          onCancelPressed: () => Get.back(),
+          onConfirmPressed: () {
+            _onStartSaleProcess();
+            Get.back();
+          },
         ),
       ],
     );
@@ -81,6 +57,7 @@ class SmartHomeController extends GetxController {
   void _onStartSaleProcess() async {
     var _startSale = AppService.currentStartSale;
     _startSale?.isStart = true;
+
     var _model = DocumentModel(
       id: Uuid.NAMESPACE_NIL,
       key_name: "start_sale",
@@ -109,12 +86,49 @@ class SmartHomeController extends GetxController {
       AppAlert.errorAlert(
         title: "please_start_sale".tr,
       );
-      // Get.snackbar(
-      //   "please_start_sale".tr,
-      //   "",
-      //   backgroundColor: Colors.red,
-      //   snackStyle: SnackStyle.FLOATING,
-      // );
+    }
+  }
+
+  void onStopSalePressed() {
+    Get.defaultDialog(
+      radius: 5,
+      title: "stop_sale".tr,
+      middleText: "are_you_sure_you_want_to_stop_sale".tr,
+      actions: [
+        ButtonActionWidget(
+          onCancelPressed: () => Get.back(),
+          onConfirmPressed: () {
+            _onStopSaleProcess();
+            Get.back();
+          },
+          confirmText: "yes".tr,
+          cancelText: "no".tr,
+        ),
+      ],
+    );
+  }
+
+  void _onStopSaleProcess() async {
+    var _startSale = AppService.currentStartSale;
+    _startSale?.isStart = false;
+    var _model = DocumentModel(
+      id: Uuid.NAMESPACE_NIL,
+      key_name: "start_sale",
+      label: "Start Sale",
+      value: jsonEncode(_startSale),
+    );
+
+    var _json = jsonEncode(_model);
+    var _resp = await APIService.post(
+      "document/save",
+      _json,
+    );
+
+    if (_resp.isSuccess) {
+      var _doc = DocumentModel.fromJson(jsonDecode(_resp.content));
+      var _ss = StartSaleModel.fromJson(jsonDecode(_doc.value ?? "{}"));
+      AppService.currentStartSale = _ss;
+      isStartSale(AppService.currentStartSale?.isStart);
     }
   }
 

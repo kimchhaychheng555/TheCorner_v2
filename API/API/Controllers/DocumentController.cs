@@ -48,23 +48,15 @@ namespace API.Controllers
             
             var _doc = await db.Documents.AsNoTracking().SingleOrDefaultAsync(x => x.key_name == doc.key_name);
             if (_doc != null)
-            { 
+            {
+                doc.id = _doc.id;
                 db.Documents.Update(doc);
                 await db.SaveChangesAsync();
             }
             else
             {
-
-                if (doc.id == Guid.Empty)
-                {
-                    db.Documents.Add(doc);
-                    await db.SaveChangesAsync();
-                }
-                else
-                {
-                    db.Documents.Update(doc);
-                    await db.SaveChangesAsync();
-                }
+                db.Documents.Add(doc);
+                await db.SaveChangesAsync();   
             }
 
             return Ok(doc);
