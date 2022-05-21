@@ -9,7 +9,7 @@ part of 'start_sale_model.dart';
 StartSaleModel _$StartSaleModelFromJson(Map<String, dynamic> json) =>
     StartSaleModel(
       date: json['date'] as String?,
-      isStart: json['isStart'] as bool?,
+      isStart: json['isStart'] as bool,
     );
 
 Map<String, dynamic> _$StartSaleModelToJson(StartSaleModel instance) =>

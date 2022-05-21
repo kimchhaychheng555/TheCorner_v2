@@ -7,11 +7,11 @@ part 'start_sale_model.g.dart';
 @JsonSerializable()
 class StartSaleModel {
   String? date;
-  bool? isStart;
+  bool isStart;
 
   StartSaleModel({
     this.date,
-    this.isStart,
+    this.isStart = false,
   });
 
   factory StartSaleModel.fromJson(Map<String, dynamic> json) =>

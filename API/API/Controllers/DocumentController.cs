@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,10 +46,9 @@ namespace API.Controllers
         public async Task<IActionResult> Post([FromBody] DocumentModel doc)
         {
             
-            var _doc = db.Documents.Where(p => p.key_name == doc.key_name);
-            if (_doc.Any())
-            {
-                doc.id = _doc.FirstOrDefault().id;
+            var _doc = await db.Documents.AsNoTracking().SingleOrDefaultAsync(x => x.key_name == doc.key_name);
+            if (_doc != null)
+            { 
                 db.Documents.Update(doc);
                 await db.SaveChangesAsync();
             }

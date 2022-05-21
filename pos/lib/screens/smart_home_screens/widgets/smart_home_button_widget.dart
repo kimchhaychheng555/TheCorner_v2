@@ -4,7 +4,7 @@ import 'package:pos/widgets/text_widget.dart';
 class SmartHomeButtonWidget extends StatelessWidget {
   // Set Paramater For Widget
   final String? title;
-  final Color? backgroundColor;
+  final Color? backgroundColor, flatColor, textColor;
   final Icon? icon;
   final Icon? iconColor;
   final Function()? onPressed;
@@ -14,6 +14,8 @@ class SmartHomeButtonWidget extends StatelessWidget {
     Key? key,
     this.title,
     this.backgroundColor,
+    this.textColor,
+    this.flatColor,
     this.icon,
     this.iconColor,
     this.onPressed,
@@ -38,7 +40,7 @@ class SmartHomeButtonWidget extends StatelessWidget {
         ),
         child: Material(
           borderRadius: BorderRadius.circular(borderRadius),
-          color: Colors.white,
+          color: flatColor ?? Colors.white,
           child: InkWell(
             borderRadius: BorderRadius.circular(borderRadius),
             onTap: onPressed,
@@ -66,7 +68,7 @@ class SmartHomeButtonWidget extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextWidget(
                   text: title ?? "",
-                  color: Colors.black,
+                  color: textColor ?? Colors.black,
                   fontSize: 15,
                 ),
               ],

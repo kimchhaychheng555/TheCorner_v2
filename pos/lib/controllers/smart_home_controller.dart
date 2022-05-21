@@ -28,6 +28,9 @@ class SmartHomeController extends GetxController {
       var _startSale = StartSaleModel.fromJson(jsonDecode(_doc.value ?? "{}"));
       AppService.currentStartSale = _startSale;
       isStartSale(_startSale.isStart);
+    } else {
+      AppService.currentStartSale =
+          StartSaleModel(date: DateFormat("yyyy-MM-dd").format(DateTime.now()));
     }
   }
 
@@ -57,7 +60,10 @@ class SmartHomeController extends GetxController {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
               ),
-              onPressed: () => _onStartSaleProcess(),
+              onPressed: () {
+                _onStartSaleProcess();
+                Get.back();
+              },
               child: SizedBox(
                 height: 40,
                 child: Center(
@@ -72,23 +78,27 @@ class SmartHomeController extends GetxController {
   }
 
   void _onStartSaleProcess() async {
-    var _startSale = StartSaleModel(
-      date: DateFormat("yyyy-MM-dd").format(DateTime.now()),
-      isStart: true,
+    var _startSale = AppService.currentStartSale;
+    _startSale?.isStart = true;
+    var _model = DocumentModel(
+      id: Uuid.NAMESPACE_NIL,
+      key_name: "start_sale",
+      label: "Start Sale",
+      value: jsonEncode(_startSale),
     );
 
-    var _model = DocumentModel(
-        id: Uuid.NAMESPACE_NIL,
-        key_name: "start_sale",
-        label: "Start Sale",
-        value: jsonEncode(_startSale));
     var _json = jsonEncode(_model);
     var _resp = await APIService.post(
       "document/save",
       _json,
     );
 
-    if (_resp.isSuccess) {}
+    if (_resp.isSuccess) {
+      var _doc = DocumentModel.fromJson(jsonDecode(_resp.content));
+      var _ss = StartSaleModel.fromJson(jsonDecode(_doc.value ?? "{}"));
+      AppService.currentStartSale = _ss;
+      isStartSale(AppService.currentStartSale?.isStart);
+    }
   }
 
   void onSalePressed() {
