@@ -12,6 +12,8 @@ class TableModel {
   DateTime? deleted_date;
   String? deleted_by;
 
+  bool isActive;
+
   TableModel({
     this.id,
     this.name,
@@ -20,6 +22,7 @@ class TableModel {
     this.is_deleted,
     this.deleted_date,
     this.deleted_by,
+    this.isActive = false,
   });
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>

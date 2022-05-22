@@ -35,7 +35,7 @@ class SmartHomeController extends GetxController {
     }
   }
 
-  void onStartSalePressed() {
+  void onStartSalePressed() async {
     Get.defaultDialog(
       radius: 5,
       title: "start_sale".tr,

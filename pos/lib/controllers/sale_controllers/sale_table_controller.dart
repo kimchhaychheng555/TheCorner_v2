@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:pos/models/table_models/table_model.dart';
+import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/services/api_service.dart';
 
 class SaleTableController extends GetxController {
@@ -23,5 +24,14 @@ class SaleTableController extends GetxController {
       tableList.assignAll(_dataList);
     }
     isLoading(false);
+  }
+
+  void onTablePressed(TableModel table) {
+    Get.toNamed(
+      SaleScreen.routeName,
+      arguments: {
+        "table": jsonEncode(table),
+      },
+    );
   }
 }

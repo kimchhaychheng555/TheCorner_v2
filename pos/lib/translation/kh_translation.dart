@@ -40,4 +40,7 @@ Map<String, String> get khTranslation => {
       "n_o": "ល.រ",
       "name_of_product": "ឈ្មោះទំនិញ",
       "price": "តម្លៃ",
+      "check_out": "បញ្ជារ",
+      "hold_bill": "រង់ចាំវិក្កយបត្រ",
+      "cancel_bill": "បោះបង់វិក្កយបត្រ",
     };
