@@ -11,6 +11,7 @@ import 'package:pos/services/encrypter_service.dart';
 
 class AppService {
   static String apiApp = "http://localhost:9090/api/";
+  static String baseUrl = apiApp.substring(0, apiApp.length - 4);
   static bool isApiConnected = false;
   static String currentLanguage = "en";
   static UserModel? currentUser;

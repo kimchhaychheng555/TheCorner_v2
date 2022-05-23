@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/sale_controllers/sale_controller.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_product_widget.dart';
+import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/action_chip_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
@@ -33,6 +34,7 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _categoriesWidget(),
+                      const SizedBox(height: 5),
                       Expanded(
                         child: GridView(
                           shrinkWrap: true,
@@ -44,15 +46,19 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                             crossAxisSpacing: 10,
                           ),
                           children: [
-                            ..._controller.productList.map(
-                              (p) => SaleProductWidget(
-                                price: p.price,
-                                productName: p.name,
-                              ),
-                            )
+                            for (var i = 0; i < 20; i++)
+                              ..._controller.productList.map(
+                                (p) => SaleProductWidget(
+                                  product: p,
+                                  onPressed: (_) {
+                                    print(AppService.currentStartSale?.date);
+                                  },
+                                ),
+                              )
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
                       _buttonActionWidget(),
                     ],
                   ),

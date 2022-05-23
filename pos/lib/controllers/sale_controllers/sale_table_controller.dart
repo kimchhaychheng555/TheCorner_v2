@@ -17,7 +17,8 @@ class SaleTableController extends GetxController {
 
   void _onLoadTable() async {
     isLoading(true);
-    var _resp = await APIService.oDataGet("table");
+    var _resp = await APIService.oDataGet(
+        "table?\$expand=sales(\$count=true;\$filter=is_deleted eq false and is_paid eq false)");
     if (_resp.isSuccess) {
       List<dynamic> _data = jsonDecode(_resp.content);
       var _dataList = _data.map((t) => TableModel.fromJson(t));

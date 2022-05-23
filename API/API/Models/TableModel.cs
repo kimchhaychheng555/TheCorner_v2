@@ -15,5 +15,7 @@ namespace API.Models
         public Guid id { get; set; }
         public string name { get; set; }
 
+        public List<SaleModel> sales { get; set; }
+
     }
 }

@@ -23,15 +23,14 @@ class SaleController extends GetxController {
   void onInit() async {
     isLoading(true);
     _onInitController();
-    await _onLoadProduct();
     await _onLoadCategory();
+    await _onLoadProduct();
     isLoading(false);
     super.onInit();
   }
 
   void _onInitController() {
     table(TableModel.fromJson(jsonDecode(Get.arguments["table"])));
-    print(jsonEncode(table));
   }
 
   void onTableChanged(String? tableId) {
@@ -39,8 +38,8 @@ class SaleController extends GetxController {
   }
 
   Future<void> _onLoadProduct() async {
-    var _resp =
-        await APIService.oDataGet("product?\$filter=is_deleted eq false");
+    var _resp = await APIService.oDataGet(
+        "product?\$filter=is_deleted eq false and category_id eq ${categorySelected.value?.id}");
     if (_resp.isSuccess) {
       List<dynamic> _products = jsonDecode(_resp.content) ?? [];
       var _datas = _products.map((p) => ProductModel.fromJson(p)).toList();
@@ -55,10 +54,14 @@ class SaleController extends GetxController {
       List<dynamic> _categories = jsonDecode(_resp.content) ?? [];
       var _datas = _categories.map((c) => CategoryModel.fromJson(c)).toList();
       categoryList.assignAll(_datas);
+      categorySelected(_datas.first);
     }
   }
 
-  void onCategoryPressed(CategoryModel category) {
+  void onCategoryPressed(CategoryModel category) async {
+    isLoading(true);
     categorySelected(category);
+    await _onLoadProduct();
+    isLoading(false);
   }
 }

@@ -57,6 +57,7 @@ class SmartHomeController extends GetxController {
   void _onStartSaleProcess() async {
     var _startSale = AppService.currentStartSale;
     _startSale?.isStart = true;
+    _startSale?.date = DateFormat("yyyy-MM-dd").format(DateTime.now());
 
     var _model = DocumentModel(
       id: Uuid.NAMESPACE_NIL,

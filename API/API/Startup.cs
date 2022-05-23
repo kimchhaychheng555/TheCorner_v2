@@ -81,15 +81,14 @@ namespace API
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-            app.UseRouting(); 
 
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                Path.Combine(env.ContentRootPath, "uploads")),
-                RequestPath = "/uploads"
-            });
+            app.UseStaticFiles();
+            app.UseRouting();
+            //app.UseFileServer(new FileServerOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+            //    RequestPath = "/uploads"
+            //}) ;
 
 
             app.UseEndpoints(endpoints =>
