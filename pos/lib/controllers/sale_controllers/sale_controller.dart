@@ -5,9 +5,12 @@ import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
+import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/button_action_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class SaleController extends GetxController {
   var isLoading = false.obs;
@@ -26,6 +29,7 @@ class SaleController extends GetxController {
     _onInitController();
     await _onLoadCategory();
     await _onLoadProduct();
+    _onSaleInitValue();
     isLoading(false);
     super.onInit();
   }
@@ -59,6 +63,16 @@ class SaleController extends GetxController {
     }
   }
 
+  void _onSaleInitValue() {
+    var _sale = SaleModel(
+      created_by: AppService.currentUser?.fullname,
+      id: Uuid.NAMESPACE_NIL,
+      sale_date: AppService.currentStartSale?.date,
+      table_id: table.value?.id,
+    );
+    sale(_sale);
+  }
+
   void onCategoryPressed(CategoryModel category) async {
     isLoading(true);
     categorySelected(category);
@@ -67,12 +81,45 @@ class SaleController extends GetxController {
   }
 
   void onCancelBillPressed() {
-    Get.back();
+    Get.defaultDialog(
+      radius: 5,
+      title: "cancel".tr,
+      middleText: "do_you_want_to_cancel_this_bill".tr,
+      actions: [
+        ButtonActionWidget(
+          confirmText: "yes".tr,
+          cancelText: "no".tr,
+          onCancelPressed: () => Get.back(),
+          onConfirmPressed: () {
+            AppService.back();
+          },
+        ),
+      ],
+    );
   }
 
   void onHoldBillPressed() {}
   void onPayPressed() {}
   void onProductPressed(ProductModel product) {
-    print(AppService.currentStartSale?.date);
+    var _exists = sale.value?.sale_products
+        .where((sp) => sp.product_id == product.id)
+        .toList();
+
+    if ((_exists ?? []).isNotEmpty) {
+      _exists?.first.quantity = ((_exists.first.quantity ?? 0) + 1);
+    } else {
+      var _tempSp = SaleProductModel(
+        quantity: 1,
+        image: product.image,
+        price: product.price,
+        product_id: product.id,
+        product_name: product.name,
+      );
+      sale.value?.sale_products.add(_tempSp);
+    }
+
+    sale.refresh();
   }
+
+  void onSaleProductItemPressed(SaleProductModel sp) {}
 }

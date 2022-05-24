@@ -45,4 +45,7 @@ Map<String, String> get khTranslation => {
       "cancel_bill": "បោះបង់វិក្កយបត្រ",
       "pay": "ទូរទាត់",
       "delete": "លុប",
+      "empty": "គ្មានទិន្នន័យ",
+      "cancel": "បោះបង់",
+      "do_you_want_to_cancel_this_bill": "តើអ្នកចង់បោះបង់វិក្កយបត្រនេះមែនទេ ?",
     };

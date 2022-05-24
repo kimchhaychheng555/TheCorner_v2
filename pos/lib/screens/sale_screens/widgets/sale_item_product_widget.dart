@@ -70,7 +70,10 @@ class SaleProductItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: const Text("\$ 9.23"),
+            trailing: TextWidget(
+              text: AppService.currencyFormat(saleProduct.price),
+              color: Colors.black,
+            ),
           ),
         ),
       ),

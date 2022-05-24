@@ -25,7 +25,7 @@ class SaleModel {
 
   TableModel? table;
 
-  List<SaleProductModel>? sale_products;
+  List<SaleProductModel> sale_products = [];
   SaleModel({
     this.id,
     this.invoice_number,

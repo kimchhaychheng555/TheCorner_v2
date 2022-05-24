@@ -25,6 +25,7 @@ class SaleProductModel {
   ProductModel? product;
   SaleProductModel({
     this.id,
+    this.product_name,
     this.quantity,
     this.image,
     this.price,
