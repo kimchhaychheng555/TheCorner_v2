@@ -48,4 +48,6 @@ Map<String, String> get enTranslation => {
       "check_out": "Check Out",
       "hold_bill": "Hold Bill",
       "cancel_bill": "Cancel Bill",
+      "pay": "Pay",
+      "delete": "Delete",
     };

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
@@ -96,6 +97,12 @@ class AppService {
       AppService.isApiConnected = false;
       await AppService.storage.write("api", AppService.apiApp);
     }
+  }
+
+  static String currencyFormat(double? price) {
+    final oCcy = NumberFormat("#,##0.00", "en_US");
+    var number = oCcy.format(price ?? 0);
+    return "\$ $number";
   }
 
 //   // ===========================================================

@@ -7,6 +7,8 @@ part 'sale_product_model.g.dart';
 @JsonSerializable()
 class SaleProductModel {
   String? id;
+  String? image;
+  String? product_name;
   double? quantity;
   double? price;
   bool? is_free;
@@ -24,6 +26,7 @@ class SaleProductModel {
   SaleProductModel({
     this.id,
     this.quantity,
+    this.image,
     this.price,
     this.is_free,
     this.is_remove_stock_done,

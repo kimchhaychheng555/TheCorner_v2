@@ -10,6 +10,7 @@ SaleProductModel _$SaleProductModelFromJson(Map<String, dynamic> json) =>
     SaleProductModel(
       id: json['id'] as String?,
       quantity: (json['quantity'] as num?)?.toDouble(),
+      image: json['image'] as String?,
       price: (json['price'] as num?)?.toDouble(),
       is_free: json['is_free'] as bool?,
       is_remove_stock_done: json['is_remove_stock_done'] as bool?,
@@ -25,6 +26,7 @@ SaleProductModel _$SaleProductModelFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['deleted_date'] as String),
       deleted_by: json['deleted_by'] as String?,
     )
+      ..product_name = json['product_name'] as String?
       ..sale = json['sale'] == null
           ? null
           : SaleModel.fromJson(json['sale'] as Map<String, dynamic>)
@@ -35,6 +37,8 @@ SaleProductModel _$SaleProductModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SaleProductModelToJson(SaleProductModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'image': instance.image,
+      'product_name': instance.product_name,
       'quantity': instance.quantity,
       'price': instance.price,
       'is_free': instance.is_free,
