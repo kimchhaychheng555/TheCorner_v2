@@ -13,6 +13,8 @@ namespace API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid id { get; set; }
+        public string image { get; set; }
+        public string product_name { get; set; }
         public decimal quantity { get; set; }
         public decimal price { get; set; }
         public bool is_free { get; set; } = false;

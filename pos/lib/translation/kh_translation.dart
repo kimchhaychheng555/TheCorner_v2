@@ -43,4 +43,6 @@ Map<String, String> get khTranslation => {
       "check_out": "បញ្ជារ",
       "hold_bill": "រង់ចាំវិក្កយបត្រ",
       "cancel_bill": "បោះបង់វិក្កយបត្រ",
+      "pay": "ទូរទាត់",
+      "delete": "លុប",
     };

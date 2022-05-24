@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/sale_controllers/sale_controller.dart';
+import 'package:pos/models/sale_product_models/sale_product_model.dart';
+import 'package:pos/screens/sale_screens/widgets/sale_item_product_widget.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_product_widget.dart';
-import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/action_chip_widget.dart';
+import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
@@ -50,94 +54,19 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                               ..._controller.productList.map(
                                 (p) => SaleProductWidget(
                                   product: p,
-                                  onPressed: (_) {
-                                    print(AppService.currentStartSale?.date);
-                                  },
+                                  onPressed: _controller.onProductPressed,
                                 ),
                               )
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       _buttonActionWidget(),
                     ],
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 300,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextWidget(
-                          text: "check_out".tr,
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        Row(
-                          children: [
-                            TextWidget(
-                              text: "table".tr,
-                              color: textColor,
-                            ),
-                            const SizedBox(width: 5),
-                            if (_controller.saleTableCtrl.tableList.isNotEmpty)
-                              SizedBox(
-                                width: 100,
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    focusColor: Colors.red,
-                                    hoverColor: Colors.red,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(5),
-                                      ),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5,
-                                      vertical: 0,
-                                    ),
-                                  ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      hint: TextWidget(
-                                        text: "table".tr,
-                                        color: textColor,
-                                      ),
-                                      value: _controller.table.value?.id,
-                                      focusColor: Colors.transparent,
-                                      isDense: true,
-                                      isExpanded: true,
-                                      items: [
-                                        ..._controller.saleTableCtrl.tableList
-                                            .map(
-                                          (table) => DropdownMenuItem(
-                                            child: TextWidget(
-                                              text: "${table.name}",
-                                              color: textColor,
-                                            ),
-                                            value: table.id,
-                                          ),
-                                        ),
-                                      ],
-                                      onChanged: _controller.onTableChanged,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                  ],
-                ),
-              ),
+              _rightSideWidget(),
             ],
           ),
         ),
@@ -145,41 +74,154 @@ class SaleScreen extends GetResponsiveView<dynamic> {
     );
   }
 
-  Container _buttonActionWidget() {
-    // SaleController _controller = Get.find();
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          ActionChipWidget(
-            radius: 50,
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 30,
+  Widget _rightSideWidget() {
+    SaleController _controller = Get.find();
+    return Obx(
+      () => Container(
+        padding: const EdgeInsets.all(5),
+        width: 300,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextWidget(
+                  text: "check_out".tr,
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                Row(
+                  children: [
+                    TextWidget(
+                      text: "table".tr,
+                      color: textColor,
+                    ),
+                    const SizedBox(width: 5),
+                    if (_controller.saleTableCtrl.tableList.isNotEmpty)
+                      SizedBox(
+                        width: 100,
+                        child: InputDecorator(
+                          decoration: const InputDecoration(
+                            focusColor: Colors.red,
+                            hoverColor: Colors.red,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(5),
+                              ),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 0,
+                            ),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              hint: TextWidget(
+                                text: "table".tr,
+                                color: textColor,
+                              ),
+                              value: _controller.table.value?.id,
+                              focusColor: Colors.transparent,
+                              isDense: true,
+                              isExpanded: true,
+                              items: [
+                                ..._controller.saleTableCtrl.tableList.map(
+                                  (table) => DropdownMenuItem(
+                                    enabled: table.saleCount == 0,
+                                    child: TextWidget(
+                                      text: "${table.name}",
+                                      color: (table.saleCount == 0)
+                                          ? textColor
+                                          : secondaryColor,
+                                    ),
+                                    value: table.id,
+                                  ),
+                                ),
+                              ],
+                              onChanged: _controller.onTableChanged,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                )
+              ],
             ),
-            backgroundColor: errorColor,
-            border: const Border(top: BorderSide.none),
-            onPressed: () {},
-            child: TextWidget(
-              text: "cancel_bill".tr,
+            Divider(
+              color: Colors.black.withOpacity(0.3),
             ),
-          ),
-          ActionChipWidget(
-            radius: 50,
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 30,
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                controller: ScrollController(keepScrollOffset: true),
+                itemCount: _controller.productList.length,
+                itemBuilder: (c, index) {
+                  var product = _controller.productList[index];
+                  return SaleProductItemWidget(
+                    keyValue: index,
+                    saleProduct: SaleProductModel.fromJson(
+                        jsonDecode(jsonEncode(product))),
+                    onPressed: () => print("${product.name}"),
+                  );
+                },
+              ),
             ),
-            border: const Border(top: BorderSide.none),
-            backgroundColor: infoColor,
-            onPressed: () {},
-            child: TextWidget(
-              text: "hold_bill".tr,
+            const SizedBox(height: 5),
+            SizedBox(
+              width: double.infinity,
+              child: ButtonWidget(
+                radius: 50,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 30,
+                ),
+                border: const Border(top: BorderSide.none),
+                backgroundColor: successColor,
+                onPressed: _controller.onPayPressed,
+                child: TextWidget(
+                  textAlign: TextAlign.center,
+                  text: "pay".tr,
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buttonActionWidget() {
+    SaleController _controller = Get.find();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ActionChipWidget(
+          radius: 50,
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 30,
+          ),
+          backgroundColor: errorColor,
+          border: const Border(top: BorderSide.none),
+          onPressed: _controller.onCancelBillPressed,
+          child: TextWidget(
+            text: "cancel_bill".tr,
+          ),
+        ),
+        ActionChipWidget(
+          radius: 50,
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 30,
+          ),
+          border: const Border(top: BorderSide.none),
+          backgroundColor: infoColor,
+          onPressed: _controller.onHoldBillPressed,
+          child: TextWidget(
+            text: "hold_bill".tr,
+          ),
+        ),
+      ],
     );
   }
 

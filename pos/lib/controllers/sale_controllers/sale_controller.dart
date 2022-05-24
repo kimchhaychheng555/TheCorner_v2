@@ -7,6 +7,7 @@ import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/app_service.dart';
 
 class SaleController extends GetxController {
   var isLoading = false.obs;
@@ -63,5 +64,15 @@ class SaleController extends GetxController {
     categorySelected(category);
     await _onLoadProduct();
     isLoading(false);
+  }
+
+  void onCancelBillPressed() {
+    Get.back();
+  }
+
+  void onHoldBillPressed() {}
+  void onPayPressed() {}
+  void onProductPressed(ProductModel product) {
+    print(AppService.currentStartSale?.date);
   }
 }
