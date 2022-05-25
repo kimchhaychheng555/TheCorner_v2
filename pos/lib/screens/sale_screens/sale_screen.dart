@@ -171,6 +171,8 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                                   saleProduct: _sp!,
                                   onPressed: () =>
                                       _controller.onSaleProductItemPressed(_sp),
+                                  onDeletePressed: () => _controller
+                                      .onSaleProductItemDeletePressed(_sp),
                                 );
                               },
                             )

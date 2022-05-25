@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
@@ -122,4 +123,28 @@ class SaleController extends GetxController {
   }
 
   void onSaleProductItemPressed(SaleProductModel sp) {}
+  void onSaleProductItemDeletePressed(SaleProductModel sp) {
+    Get.defaultDialog(
+      radius: 5,
+      title: sp.product_name ?? "",
+      titleStyle: const TextStyle(fontFamily: "Siemreap"),
+      middleText: "do_you_want_to_remove_this_product".tr,
+      actions: [
+        ButtonActionWidget(
+          confirmText: "yes".tr,
+          cancelText: "no".tr,
+          onCancelPressed: () => Get.back(),
+          onConfirmPressed: () {
+            _onSaleProductItemDeleteProcess(sp);
+          },
+        ),
+      ],
+    );
+  }
+
+  void _onSaleProductItemDeleteProcess(SaleProductModel sp) {
+    sale.value?.sale_products.remove(sp);
+    sale.refresh();
+    Get.back();
+  }
 }

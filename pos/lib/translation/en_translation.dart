@@ -53,4 +53,10 @@ Map<String, String> get enTranslation => {
       "empty": "Empty",
       "cancel": "Cancel",
       "do_you_want_to_cancel_this_bill": "Do you want to cancel this bill ?",
+      "login_failed": "Login Failed",
+      "remove": "Remove",
+      "do_you_want_to_remove_this_product":
+          "Do you want to remove this product ?",
+      "free": "Free",
+      "menu": "Menu",
     };

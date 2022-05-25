@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/controllers/smart_home_controller.dart';
 
 import 'package:pos/screens/smart_home_screens/widgets/smart_home_button_widget.dart';
+import 'package:pos/widgets/drawer_widget.dart';
 
 class SmartHomeScreen extends GetResponsiveView<dynamic> {
   SmartHomeScreen({Key? key}) : super(key: key);
@@ -15,22 +16,35 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
     SmartHomeController _controller = Get.find();
     return Obx(
       () => Scaffold(
-        backgroundColor: const Color(0xFFF0F2FE),
+        backgroundColor: Colors.white,
+        drawer: const DrawerWidget(),
         appBar: AppBar(
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: 'menu'.tr,
+              );
+            },
+          ),
           title: Text(
             "the_corner".tr,
           ),
-          actions: const [
-            Icon(Icons.logout),
-            SizedBox(width: 20),
+          actions: [
+            IconButton(
+              tooltip: "logout".tr,
+              onPressed: _controller.onLogoutPressed,
+              icon: const Icon(Icons.logout),
+            ),
           ],
         ),
         body: SafeArea(
           child: Center(
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
+              padding: const EdgeInsets.all(10),
               constraints: const BoxConstraints(maxWidth: 450),
               height: double.infinity,
               alignment: Alignment.center,

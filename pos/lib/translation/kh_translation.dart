@@ -28,7 +28,7 @@ Map<String, String> get khTranslation => {
       "products": "ទំនិញ",
       "report": "របាយការណ៍",
       "permission": "សិទ្ធិ",
-      "business_report": "របាយការណ៍ Business",
+      "business_report": "របាយការណ៍សរុប",
       "users": "អ្នកប្រើប្រាស់",
       "are_you_sure_you_want_to_start_sale": "តើអ្នកចង់ចាប់ផ្តើមលក់មែនទេ ?",
       "stop_sale": "បញ្ឈប់ការលក់",
@@ -48,4 +48,9 @@ Map<String, String> get khTranslation => {
       "empty": "គ្មានទិន្នន័យ",
       "cancel": "បោះបង់",
       "do_you_want_to_cancel_this_bill": "តើអ្នកចង់បោះបង់វិក្កយបត្រនេះមែនទេ ?",
+      "login_failed": "ចូលប្រព័ន្ធបរាជ័យ",
+      "remove": "លុប",
+      "do_you_want_to_remove_this_product": "តើអ្នកចង់លុបមែនទេ ?",
+      "free": "មិនគិតថ្លៃ",
+      "menu": "មីនុយ",
     };

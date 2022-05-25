@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/services/app_service.dart';
@@ -9,12 +10,13 @@ import 'package:pos/widgets/text_widget.dart';
 class SaleProductItemWidget extends StatelessWidget {
   final int keyValue;
   final SaleProductModel saleProduct;
-  final Function()? onPressed;
+  final Function()? onPressed, onDeletePressed;
   const SaleProductItemWidget({
     Key? key,
     required this.keyValue,
     required this.saleProduct,
     this.onPressed,
+    this.onDeletePressed,
   }) : super(key: key);
 
   @override
@@ -24,11 +26,14 @@ class SaleProductItemWidget extends StatelessWidget {
       child: Slidable(
         key: ValueKey(keyValue),
         endActionPane: ActionPane(
-          dragDismissible: true,
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context) {
+                if (onDeletePressed != null) {
+                  onDeletePressed!();
+                }
+              },
               backgroundColor: errorColor,
               foregroundColor: Colors.white,
               icon: Icons.delete,
@@ -71,8 +76,12 @@ class SaleProductItemWidget extends StatelessWidget {
               ],
             ),
             trailing: TextWidget(
-              text: AppService.currencyFormat(saleProduct.price),
-              color: Colors.black,
+              text: (saleProduct.is_free ?? false)
+                  ? "free".tr
+                  : AppService.currencyFormat(
+                      ((saleProduct.price ?? 0) * (saleProduct.quantity ?? 1))),
+              color:
+                  (saleProduct.is_free ?? false) ? successColor : Colors.black,
             ),
           ),
         ),

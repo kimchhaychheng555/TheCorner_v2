@@ -119,6 +119,10 @@ class LoginScreen extends GetResponsiveView<dynamic> {
                         ),
                         const SizedBox(height: 10),
                         ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                          ),
                           onPressed: _controller.onLoginPressed,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -129,7 +133,7 @@ class LoginScreen extends GetResponsiveView<dynamic> {
                               text: "login".tr,
                               textAlign: TextAlign.center,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: textColor,
                             ),
                           ),
                         ),

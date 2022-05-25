@@ -5,6 +5,7 @@ import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/services/encrypter_service.dart';
 import 'package:pos/services/log_service.dart';
@@ -40,7 +41,7 @@ class LoginController extends GetxController {
         logAction: "This user login to system.",
       );
     } else {
-      Get.snackbar("error", "Error");
+      AppAlert.errorAlert(title: "login_failed".tr);
     }
     isLoading(false);
   }

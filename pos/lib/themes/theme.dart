@@ -8,11 +8,12 @@ class AppTheme {
         fontFamily: AppService.getFont,
         backgroundColor: primaryColor,
         primarySwatch: AppService.buildMaterialColor(primaryColor),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.normal,
+            fontFamily: AppService.getFont,
           ),
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             size: 20,
             color: Colors.white,
           ),
