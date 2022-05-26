@@ -1,1 +1,1 @@
-{"language":"en","api":"http://124.248.174.235:9090/api/"}
+{"language":"kh","api":"http://202.62.63.242:9090/api/"}
