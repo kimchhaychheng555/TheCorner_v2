@@ -7,6 +7,7 @@ final Color secondaryColor = HexColor("#f16023");
 final Color secondaryShadeColor = HexColor("#b2b2b2");
 
 final Color textColor = HexColor("#104c8a");
+final Color greyColor = HexColor("#767576");
 
 // ============
 final Color infoColor = HexColor("#1f78d1");
