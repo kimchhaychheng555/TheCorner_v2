@@ -76,12 +76,11 @@ class SaleProductItemWidget extends StatelessWidget {
               ],
             ),
             trailing: TextWidget(
-              text: (saleProduct.is_free ?? false)
+              text: (saleProduct.is_free)
                   ? "free".tr
                   : AppService.currencyFormat(
                       ((saleProduct.price ?? 0) * (saleProduct.quantity ?? 1))),
-              color:
-                  (saleProduct.is_free ?? false) ? successColor : Colors.black,
+              color: (saleProduct.is_free) ? successColor : Colors.black,
             ),
           ),
         ),

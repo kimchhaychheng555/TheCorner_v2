@@ -47,8 +47,20 @@ namespace API.Controllers
         public async Task<IActionResult> Post([FromBody] SaleModel sale)
         {
             if (sale.id == Guid.Empty)
-            { 
+            {
+                var getInvoiceNumber = db.Documents.Where(x => x.key_name == "invoice_number").FirstOrDefault();
+                int input_number = Convert.ToInt32(getInvoiceNumber.value);
+                var _prefix = getInvoiceNumber.prefix ?? "";
+                string number_value = _prefix + input_number.ToString().PadLeft((getInvoiceNumber.max_length.Length), '0');
+
+                sale.invoice_number = number_value;
+
+                 
                 db.Sales.Add(sale);
+                if (sale.id != Guid.Empty)
+                {
+                    updateInvoiceNumber();
+                }
                 await db.SaveChangesAsync();
             }
             else
@@ -58,6 +70,23 @@ namespace API.Controllers
             }
 
             return Ok(sale);
+        }
+
+        private void updateInvoiceNumber()
+        {
+            try
+            {
+
+                var getInvoiceNumber = db.Documents.Where(x => x.key_name == "invoice_number").FirstOrDefault();
+                int updateInvoiceValue = (int.Parse(getInvoiceNumber.value)) + 1;
+                getInvoiceNumber.value = updateInvoiceValue.ToString();
+                db.Documents.Update(getInvoiceNumber);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
         }
     }
 }

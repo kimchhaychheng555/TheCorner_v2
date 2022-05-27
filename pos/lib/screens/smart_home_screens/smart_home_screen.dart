@@ -127,17 +127,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                     borderRadius: 5,
                   ),
                   SmartHomeButtonWidget(
-                    onPressed: _controller.onBusinessReportPressed,
-                    icon: Icon(
-                      Icons.insights,
-                      size: 25,
-                      color: HexColor("#9190B1"),
-                    ),
-                    backgroundColor: HexColor("#E9E9F3"),
-                    title: "business_report".tr,
-                    borderRadius: 5,
-                  ),
-                  SmartHomeButtonWidget(
                     onPressed: _controller.onUsersPressed,
                     icon: Icon(
                       Icons.supervisor_account,

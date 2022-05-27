@@ -129,18 +129,20 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                                       isExpanded: true,
                                       items: [
                                         ..._controller.saleTableCtrl.tableList
-                                            .map(
-                                          (table) => DropdownMenuItem(
-                                            enabled: table.saleCount == 0,
+                                            .map((table) {
+                                          return DropdownMenuItem(
+                                            enabled: (table.isActive ?? false)
+                                                ? false
+                                                : true,
                                             child: TextWidget(
                                               text: "${table.name}",
-                                              color: (table.saleCount == 0)
-                                                  ? textColor
-                                                  : secondaryColor,
+                                              color: (table.isActive ?? false)
+                                                  ? secondaryColor
+                                                  : textColor,
                                             ),
                                             value: table.id,
-                                          ),
-                                        ),
+                                          );
+                                        }),
                                       ],
                                       onChanged: _controller.onTableChanged,
                                     ),
@@ -162,13 +164,15 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                               controller:
                                   ScrollController(keepScrollOffset: true),
                               itemCount:
-                                  _controller.sale.value?.sale_products.length,
+                                  (_controller.sale.value?.sale_products ?? [])
+                                      .length,
                               itemBuilder: (c, index) {
-                                var _sp = _controller
-                                    .sale.value?.sale_products[index];
+                                var _sp =
+                                    (_controller.sale.value?.sale_products ??
+                                        [])[index];
                                 return SaleProductItemWidget(
                                   keyValue: index,
-                                  saleProduct: _sp!,
+                                  saleProduct: _sp,
                                   onPressed: () =>
                                       _controller.onSaleProductItemPressed(_sp),
                                   onDeletePressed: () => _controller

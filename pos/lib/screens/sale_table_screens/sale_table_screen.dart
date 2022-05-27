@@ -83,7 +83,7 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
                         (table) => SaleTableWidget(
                           title: table.name ?? "",
                           onPressed: () => _controller.onTablePressed(table),
-                          active: table.saleCount > 0,
+                          active: table.isActive ?? false,
                         ),
                       ),
                     ],

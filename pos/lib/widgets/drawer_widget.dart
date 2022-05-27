@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/smart_home_controller.dart';
+import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/text_widget.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -14,17 +17,39 @@ class DrawerWidget extends StatelessWidget {
       () => Drawer(
         child: Column(
           children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text("Abhishek Mishra"),
-              accountEmail: Text("abhishekm977@gmail.com"),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.orange,
-                child: Text(
-                  "A",
-                  style: TextStyle(fontSize: 40.0),
+            Container(
+              color: primaryColor,
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl:
+                          "${AppService.baseUrl}uploads/${AppService.currentUser?.profile}",
+                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                        maxRadius: 30,
+                        minRadius: 30,
+                        backgroundImage: CachedNetworkImageProvider(
+                            "${AppService.baseUrl}uploads/${AppService.currentUser?.profile}"),
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => CircleAvatar(
+                        maxRadius: 30,
+                        minRadius: 30,
+                        backgroundImage: NetworkImage(
+                            "${AppService.baseUrl}uploads/noimage.png"),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    TextWidget(
+                      text: AppService.currentUser?.fullname ?? "",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
                 ),
               ),
-              margin: EdgeInsets.all(0),
             ),
             Expanded(
               child: Padding(
@@ -66,12 +91,18 @@ class DrawerWidget extends StatelessWidget {
                     tile(
                       icon: Icons.format_list_bulleted,
                       text: "products".tr,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.back();
+                        _controller.onProductPressed();
+                      },
                     ),
                     tile(
                       icon: Icons.feed,
                       text: "report".tr,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.back();
+                        _controller.onReportPressed();
+                      },
                     ),
                     expandTile(
                       title: "business_report".tr,
@@ -79,23 +110,38 @@ class DrawerWidget extends StatelessWidget {
                       children: [
                         tile(
                           text: "overview".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onOverviewBusinessReportPressed();
+                          },
                         ),
                         tile(
                           text: "inventory_summary_report".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onInventorySummaryReportPressed();
+                          },
                         ),
                         tile(
                           text: "sale_summary_report".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onSaleSummaryReportPressed();
+                          },
                         ),
                         tile(
                           text: "receipt_report".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onReceiptReportPressed();
+                          },
                         ),
                         tile(
                           text: "expense_report".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onExpenseReportPressed();
+                          },
                         ),
                       ],
                     ),
@@ -105,15 +151,24 @@ class DrawerWidget extends StatelessWidget {
                       children: [
                         tile(
                           text: "purchase_order".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onPurchaseOrderPressed();
+                          },
                         ),
                         tile(
                           text: "adjustment_inventory".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onAdjustmentInventoryPressed();
+                          },
                         ),
                         tile(
                           text: "inventory_transaction".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onInventoryTransactionPressed();
+                          },
                         ),
                       ],
                     ),
@@ -123,28 +178,53 @@ class DrawerWidget extends StatelessWidget {
                       children: [
                         tile(
                           text: "add_expense".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onAddExpensePressed();
+                          },
                         ),
                         tile(
                           text: "view_expense".tr,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            _controller.onViewExpensePressed();
+                          },
                         ),
                       ],
                     ),
                     tile(
                       icon: Icons.lock_outlined,
                       text: "permission".tr,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.back();
+                        _controller.onPermissionPressed();
+                      },
                     ),
                     tile(
                       icon: Icons.people,
-                      text: "user".tr,
-                      onPressed: () {},
+                      text: "users".tr,
+                      onPressed: () {
+                        Get.back();
+                        _controller.onUserPressed();
+                      },
                     ),
                     tile(
                       icon: Icons.settings_rounded,
                       text: "setting".tr,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.back();
+                        _controller.onSettingPressed();
+                      },
+                    ),
+                    tile(
+                      icon: Icons.logout_rounded,
+                      text: "logout".tr,
+                      iconColor: errorColor,
+                      textColor: errorColor,
+                      onPressed: () {
+                        Get.back();
+                        _controller.onLogoutPressed();
+                      },
                     ),
                   ],
                 ),

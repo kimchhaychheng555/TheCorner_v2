@@ -8,13 +8,13 @@ part 'sale_model.g.dart';
 class SaleModel {
   String? id;
   String? invoice_number;
-  double? vat;
-  double? sub_total;
+  double vat;
+  double sub_total;
   String? discount_type;
-  double? discount;
-  double? grand_total;
-  bool? is_paid;
-  bool? status;
+  double discount;
+  double grand_total;
+  bool is_paid;
+  bool status;
   String? sale_date;
   String? table_id;
   DateTime? created_date;
@@ -25,17 +25,17 @@ class SaleModel {
 
   TableModel? table;
 
-  List<SaleProductModel> sale_products = [];
+  List<SaleProductModel>? sale_products = [];
   SaleModel({
     this.id,
     this.invoice_number,
-    this.vat,
-    this.sub_total,
+    this.vat = 0,
+    this.sub_total = 0,
     this.discount_type,
-    this.discount,
-    this.grand_total,
-    this.is_paid,
-    this.status,
+    this.discount = 0,
+    this.grand_total = 0,
+    this.is_paid = false,
+    this.status = false,
     this.sale_date,
     this.table_id,
     this.created_date,

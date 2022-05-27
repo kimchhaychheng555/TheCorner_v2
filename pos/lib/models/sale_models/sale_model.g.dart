@@ -9,13 +9,13 @@ part of 'sale_model.dart';
 SaleModel _$SaleModelFromJson(Map<String, dynamic> json) => SaleModel(
       id: json['id'] as String?,
       invoice_number: json['invoice_number'] as String?,
-      vat: (json['vat'] as num?)?.toDouble(),
-      sub_total: (json['sub_total'] as num?)?.toDouble(),
+      vat: (json['vat'] as num?)?.toDouble() ?? 0,
+      sub_total: (json['sub_total'] as num?)?.toDouble() ?? 0,
       discount_type: json['discount_type'] as String?,
-      discount: (json['discount'] as num?)?.toDouble(),
-      grand_total: (json['grand_total'] as num?)?.toDouble(),
-      is_paid: json['is_paid'] as bool?,
-      status: json['status'] as bool?,
+      discount: (json['discount'] as num?)?.toDouble() ?? 0,
+      grand_total: (json['grand_total'] as num?)?.toDouble() ?? 0,
+      is_paid: json['is_paid'] as bool? ?? false,
+      status: json['status'] as bool? ?? false,
       sale_date: json['sale_date'] as String?,
       table_id: json['table_id'] as String?,
       created_date: json['created_date'] == null
@@ -31,8 +31,8 @@ SaleModel _$SaleModelFromJson(Map<String, dynamic> json) => SaleModel(
       ..table = json['table'] == null
           ? null
           : TableModel.fromJson(json['table'] as Map<String, dynamic>)
-      ..sale_products = (json['sale_products'] as List<dynamic>)
-          .map((e) => SaleProductModel.fromJson(e as Map<String, dynamic>))
+      ..sale_products = (json['sale_products'] as List<dynamic>?)
+          ?.map((e) => SaleProductModel.fromJson(e as Map<String, dynamic>))
           .toList();
 
 Map<String, dynamic> _$SaleModelToJson(SaleModel instance) => <String, dynamic>{

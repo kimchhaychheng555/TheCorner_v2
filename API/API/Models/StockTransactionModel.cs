@@ -13,7 +13,7 @@ namespace API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid id { get; set; }
-        public decimal quantity { get; set; }
+        public decimal? quantity { get; set; }
         public string type { get; set; }
 
         public Guid product_id { get; set; }

@@ -11,9 +11,7 @@ class TableModel {
   bool? is_deleted;
   DateTime? deleted_date;
   String? deleted_by;
-
-  bool isActive;
-  int saleCount;
+  bool? isActive;
 
   TableModel({
     this.id,
@@ -23,7 +21,6 @@ class TableModel {
     this.is_deleted,
     this.deleted_date,
     this.deleted_by,
-    this.saleCount = 0,
     this.isActive = false,
   });
 

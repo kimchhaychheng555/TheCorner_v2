@@ -18,7 +18,6 @@ TableModel _$TableModelFromJson(Map<String, dynamic> json) => TableModel(
           ? null
           : DateTime.parse(json['deleted_date'] as String),
       deleted_by: json['deleted_by'] as String?,
-      saleCount: json['sales@odata.count'] as int? ?? 0,
       isActive: json['isActive'] as bool? ?? false,
     );
 
@@ -32,5 +31,4 @@ Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
       'deleted_date': instance.deleted_date?.toIso8601String(),
       'deleted_by': instance.deleted_by,
       'isActive': instance.isActive,
-      'saleCount': instance.saleCount,
     };

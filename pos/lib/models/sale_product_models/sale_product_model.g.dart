@@ -9,24 +9,24 @@ part of 'sale_product_model.dart';
 SaleProductModel _$SaleProductModelFromJson(Map<String, dynamic> json) =>
     SaleProductModel(
       id: json['id'] as String?,
+      product_name: json['product_name'] as String?,
       quantity: (json['quantity'] as num?)?.toDouble(),
       image: json['image'] as String?,
       price: (json['price'] as num?)?.toDouble(),
-      is_free: json['is_free'] as bool?,
-      is_remove_stock_done: json['is_remove_stock_done'] as bool?,
+      is_free: json['is_free'] as bool? ?? false,
+      is_remove_stock_done: json['is_remove_stock_done'] as bool? ?? false,
       sale_id: json['sale_id'] as String?,
       product_id: json['product_id'] as String?,
       created_date: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
       created_by: json['created_by'] as String?,
-      is_deleted: json['is_deleted'] as bool?,
+      is_deleted: json['is_deleted'] as bool? ?? false,
       deleted_date: json['deleted_date'] == null
           ? null
           : DateTime.parse(json['deleted_date'] as String),
       deleted_by: json['deleted_by'] as String?,
     )
-      ..product_name = json['product_name'] as String?
       ..sale = json['sale'] == null
           ? null
           : SaleModel.fromJson(json['sale'] as Map<String, dynamic>)

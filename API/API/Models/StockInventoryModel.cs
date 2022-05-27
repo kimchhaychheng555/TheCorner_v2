@@ -13,8 +13,8 @@ namespace API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid id { get; set; }
-        public decimal quantity_stock { get; set; }
-        public decimal min_quantity { get; set; }
+        public decimal? quantity_stock { get; set; }
+        public decimal? min_quantity { get; set; }
 
         public Guid product_id { get; set; }
         [ForeignKey("product_id")]

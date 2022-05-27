@@ -141,7 +141,17 @@ class SmartHomeController extends GetxController {
   void onProductPressed() => Get.toNamed(ProductScren.routeName);
   void onReportPressed() {}
   void onPermissionPressed() {}
-  void onBusinessReportPressed() {}
+  void onOverviewBusinessReportPressed() {}
+  void onInventorySummaryReportPressed() {}
+  void onSaleSummaryReportPressed() {}
+  void onReceiptReportPressed() {}
+  void onExpenseReportPressed() {}
+  void onPurchaseOrderPressed() {}
+  void onAdjustmentInventoryPressed() {}
+  void onInventoryTransactionPressed() {}
+  void onAddExpensePressed() {}
+  void onViewExpensePressed() {}
+  void onUserPressed() {}
   void onUsersPressed() {}
   void onSettingPressed() => Get.toNamed(SettingScreen.routeName);
   void onLogoutPressed() {

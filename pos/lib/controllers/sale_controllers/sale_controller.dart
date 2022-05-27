@@ -9,6 +9,7 @@ import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
@@ -27,16 +28,39 @@ class SaleController extends GetxController {
   @override
   void onInit() async {
     isLoading(true);
-    _onInitController();
+
     await _onLoadCategory();
     await _onLoadProduct();
-    _onSaleInitValue();
+
+    await _onInitController();
+    if (table.value?.isActive == false) {
+      _onSaleInitValue();
+    }
+
     isLoading(false);
     super.onInit();
   }
 
-  void _onInitController() {
+  @override
+  void onClose() async {
+    saleTableCtrl.onLoadTable();
+    super.onClose();
+  }
+
+  Future<void> _onInitController() async {
     table(TableModel.fromJson(jsonDecode(Get.arguments["table"])));
+    if (table.value?.isActive == true) {
+      var _resp = await APIService.oDataGet(
+          "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products");
+      if (_resp.isSuccess) {
+        List<dynamic> _data = jsonDecode(_resp.content);
+        var _dataSale = _data.map((s) => SaleModel.fromJson(s)).toList();
+        if (_dataSale.isNotEmpty) {
+          sale(_dataSale.first);
+          sale.refresh();
+        }
+      }
+    }
   }
 
   void onTableChanged(String? tableId) {
@@ -99,24 +123,31 @@ class SaleController extends GetxController {
     );
   }
 
-  void onHoldBillPressed() {}
+  void onHoldBillPressed() async {
+    isLoading(true);
+    await _onHoldProcess();
+    isLoading(false);
+  }
+
   void onPayPressed() {}
   void onProductPressed(ProductModel product) {
-    var _exists = sale.value?.sale_products
+    var _exists = (sale.value?.sale_products ?? [])
         .where((sp) => sp.product_id == product.id)
         .toList();
 
-    if ((_exists ?? []).isNotEmpty) {
-      _exists?.first.quantity = ((_exists.first.quantity ?? 0) + 1);
+    if ((_exists).isNotEmpty) {
+      _exists.first.quantity = ((_exists.first.quantity ?? 0) + 1);
     } else {
       var _tempSp = SaleProductModel(
+        id: Uuid.NAMESPACE_NIL,
+        sale_id: sale.value?.id,
         quantity: 1,
         image: product.image,
         price: product.price,
         product_id: product.id,
         product_name: product.name,
       );
-      sale.value?.sale_products.add(_tempSp);
+      (sale.value?.sale_products ?? []).add(_tempSp);
     }
 
     sale.refresh();
@@ -143,8 +174,24 @@ class SaleController extends GetxController {
   }
 
   void _onSaleProductItemDeleteProcess(SaleProductModel sp) {
-    sale.value?.sale_products.remove(sp);
+    (sale.value?.sale_products ?? []).remove(sp);
     sale.refresh();
     Get.back();
+  }
+
+  Future<void> _onHoldProcess() async {
+    SaleModel _saleProcess = sale.value ?? SaleModel();
+    _saleProcess.status = true;
+    _saleProcess.table_id = table.value?.id;
+    _saleProcess.sale_date = AppService.currentStartSale?.date;
+
+    var _json = jsonEncode(_saleProcess);
+    var _resp = await APIService.post("sale/save", _json);
+    if (_resp.isSuccess) {
+      Get.back();
+      AppAlert.successAlert(title: "save_sale_successfully".tr);
+    } else {
+      AppAlert.errorAlert(title: "save_sale_error".tr);
+    }
   }
 }

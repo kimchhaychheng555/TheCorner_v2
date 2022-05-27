@@ -11,13 +11,13 @@ class SaleProductModel {
   String? product_name;
   double? quantity;
   double? price;
-  bool? is_free;
-  bool? is_remove_stock_done;
+  bool is_free;
+  bool is_remove_stock_done;
   String? sale_id;
   String? product_id;
   DateTime? created_date;
   String? created_by;
-  bool? is_deleted;
+  bool is_deleted;
   DateTime? deleted_date;
   String? deleted_by;
 
@@ -29,13 +29,13 @@ class SaleProductModel {
     this.quantity,
     this.image,
     this.price,
-    this.is_free,
-    this.is_remove_stock_done,
+    this.is_free = false,
+    this.is_remove_stock_done = false,
     this.sale_id,
     this.product_id,
     this.created_date,
     this.created_by,
-    this.is_deleted,
+    this.is_deleted = false,
     this.deleted_date,
     this.deleted_by,
   });
