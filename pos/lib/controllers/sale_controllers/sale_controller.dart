@@ -186,7 +186,6 @@ class SaleController extends GetxController {
     _saleProcess.sale_date = AppService.currentStartSale?.date;
 
     var _json = jsonEncode(_saleProcess);
-    print(_json);
     var _resp = await APIService.post("sale/save", _json);
     if (_resp.isSuccess) {
       Get.back();
