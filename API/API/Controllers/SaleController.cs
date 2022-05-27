@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -48,13 +49,13 @@ namespace API.Controllers
         {
             if (sale.id == Guid.Empty)
             {
-                var getInvoiceNumber = db.Documents.Where(x => x.key_name == "invoice_number").FirstOrDefault();
-                int input_number = Convert.ToInt32(getInvoiceNumber.value);
-                var _prefix = getInvoiceNumber.prefix ?? "";
-                string number_value = _prefix + input_number.ToString().PadLeft((getInvoiceNumber.max_length.Length), '0');
+                var getInvoiceNumber = db.Documents.Where(x => x.key_name == "invoice_number").FirstOrDefault().value;
+                var obj = JsonSerializer.Deserialize<InvoiceNumberModel>(getInvoiceNumber);
+                int input_number = obj.value;
+                var _prefix = obj.prefix ?? "";
+                string number_value = _prefix + input_number.ToString().PadLeft((obj.max_length.Length), '0');
 
                 sale.invoice_number = number_value;
-
                  
                 db.Sales.Add(sale);
                 if (sale.id != Guid.Empty)
@@ -76,10 +77,10 @@ namespace API.Controllers
         {
             try
             {
-
                 var getInvoiceNumber = db.Documents.Where(x => x.key_name == "invoice_number").FirstOrDefault();
-                int updateInvoiceValue = (int.Parse(getInvoiceNumber.value)) + 1;
-                getInvoiceNumber.value = updateInvoiceValue.ToString();
+                var obj = JsonSerializer.Deserialize<InvoiceNumberModel>(getInvoiceNumber.value);
+                obj.value =  (obj.value+ 1);
+                getInvoiceNumber.value = JsonSerializer.Serialize(obj);
                 db.Documents.Update(getInvoiceNumber);
             }
             catch (Exception ex)
