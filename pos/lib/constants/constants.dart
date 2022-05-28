@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+enum Screen { isMobile, isDesktop }
 const String keyEncrypt = "zrR8J8FJREftab7QKYf5rE5j49LPaAKh";
 final Color primaryColor = HexColor("#104c8a");
 final Color secondaryColor = HexColor("#f16023");

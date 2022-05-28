@@ -30,8 +30,7 @@ class DrawerWidget extends StatelessWidget {
                       imageBuilder: (context, imageProvider) => CircleAvatar(
                         maxRadius: 30,
                         minRadius: 30,
-                        backgroundImage: CachedNetworkImageProvider(
-                            "${AppService.baseUrl}uploads/${AppService.currentUser?.profile}"),
+                        backgroundImage: imageProvider,
                       ),
                       placeholder: (context, url) =>
                           const CircularProgressIndicator(),

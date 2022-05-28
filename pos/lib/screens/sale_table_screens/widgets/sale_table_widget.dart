@@ -7,13 +7,14 @@ class SaleTableWidget extends StatelessWidget {
   final String title;
   final double? amount;
   final bool active;
-  final Function()? onPressed;
+  final Function()? onPressed, onLongPressed;
   const SaleTableWidget({
     Key? key,
     this.title = "",
     this.amount,
     this.active = false,
     this.onPressed,
+    this.onLongPressed,
   }) : super(key: key);
 
   @override
@@ -22,6 +23,8 @@ class SaleTableWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       color: Colors.white,
       child: InkWell(
+        onLongPress: onLongPressed,
+        borderRadius: BorderRadius.circular(5),
         onTap: onPressed,
         child: Container(
           decoration: BoxDecoration(

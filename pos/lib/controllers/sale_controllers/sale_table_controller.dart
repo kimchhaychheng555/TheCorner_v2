@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
+import 'package:pos/screens/sale_table_screens/widgets/sale_table_modal_widget.dart';
 import 'package:pos/services/api_service.dart';
 
 class SaleTableController extends GetxController {
@@ -47,6 +48,14 @@ class SaleTableController extends GetxController {
       arguments: {
         "table": jsonEncode(table),
       },
+    );
+  }
+
+  void onTableLongPressed(TableModel table) async {
+    Get.defaultDialog(
+      radius: 5,
+      title: table.name ?? "",
+      content: const SaleTableModelWidget(),
     );
   }
 }

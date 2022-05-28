@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:pos/constants/constants.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
@@ -40,6 +41,13 @@ class AppService {
       default:
         return "Roboto";
     }
+  }
+
+  static Screen get screen {
+    if (Get.width < 480) {
+      return Screen.isMobile;
+    }
+    return Screen.isDesktop;
   }
 
   static void back() {

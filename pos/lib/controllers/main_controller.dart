@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/services/api_service.dart';
@@ -37,6 +38,7 @@ class MainController extends GetxController {
           await APIService.post("user/login", jsonEncode(AppService.loginUser));
       if (_resp.isSuccess) {
         Get.offAndToNamed(SmartHomeScreen.routeName);
+        AppService.currentUser = UserModel.fromJson(jsonDecode(_resp.content));
       } else {
         Get.offAndToNamed(LoginScreen.routeName);
       }
