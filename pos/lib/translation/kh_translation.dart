@@ -65,4 +65,10 @@ Map<String, String> get khTranslation => {
       "expense": "ចំណាយ",
       "add_expense": "បង្កើតចំណាយ",
       "view_expense": "មើលចំណាយ",
+      "percent": "ភាគរយ",
+      "amount": "សាច់ប្រាក់",
+      "discount": "បញ្ចុះតម្លៃ",
+      "discount_no_value": "បញ្ចុះតម្លៃគ្មានតម្លៃ",
+      "sub_total": "សរុបរង",
+      "grand_total": "តម្លៃសរុប",
     };

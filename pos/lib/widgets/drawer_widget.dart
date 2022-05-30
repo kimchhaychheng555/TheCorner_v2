@@ -14,46 +14,46 @@ class DrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SmartHomeController _controller = Get.find();
     return Obx(
-      () => Drawer(
-        child: Column(
-          children: [
-            Container(
-              color: primaryColor,
-              height: 100,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl:
-                          "${AppService.baseUrl}uploads/${AppService.currentUser?.profile}",
-                      imageBuilder: (context, imageProvider) => CircleAvatar(
-                        maxRadius: 30,
-                        minRadius: 30,
-                        backgroundImage: imageProvider,
+      () => SafeArea(
+        child: Drawer(
+          child: Column(
+            children: [
+              Container(
+                color: primaryColor,
+                height: 100,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl:
+                            "${AppService.baseUrl}uploads/${AppService.currentUser?.profile}",
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          maxRadius: 30,
+                          minRadius: 30,
+                          backgroundImage: imageProvider,
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => CircleAvatar(
+                          maxRadius: 30,
+                          minRadius: 30,
+                          backgroundImage: NetworkImage(
+                              "${AppService.baseUrl}uploads/noimage.png"),
+                        ),
                       ),
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => CircleAvatar(
-                        maxRadius: 30,
-                        minRadius: 30,
-                        backgroundImage: NetworkImage(
-                            "${AppService.baseUrl}uploads/noimage.png"),
+                      const SizedBox(width: 10),
+                      TextWidget(
+                        text: AppService.currentUser?.fullname ?? "",
+                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    TextWidget(
-                      text: AppService.currentUser?.fullname ?? "",
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+              Expanded(
                 child: ListView(
+                  padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
                   controller: ScrollController(keepScrollOffset: true),
                   scrollDirection: Axis.vertical,
                   children: [
@@ -228,8 +228,8 @@ class DrawerWidget extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

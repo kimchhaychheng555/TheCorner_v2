@@ -8,6 +8,7 @@ import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
+import 'package:pos/screens/sale_screens/widgets/sale_discount_widget.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
@@ -129,10 +130,35 @@ class SaleController extends GetxController {
     isLoading(false);
   }
 
-  void onPayPressed() {}
+  void onDiscountPressed() {
+    var _discountType = sale.value?.discount_type;
+    var _discountValue =
+        sale.value?.discount == 0 ? null : sale.value?.discount.toString();
+    Get.defaultDialog(
+      title: "discount".tr,
+      radius: 5,
+      content: SaleDiscountWidget(
+        type: _discountType,
+        value: _discountValue,
+        onAccept: (_discountType, _discountValue) {
+          sale.value?.discount_type = _discountType;
+          sale.value?.discount = double.tryParse(_discountValue) ?? 0;
+          Get.back();
+          sale.refresh();
+        },
+      ),
+    );
+  }
+
+  void onPrintBillPressed() {}
+
+  void onPayPressed() {
+    print(jsonEncode(sale.value));
+  }
+
   void onProductPressed(ProductModel product) {
     var _exists = (sale.value?.sale_products ?? [])
-        .where((sp) => sp.product_id == product.id)
+        .where((sp) => sp.product_id == product.id && sp.is_deleted == false)
         .toList();
 
     if ((_exists).isNotEmpty) {
@@ -146,6 +172,7 @@ class SaleController extends GetxController {
         price: product.price,
         product_id: product.id,
         product_name: product.name,
+        created_by: AppService.currentUser?.fullname,
       );
       (sale.value?.sale_products ?? []).add(_tempSp);
     }
@@ -154,6 +181,7 @@ class SaleController extends GetxController {
   }
 
   void onSaleProductItemPressed(SaleProductModel sp) {}
+
   void onSaleProductItemDeletePressed(SaleProductModel sp) {
     Get.defaultDialog(
       radius: 5,
@@ -174,7 +202,13 @@ class SaleController extends GetxController {
   }
 
   void _onSaleProductItemDeleteProcess(SaleProductModel sp) {
-    (sale.value?.sale_products ?? []).remove(sp);
+    if ((sp.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+      var saleProduct =
+          sale.value?.sale_products?.where((_sp) => _sp.id == sp.id);
+      saleProduct?.first.is_deleted = true;
+    } else {
+      (sale.value?.sale_products ?? []).remove(sp);
+    }
     sale.refresh();
     Get.back();
   }
@@ -183,7 +217,12 @@ class SaleController extends GetxController {
     SaleModel _saleProcess = sale.value ?? SaleModel();
     _saleProcess.status = true;
     _saleProcess.table_id = table.value?.id;
-    _saleProcess.sale_date = AppService.currentStartSale?.date;
+    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+      _saleProcess.sale_date = AppService.currentStartSale?.date;
+      _saleProcess.created_by = AppService.currentUser?.fullname;
+    }
+    _saleProcess.sub_total = getSubTotal;
+    _saleProcess.grand_total = getGrandTotal;
 
     var _json = jsonEncode(_saleProcess);
     var _resp = await APIService.post("sale/save", _json);
@@ -192,6 +231,39 @@ class SaleController extends GetxController {
       AppAlert.successAlert(title: "save_sale_successfully".tr);
     } else {
       AppAlert.errorAlert(title: "save_sale_error".tr);
+    }
+  }
+
+  double get getSubTotal {
+    var _subTotal = 0.0;
+    sale.value?.sale_products?.forEach((sp) {
+      if (sp.is_deleted || sp.is_free) {
+        _subTotal += 0;
+      } else {
+        _subTotal += (sp.quantity ?? 1) * (sp.price ?? 1);
+      }
+    });
+    return _subTotal;
+  }
+
+  double get getGrandTotal {
+    var _grandTotal = 0.0;
+    if (sale.value?.discount_type == "percent") {
+      _grandTotal =
+          getSubTotal - (getSubTotal * ((sale.value?.discount ?? 0) / 100));
+    } else if (sale.value?.discount_type == "amount") {
+      _grandTotal = getSubTotal - (sale.value?.discount ?? 0);
+    } else {
+      _grandTotal = getSubTotal;
+    }
+    return _grandTotal;
+  }
+
+  String get getDiscountSummary {
+    if (sale.value?.discount_type == "percent") {
+      return "${sale.value?.discount} %";
+    } else {
+      return AppService.currencyFormat(sale.value?.discount);
     }
   }
 }

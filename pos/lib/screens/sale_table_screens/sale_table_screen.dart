@@ -42,11 +42,11 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
           appBar: AppBar(
             title: Text("table".tr),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Row(
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
@@ -69,30 +69,31 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: GridView(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: _grid,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                    ),
-                    children: [
-                      ..._controller.tableList.map(
-                        (table) => SaleTableWidget(
-                          title: table.name ?? "",
-                          onPressed: () => _controller.onTablePressed(table),
-                          onLongPressed: () =>
-                              _controller.onTableLongPressed(table),
-                          active: table.isActive ?? false,
-                        ),
-                      ),
-                    ],
+              ),
+              Expanded(
+                child: GridView(
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: _grid,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
                   ),
+                  children: [
+                    ..._controller.tableList.map(
+                      (table) => SaleTableWidget(
+                        title: table.name ?? "",
+                        onPressed: () => _controller.onTablePressed(table),
+                        onLongPressed: () =>
+                            _controller.onTableLongPressed(table),
+                        active: table.isActive ?? false,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

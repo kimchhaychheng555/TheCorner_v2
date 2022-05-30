@@ -71,4 +71,10 @@ Map<String, String> get enTranslation => {
       "expense": "Expense",
       "add_expense": "Add Expense",
       "view_expense": "View Expense",
+      "percent": "Percent",
+      "amount": "Amount",
+      "discount": "Discount",
+      "discount_no_value": "Discount No Value",
+      "sub_total": "Sub Total",
+      "grand_total": "Grand Total",
     };

@@ -5,6 +5,7 @@ import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/sale_controllers/sale_controller.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_item_product_widget.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_product_widget.dart';
+import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/action_chip_widget.dart';
 import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
@@ -23,6 +24,22 @@ class SaleScreen extends GetResponsiveView<dynamic> {
         isLoading: _controller.isLoading.value,
         child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: _controller.onCancelBillPressed,
+            ),
+            actions: [
+              IconButton(
+                splashRadius: 30,
+                onPressed: _controller.onDiscountPressed,
+                icon: const Icon(Icons.discount),
+              ),
+              IconButton(
+                splashRadius: 30,
+                onPressed: _controller.onPrintBillPressed,
+                icon: const Icon(Icons.print),
+              ),
+            ],
             title: Text("sale".tr),
           ),
           body: Row(
@@ -47,13 +64,12 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                             crossAxisSpacing: 10,
                           ),
                           children: [
-                            for (var i = 0; i < 20; i++)
-                              ..._controller.productList.map(
-                                (p) => SaleProductWidget(
-                                  product: p,
-                                  onPressed: _controller.onProductPressed,
-                                ),
-                              )
+                            ..._controller.productList.map(
+                              (p) => SaleProductWidget(
+                                product: p,
+                                onPressed: _controller.onProductPressed,
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -170,14 +186,18 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                                 var _sp =
                                     (_controller.sale.value?.sale_products ??
                                         [])[index];
-                                return SaleProductItemWidget(
-                                  keyValue: index,
-                                  saleProduct: _sp,
-                                  onPressed: () =>
-                                      _controller.onSaleProductItemPressed(_sp),
-                                  onDeletePressed: () => _controller
-                                      .onSaleProductItemDeletePressed(_sp),
-                                );
+
+                                if (_sp.is_deleted == false) {
+                                  return SaleProductItemWidget(
+                                    keyValue: index,
+                                    saleProduct: _sp,
+                                    onPressed: () => _controller
+                                        .onSaleProductItemPressed(_sp),
+                                    onDeletePressed: () => _controller
+                                        .onSaleProductItemDeletePressed(_sp),
+                                  );
+                                }
+                                return Container();
                               },
                             )
                           : Center(
@@ -186,6 +206,30 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                                 color: Colors.black38,
                               ),
                             ),
+                    ),
+                    const Divider(),
+                    Column(
+                      children: [
+                        _saleSummary(
+                          name: "sub_total".tr,
+                          value: AppService.currencyFormat(
+                              _controller.getSubTotal),
+                        ),
+                        if ((_controller.sale.value?.discount ?? 0) > 0)
+                          _saleSummary(
+                            name: "discount".tr,
+                            nameColor: secondaryColor,
+                            valueColor: secondaryColor,
+                            value: _controller.getDiscountSummary,
+                          ),
+                        const Divider(),
+                        _saleSummary(
+                            name: "grand_total".tr,
+                            nameSize: 16,
+                            value: AppService.currencyFormat(
+                                _controller.getGrandTotal),
+                            valueSize: 16),
+                      ],
                     ),
                   ],
                 ),
@@ -250,6 +294,34 @@ class SaleScreen extends GetResponsiveView<dynamic> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _saleSummary({
+    required String name,
+    Color? nameColor,
+    double? nameSize,
+    required String value,
+    Color? valueColor,
+    double? valueSize,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TextWidget(
+            text: name,
+            color: nameColor ?? textColor,
+            fontSize: nameSize ?? 14,
+          ),
+          TextWidget(
+            text: value,
+            color: valueColor ?? textColor,
+            fontSize: valueSize ?? 14,
+          ),
+        ],
+      ),
     );
   }
 

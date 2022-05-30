@@ -14,6 +14,7 @@ class APIInputUrlWidget extends StatelessWidget {
       color: primaryColor,
       child: Center(
         child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           constraints: const BoxConstraints(maxWidth: 600),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

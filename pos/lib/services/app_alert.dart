@@ -75,7 +75,8 @@ class AppAlert {
       "",
       backgroundColor: (backgroundColor ?? errorColor).withOpacity(0.75),
       maxWidth: 500,
-      duration: const Duration(seconds: 1),
+      // duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
       borderRadius: 5,
       padding: const EdgeInsets.symmetric(
         vertical: 10,
