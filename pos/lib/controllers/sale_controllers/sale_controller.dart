@@ -9,6 +9,7 @@ import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_discount_widget.dart';
+import 'package:pos/screens/sale_screens/widgets/sale_payment_widget.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
@@ -153,6 +154,11 @@ class SaleController extends GetxController {
   void onPrintBillPressed() {}
 
   void onPayPressed() {
+    Get.defaultDialog(
+      title: "payment".tr,
+      radius: 5,
+      content: const SalePaymentWidget(),
+    );
     print(jsonEncode(sale.value));
   }
 

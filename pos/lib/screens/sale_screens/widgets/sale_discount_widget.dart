@@ -63,28 +63,31 @@ class SaleDiscountWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          TextField(
-            controller: _controller.discountValueCtrl,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 20,
-              ),
-              filled: true,
-              isCollapsed: true,
-              hintText: "discount".tr,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.circular(5),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 25),
+            child: TextField(
+              controller: _controller.discountValueCtrl,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 20,
+                ),
+                filled: true,
+                isCollapsed: true,
+                hintText: "discount".tr,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(5),
+                ),
               ),
             ),
           ),
