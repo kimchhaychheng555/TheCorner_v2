@@ -14,6 +14,7 @@ namespace API.Models
         [Key]
         public Guid id { get; set; }
         public string payment_method_name { get; set; }
+        public decimal exchange_rate { get; set; }
 
     }
 }
