@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
+import 'package:pos/models/payment_method_models/payment_method_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
+import 'package:pos/models/sale_payment_models/sale_payment_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_discount_widget.dart';
@@ -157,9 +159,27 @@ class SaleController extends GetxController {
     Get.defaultDialog(
       title: "payment".tr,
       radius: 5,
-      content: const SalePaymentWidget(),
+      content: SalePaymentWidget(
+        onAcceptPressed: (payment) {
+          _onPaymentProcess(payment);
+        },
+      ),
     );
-    print(jsonEncode(sale.value));
+  }
+
+  void _onPaymentProcess(PaymentMethodModel model) {
+    List<SalePaymentModel> _salePayments = [];
+    _salePayments.add(SalePaymentModel(
+      id: Uuid.NAMESPACE_NIL,
+      created_by: AppService.currentUser?.fullname,
+      exchange_rate: model.exchange_rate,
+      payment_amount: getGrandTotal,
+      payment_method_name: model.payment_method_name,
+      payment_method_id: model.id,
+    ));
+
+    (sale.value?.sale_payments ?? []).addAll(_salePayments);
+    _onSubmitPaymentProcess();
   }
 
   void onProductPressed(ProductModel product) {
@@ -210,8 +230,8 @@ class SaleController extends GetxController {
   void _onSaleProductItemDeleteProcess(SaleProductModel sp) {
     if ((sp.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
       var saleProduct =
-          sale.value?.sale_products?.where((_sp) => _sp.id == sp.id);
-      saleProduct?.first.is_deleted = true;
+          (sale.value?.sale_products ?? []).where((_sp) => _sp.id == sp.id);
+      saleProduct.first.is_deleted = true;
     } else {
       (sale.value?.sale_products ?? []).remove(sp);
     }
@@ -240,15 +260,39 @@ class SaleController extends GetxController {
     }
   }
 
+  Future<void> _onSubmitPaymentProcess() async {
+    isLoading(true);
+    SaleModel _saleProcess = sale.value ?? SaleModel();
+    _saleProcess.status = true;
+    _saleProcess.is_paid = true;
+    _saleProcess.table_id = table.value?.id;
+    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+      _saleProcess.sale_date = AppService.currentStartSale?.date;
+      _saleProcess.created_by = AppService.currentUser?.fullname;
+    }
+    _saleProcess.sub_total = getSubTotal;
+    _saleProcess.grand_total = getGrandTotal;
+
+    var _json = jsonEncode(_saleProcess);
+    var _resp = await APIService.post("sale/save", _json);
+    if (_resp.isSuccess) {
+      Get.back();
+      AppAlert.successAlert(title: "save_sale_successfully".tr);
+    } else {
+      AppAlert.errorAlert(title: "save_sale_error".tr);
+    }
+    isLoading(false);
+  }
+
   double get getSubTotal {
     var _subTotal = 0.0;
-    sale.value?.sale_products?.forEach((sp) {
+    for (var sp in (sale.value?.sale_products ?? [])) {
       if (sp.is_deleted || sp.is_free) {
         _subTotal += 0;
       } else {
         _subTotal += (sp.quantity ?? 1) * (sp.price ?? 1);
       }
-    });
+    }
     return _subTotal;
   }
 

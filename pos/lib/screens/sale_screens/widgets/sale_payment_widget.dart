@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/sale_controllers/sale_payment_controller.dart';
+import 'package:pos/models/payment_method_models/payment_method_model.dart';
+import 'package:pos/services/app_alert.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:get/get.dart';
 import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class SalePaymentWidget extends StatelessWidget {
-  const SalePaymentWidget({Key? key}) : super(key: key);
+  final Function(PaymentMethodModel)? onAcceptPressed;
+  const SalePaymentWidget({
+    Key? key,
+    this.onAcceptPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +27,18 @@ class SalePaymentWidget extends StatelessWidget {
             children: [
               ..._controller.paymentMethodList.map(
                 (paymentMethod) => ButtonWidget(
+                  backgroundColor:
+                      _controller.paymentMethod.value?.id == paymentMethod.id
+                          ? primaryColor
+                          : null,
                   onPressed: () =>
                       _controller.onPaymentMethodPressed(paymentMethod),
                   child: TextWidget(
                     text: paymentMethod.payment_method_name ?? "",
-                    color: textColor,
+                    color:
+                        _controller.paymentMethod.value?.id == paymentMethod.id
+                            ? Colors.white
+                            : textColor,
                   ),
                 ),
               )
@@ -36,7 +49,14 @@ class SalePaymentWidget extends StatelessWidget {
             confirmText: "yes".tr,
             cancelText: "no".tr,
             onCancelPressed: () => Get.back(),
-            onConfirmPressed: () {},
+            onConfirmPressed: () {
+              if (_controller.paymentMethod.value == null) {
+                AppAlert.errorAlert(title: "please_choose_payment".tr);
+                return;
+              }
+              onAcceptPressed!(_controller.paymentMethod.value!);
+              Get.back();
+            },
           ),
         ],
       ),

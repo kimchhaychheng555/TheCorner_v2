@@ -33,6 +33,9 @@ SaleModel _$SaleModelFromJson(Map<String, dynamic> json) => SaleModel(
           : TableModel.fromJson(json['table'] as Map<String, dynamic>)
       ..sale_products = (json['sale_products'] as List<dynamic>?)
           ?.map((e) => SaleProductModel.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..sale_payments = (json['sale_payments'] as List<dynamic>?)
+          ?.map((e) => SalePaymentModel.fromJson(e as Map<String, dynamic>))
           .toList();
 
 Map<String, dynamic> _$SaleModelToJson(SaleModel instance) => <String, dynamic>{
@@ -54,4 +57,5 @@ Map<String, dynamic> _$SaleModelToJson(SaleModel instance) => <String, dynamic>{
       'deleted_by': instance.deleted_by,
       'table': instance.table,
       'sale_products': instance.sale_products,
+      'sale_payments': instance.sale_payments,
     };

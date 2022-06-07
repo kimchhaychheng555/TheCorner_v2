@@ -64,6 +64,7 @@ namespace API
 
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<DocumentModel> Documents { get; set; }
+        public DbSet<ExpenseModel> Expenses { get; set; }
         public DbSet<PermissionModel> Permissions { get; set; }
         public DbSet<PrintModel> Prints { get; set; }
         public DbSet<PaymentMethodModel> PaymentMethods { get; set; }

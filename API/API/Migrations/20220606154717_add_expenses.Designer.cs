@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220524134024_add_product_name")]
-    partial class add_product_name
+    [Migration("20220606154717_add_expenses")]
+    partial class add_expenses
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,6 +82,58 @@ namespace API.Migrations
                     b.ToTable("data_document");
                 });
 
+            modelBuilder.Entity("API.Models.ExpenseModel", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("created_by")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
+                    b.Property<DateTime?>("created_date")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
+
+                    b.Property<string>("deleted_by")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
+
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
+                    b.Property<double?>("exchange_rate")
+                        .HasColumnType("float");
+
+                    b.Property<bool?>("is_deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("note")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
+                    b.Property<string>("payment_method_name")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
+                    b.HasKey("id");
+
+                    b.ToTable("data_expense");
+                });
+
             modelBuilder.Entity("API.Models.PaymentMethodModel", b =>
                 {
                     b.Property<Guid>("id")
@@ -105,6 +157,9 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getDate()");
+
+                    b.Property<decimal>("exchange_rate")
+                        .HasColumnType("decimal(19,5)");
 
                     b.Property<bool?>("is_deleted")
                         .ValueGeneratedOnAdd()
@@ -250,11 +305,8 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(19,5)");
-
-                    b.Property<bool>("stockable")
-                        .HasColumnType("bit");
+                    b.Property<decimal?>("price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
 
@@ -325,15 +377,15 @@ namespace API.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getDate()");
 
-                    b.Property<decimal>("discount")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("discount_type")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<decimal>("grand_total")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("grand_total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("invoice_number")
                         .HasColumnType("nvarchar(max)")
@@ -344,24 +396,24 @@ namespace API.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("is_paid")
+                    b.Property<bool?>("is_paid")
                         .HasColumnType("bit");
 
                     b.Property<string>("sale_date")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<bool>("status")
+                    b.Property<bool?>("status")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("sub_total")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("sub_total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("table_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("vat")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("vat")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
 
@@ -394,7 +446,7 @@ namespace API.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getDate()");
 
-                    b.Property<double>("exchange_rate")
+                    b.Property<double?>("exchange_rate")
                         .HasColumnType("float");
 
                     b.Property<bool?>("is_deleted")
@@ -402,7 +454,7 @@ namespace API.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<double>("payment_amount")
+                    b.Property<double?>("payment_amount")
                         .HasColumnType("float");
 
                     b.Property<Guid>("payment_method_id")
@@ -457,14 +509,14 @@ namespace API.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("is_free")
+                    b.Property<bool?>("is_free")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("is_remove_stock_done")
+                    b.Property<bool?>("is_remove_stock_done")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("product_id")
                         .HasColumnType("uniqueidentifier");
@@ -473,8 +525,8 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<decimal>("quantity")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("sale_id")
                         .HasColumnType("uniqueidentifier");
@@ -517,14 +569,14 @@ namespace API.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<decimal>("min_quantity")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("min_quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("product_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("quantity_stock")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("quantity_stock")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
 
@@ -565,8 +617,8 @@ namespace API.Migrations
                     b.Property<Guid>("product_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("quantity")
-                        .HasColumnType("decimal(19,5)");
+                    b.Property<decimal?>("quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("type")
                         .HasColumnType("nvarchar(max)")

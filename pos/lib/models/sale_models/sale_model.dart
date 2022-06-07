@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pos/models/sale_payment_models/sale_payment_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 part 'sale_model.g.dart';
@@ -26,6 +27,8 @@ class SaleModel {
   TableModel? table;
 
   List<SaleProductModel>? sale_products = [];
+  List<SalePaymentModel>? sale_payments = [];
+
   SaleModel({
     this.id,
     this.invoice_number,
