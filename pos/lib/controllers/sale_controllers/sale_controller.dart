@@ -176,6 +176,7 @@ class SaleController extends GetxController {
       payment_amount: getGrandTotal,
       payment_method_name: model.payment_method_name,
       payment_method_id: model.id,
+      sale_id: Uuid.NAMESPACE_NIL,
     ));
 
     (sale.value?.sale_payments ?? []).addAll(_salePayments);
@@ -281,6 +282,8 @@ class SaleController extends GetxController {
     } else {
       AppAlert.errorAlert(title: "save_sale_error".tr);
     }
+
+    print(jsonEncode(sale.value));
     isLoading(false);
   }
 
