@@ -179,7 +179,7 @@ class SaleController extends GetxController {
       sale_id: Uuid.NAMESPACE_NIL,
     ));
 
-    (sale.value?.sale_payments ?? []).addAll(_salePayments);
+    sale.value?.sale_payments.addAll(_salePayments);
     _onSubmitPaymentProcess();
   }
 

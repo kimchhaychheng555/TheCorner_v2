@@ -31,11 +31,11 @@ SaleModel _$SaleModelFromJson(Map<String, dynamic> json) => SaleModel(
       ..table = json['table'] == null
           ? null
           : TableModel.fromJson(json['table'] as Map<String, dynamic>)
-      ..sale_products = (json['sale_products'] as List<dynamic>?)
-          ?.map((e) => SaleProductModel.fromJson(e as Map<String, dynamic>))
+      ..sale_products = (json['sale_products'] as List<dynamic>)
+          .map((e) => SaleProductModel.fromJson(e as Map<String, dynamic>))
           .toList()
-      ..sale_payments = (json['sale_payments'] as List<dynamic>?)
-          ?.map((e) => SalePaymentModel.fromJson(e as Map<String, dynamic>))
+      ..sale_payments = (json['sale_payments'] as List<dynamic>)
+          .map((e) => SalePaymentModel.fromJson(e as Map<String, dynamic>))
           .toList();
 
 Map<String, dynamic> _$SaleModelToJson(SaleModel instance) => <String, dynamic>{

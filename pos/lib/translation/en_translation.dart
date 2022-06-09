@@ -77,4 +77,6 @@ Map<String, String> get enTranslation => {
       "discount_no_value": "Discount No Value",
       "sub_total": "Sub Total",
       "grand_total": "Grand Total",
+      "save_sale_successfully": "Save Sale Successfully",
+      "save_sale_error": "Save Sale Error",
     };

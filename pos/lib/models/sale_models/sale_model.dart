@@ -26,8 +26,8 @@ class SaleModel {
 
   TableModel? table;
 
-  List<SaleProductModel>? sale_products = [];
-  List<SalePaymentModel>? sale_payments = [];
+  List<SaleProductModel> sale_products = [];
+  List<SalePaymentModel> sale_payments = [];
 
   SaleModel({
     this.id,

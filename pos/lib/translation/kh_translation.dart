@@ -71,4 +71,6 @@ Map<String, String> get khTranslation => {
       "discount_no_value": "បញ្ចុះតម្លៃគ្មានតម្លៃ",
       "sub_total": "សរុបរង",
       "grand_total": "តម្លៃសរុប",
+      "save_sale_successfully": "រក្សាទុកជោគជ័យ",
+      "save_sale_error": "រក្សាការលក់ត្រូវបានបរាជ័យ",
     };
