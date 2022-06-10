@@ -13,7 +13,7 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
   @override
   Widget builder() {
     var _grid = 3;
-    Get.width < 450
+    Get.width < 400
         ? _grid = 3
         : Get.width < 550
             ? _grid = 4
@@ -55,7 +55,7 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
                           secondaryColor,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () => _controller.onAddTablePressed(),
                       child: SizedBox(
                         height: 40,
                         child: Row(

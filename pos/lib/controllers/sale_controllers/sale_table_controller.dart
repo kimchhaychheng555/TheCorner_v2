@@ -1,16 +1,22 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
+import 'package:pos/screens/sale_table_screens/widgets/sale_table_add_table_widget.dart';
 import 'package:pos/screens/sale_table_screens/widgets/sale_table_modal_widget.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/app_alert.dart';
+import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/button_action_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class SaleTableController extends GetxController {
   var isLoading = false.obs;
   RxList<TableModel> tableList = (<TableModel>[]).obs;
   RxList<SaleModel> tempSaleList = (<SaleModel>[]).obs;
+  var addTableText = TextEditingController();
 
   @override
   void onInit() {
@@ -57,5 +63,49 @@ class SaleTableController extends GetxController {
       title: table.name ?? "",
       content: const SaleTableModelWidget(),
     );
+  }
+
+  void onAddTablePressed() {
+    addTableText.clear();
+    Get.defaultDialog(
+      radius: 5,
+      title: "add_table".tr,
+      content: SaleTableAddTableWidget(onSubmited: () => onAddTableSubmited()),
+      actions: [
+        ButtonActionWidget(
+          confirmText: "yes".tr,
+          cancelText: "no".tr,
+          onCancelPressed: () => Get.back(),
+          onConfirmPressed: () => onAddTableSubmited(),
+        ),
+      ],
+    );
+  }
+
+  void onAddTableSubmited() async {
+    if (Get.isSnackbarOpen) {
+      Get.closeAllSnackbars();
+    }
+    Get.back();
+    isLoading(true);
+    var newTable = TableModel(
+      id: Uuid.NAMESPACE_NIL,
+      name: addTableText.text,
+      created_by: AppService.currentUser?.fullname,
+    );
+
+    var _resp = await APIService.post(
+      "table/save",
+      jsonEncode(newTable),
+    );
+
+    if (_resp.isSuccess) {
+      AppAlert.successAlert(title: "add_table_success".tr);
+    } else {
+      AppAlert.errorAlert(title: "add_table_error".tr);
+    }
+
+    onLoadTable();
+    isLoading(false);
   }
 }
