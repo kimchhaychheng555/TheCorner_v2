@@ -36,7 +36,7 @@ class SaleDiscountWidget extends StatelessWidget {
                     : null,
                 border: _controller.discountType.value == "percent"
                     ? Border.all(color: primaryColor)
-                    : null,
+                    : Border.all(color: secondaryColor),
                 child: TextWidget(
                   text: "${"percent".tr} (%)",
                   color: _controller.discountType.value == "percent"
@@ -52,7 +52,7 @@ class SaleDiscountWidget extends StatelessWidget {
                     : null,
                 border: _controller.discountType.value == "amount"
                     ? Border.all(color: primaryColor)
-                    : null,
+                    : Border.all(color: secondaryColor),
                 child: TextWidget(
                   text: "${"amount".tr} (\$)",
                   color: _controller.discountType.value == "amount"

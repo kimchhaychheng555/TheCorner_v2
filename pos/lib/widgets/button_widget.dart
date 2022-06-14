@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pos/constants/constants.dart';
 
 class ButtonWidget extends StatelessWidget {
   final double radius;
@@ -31,7 +30,7 @@ class ButtonWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius),
-            border: border ?? Border.all(color: secondaryColor),
+            border: border,
           ),
           padding: padding ??
               const EdgeInsets.symmetric(vertical: 8, horizontal: 15),

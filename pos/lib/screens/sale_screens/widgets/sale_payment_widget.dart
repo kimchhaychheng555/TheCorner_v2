@@ -27,6 +27,7 @@ class SalePaymentWidget extends StatelessWidget {
             children: [
               ..._controller.paymentMethodList.map(
                 (paymentMethod) => ButtonWidget(
+                  border: Border.all(color: secondaryColor),
                   backgroundColor:
                       _controller.paymentMethod.value?.id == paymentMethod.id
                           ? primaryColor
