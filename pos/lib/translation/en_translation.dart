@@ -79,4 +79,6 @@ Map<String, String> get enTranslation => {
       "grand_total": "Grand Total",
       "save_sale_successfully": "Save Sale Successfully",
       "save_sale_error": "Save Sale Error",
+      "search": "Search",
+      "add_category": "Add Category",
     };
