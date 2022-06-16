@@ -12,6 +12,7 @@ import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_discount_widget.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_payment_widget.dart';
+import 'package:pos/screens/sale_screens/widgets/sale_product_item_modify_widget.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
@@ -179,13 +180,17 @@ class SaleController extends GetxController {
       sale_id: Uuid.NAMESPACE_NIL,
     ));
 
+    sale.value?.sale_payments = [];
     sale.value?.sale_payments?.addAll(_salePayments);
     _onSubmitPaymentProcess();
   }
 
   void onProductPressed(ProductModel product) {
     var _exists = (sale.value?.sale_products ?? [])
-        .where((sp) => sp.product_id == product.id && sp.is_deleted == false)
+        .where((sp) =>
+            sp.product_id == product.id &&
+            sp.is_deleted == false &&
+            sp.is_free == false)
         .toList();
 
     if ((_exists).isNotEmpty) {
@@ -207,7 +212,45 @@ class SaleController extends GetxController {
     sale.refresh();
   }
 
-  void onSaleProductItemPressed(SaleProductModel sp) {}
+  void onSaleProductItemPressed(SaleProductModel sp) {
+    var tempSp = (sale.value?.sale_products ?? []).where((_sp) =>
+        _sp.id == sp.id &&
+        _sp.product_id == sp.product_id &&
+        _sp.is_free == sp.is_free &&
+        sp.is_deleted == false);
+
+    Get.defaultDialog(
+      barrierDismissible: false,
+      title: sp.product_name ?? "",
+      titleStyle: const TextStyle(fontFamily: "Siemreap"),
+      radius: 5,
+      content: SaleProductItemModifyWidget(
+        sp: sp,
+        onAccept: (qty, price) {
+          if (tempSp.isNotEmpty) {
+            tempSp.first.quantity = double.parse(qty);
+            tempSp.first.price = double.parse(price);
+            sale.refresh();
+            Get.back();
+          }
+        },
+        onFreePressed: () {
+          if (tempSp.isNotEmpty) {
+            tempSp.first.is_free = true;
+            sale.refresh();
+            Get.back();
+          }
+        },
+        onRemoveFreePressed: () {
+          if (tempSp.isNotEmpty) {
+            tempSp.first.is_free = false;
+            sale.refresh();
+            Get.back();
+          }
+        },
+      ),
+    );
+  }
 
   void onSaleProductItemDeletePressed(SaleProductModel sp) {
     Get.defaultDialog(
