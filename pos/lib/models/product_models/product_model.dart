@@ -8,6 +8,7 @@ class ProductModel {
   String? id;
   String? name;
   double? price;
+  double? cost;
   String? image;
   bool? stockable;
   String? category_id;
@@ -22,6 +23,7 @@ class ProductModel {
     this.id,
     this.name,
     this.price,
+    this.cost,
     this.image,
     this.stockable,
     this.category_id,

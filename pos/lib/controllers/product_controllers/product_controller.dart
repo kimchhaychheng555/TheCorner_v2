@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:pos/models/product_models/product_model.dart';
-import 'package:pos/screens/products_screens/widgets/add_product_widget.dart';
+import 'package:pos/screens/products_screens/widgets/product_detail_widget.dart';
 import 'package:pos/services/api_service.dart';
 
 class ProductController extends GetxController {
@@ -42,7 +42,8 @@ class ProductController extends GetxController {
   void onAddProductPressed() {
     Get.defaultDialog(
       title: "add_product".tr,
-      content: const AddProductWidget(),
+      radius: 5,
+      content: const ProductDetailWidget(),
     );
   }
 }
