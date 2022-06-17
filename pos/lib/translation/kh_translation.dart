@@ -75,4 +75,12 @@ Map<String, String> get khTranslation => {
       "save_sale_error": "រក្សាការលក់ត្រូវបានបរាជ័យ",
       "search": "ស្វែងរក",
       "quantity": "ចំនួន",
+      "upload": "បញ្ចូល",
+      "clear": "សម្អាត",
+      "use_stock": "ប្រើប្រាស់ ស្តុក",
+      "product_name": "ឈ្មោះផលិតផល",
+      "cost": "តម្លៃដើម",
+      "category": "ប្រភេទ",
+      "save": "រក្សាទុក",
+      "edit_product": "កែប្រែ",
     };

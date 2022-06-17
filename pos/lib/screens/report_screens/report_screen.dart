@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/screens/report_screens/data_page.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ReportScreen extends GetResponsiveView<dynamic> {
@@ -16,7 +15,7 @@ class ReportScreen extends GetResponsiveView<dynamic> {
           text: "report".tr,
         ),
       ),
-      body: const DataPage(),
+      body: Container(),
     );
   }
 }

@@ -18,7 +18,7 @@ class ProductScren extends GetResponsiveView<dynamic> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text("Products".tr),
+          title: Text("products".tr),
           actions: [
             IconButton(
               onPressed: () {},

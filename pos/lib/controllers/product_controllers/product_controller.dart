@@ -40,10 +40,9 @@ class ProductController extends GetxController {
 
   void onAddCategoryPressed() {}
   void onAddProductPressed() {
-    Get.defaultDialog(
-      title: "add_product".tr,
-      radius: 5,
-      content: const ProductDetailWidget(),
+    Get.toNamed(
+      ProductDetailScreen.routeName,
+      preventDuplicates: true,
     );
   }
 }

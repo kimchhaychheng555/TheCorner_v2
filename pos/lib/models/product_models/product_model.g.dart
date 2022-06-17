@@ -12,7 +12,7 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       price: (json['price'] as num?)?.toDouble(),
       cost: (json['cost'] as num?)?.toDouble(),
       image: json['image'] as String?,
-      stockable: json['stockable'] as bool?,
+      stockable: json['stockable'] as bool? ?? false,
       category_id: json['category_id'] as String?,
       created_date: json['created_date'] == null
           ? null

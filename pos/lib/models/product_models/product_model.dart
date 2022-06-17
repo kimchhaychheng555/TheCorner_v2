@@ -25,7 +25,7 @@ class ProductModel {
     this.price,
     this.cost,
     this.image,
-    this.stockable,
+    this.stockable = false,
     this.category_id,
     this.created_date,
     this.created_by,

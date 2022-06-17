@@ -82,4 +82,12 @@ Map<String, String> get enTranslation => {
       "search": "Search",
       "add_category": "Add Category",
       "quantity": "Quantity",
+      "upload": "Upload",
+      "clear": "Clear",
+      "use_stock": "Use Stock",
+      "product_name": "Product Name",
+      "cost": "Cost",
+      "category": "Category",
+      "save": "Save",
+      "edit_product": "Edit Product",
     };
