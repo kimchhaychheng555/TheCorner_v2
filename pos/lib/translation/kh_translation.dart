@@ -83,4 +83,5 @@ Map<String, String> get khTranslation => {
       "category": "ប្រភេទ",
       "save": "រក្សាទុក",
       "edit_product": "កែប្រែ",
+      "upload_file_error": "បរាជ័យឯកសារ",
     };

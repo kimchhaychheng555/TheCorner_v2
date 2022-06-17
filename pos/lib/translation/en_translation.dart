@@ -90,4 +90,5 @@ Map<String, String> get enTranslation => {
       "category": "Category",
       "save": "Save",
       "edit_product": "Edit Product",
+      "upload_file_error": "Upload File Error",
     };

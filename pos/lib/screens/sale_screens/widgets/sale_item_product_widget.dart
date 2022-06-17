@@ -52,9 +52,9 @@ class SaleProductItemWidget extends StatelessWidget {
                 ),
               ),
               placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                  "${AppService.baseUrl}uploads/noimage.png",
+              errorWidget: (context, url, error) => const CircleAvatar(
+                backgroundImage: AssetImage(
+                  "assets/images/noimage.png",
                 ),
               ),
             ),

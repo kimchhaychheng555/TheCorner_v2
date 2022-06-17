@@ -12,6 +12,7 @@ class AppTheme {
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.normal,
             fontFamily: AppService.getFont,
+            color: Colors.white,
           ),
           iconTheme: const IconThemeData(
             size: 20,

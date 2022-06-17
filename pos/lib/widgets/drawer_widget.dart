@@ -35,11 +35,12 @@ class DrawerWidget extends StatelessWidget {
                         ),
                         placeholder: (context, url) =>
                             const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => CircleAvatar(
+                        errorWidget: (context, url, error) =>
+                            const CircleAvatar(
                           maxRadius: 30,
                           minRadius: 30,
-                          backgroundImage: NetworkImage(
-                              "${AppService.baseUrl}uploads/noimage.png"),
+                          backgroundImage:
+                              AssetImage("assets/images/noimage.png"),
                         ),
                       ),
                       const SizedBox(width: 10),

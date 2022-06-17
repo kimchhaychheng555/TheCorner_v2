@@ -49,25 +49,35 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                         text: _controller.titleScreen.value.tr,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 18,
                       ),
                     ),
                     const SizedBox(height: 10),
-                    CachedNetworkImage(
-                      imageUrl:
-                          "${AppService.baseUrl}uploads/${_controller.productDetail.value.image}",
-                      imageBuilder: (context, imageProvider) => CircleAvatar(
-                        maxRadius: 60,
-                        backgroundImage: CachedNetworkImageProvider(
-                          "${AppService.baseUrl}uploads/${_controller.productDetail.value.image}",
-                        ),
+                    if (_controller.isUploadImage.value)
+                      CircleAvatar(
+                        maxRadius: 70,
+                        backgroundImage:
+                            FileImage(_controller.imageFile.value!),
                       ),
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => const CircleAvatar(
-                        maxRadius: 60,
-                        backgroundImage: AssetImage(
-                          "assets/images/noimage.png",
+                    Visibility(
+                      visible: !_controller.isUploadImage.value,
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "${AppService.baseUrl}uploads/${_controller.productDetail.value.image}",
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          maxRadius: 70,
+                          backgroundImage: CachedNetworkImageProvider(
+                            "${AppService.baseUrl}uploads/${_controller.productDetail.value.image}",
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const CircleAvatar(
+                          maxRadius: 70,
+                          backgroundImage: AssetImage(
+                            "assets/images/noimage.png",
+                          ),
                         ),
                       ),
                     ),
@@ -78,15 +88,15 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ButtonWidget(
-                            onPressed: () => _controller.onUploadPressed(),
-                            child: TextWidget(text: "upload".tr),
-                            backgroundColor: infoColor,
-                          ),
-                          const SizedBox(width: 10),
-                          ButtonWidget(
                             onPressed: () => _controller.onClearImagePressed(),
                             child: TextWidget(text: "clear".tr),
                             backgroundColor: errorColor,
+                          ),
+                          const SizedBox(width: 10),
+                          ButtonWidget(
+                            onPressed: () => _controller.onUploadPressed(),
+                            child: TextWidget(text: "upload".tr),
+                            backgroundColor: infoColor,
                           ),
                         ],
                       ),
@@ -97,7 +107,8 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                         IgnorePointer(
                           ignoring: !_controller.isEditable.value,
                           child: Checkbox(
-                            value: _controller.productDetail.value.stockable,
+                            value:
+                                _controller.tempProductDetail.value.stockable,
                             onChanged: (_) => _controller.onStockableChanged(_),
                           ),
                         ),
@@ -109,6 +120,7 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                     ),
                     const SizedBox(height: 10),
                     TextFormFieldWidget(
+                      controller: _controller.productNameCtrl,
                       readOnly: !_controller.isEditable.value,
                       label: "product_name".tr,
                       value: _controller.productDetail.value.name,
@@ -116,14 +128,20 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                     ),
                     const SizedBox(height: 10),
                     TextFormFieldWidget(
+                      controller: _controller.costCtrl,
+                      keyboardType: TextInputType.number,
+                      isNumberic: true,
                       readOnly: !_controller.isEditable.value,
                       label: "cost".tr,
                       value: "${_controller.productDetail.value.cost ?? 0}",
                     ),
                     const SizedBox(height: 10),
                     TextFormFieldWidget(
+                      controller: _controller.priceCtrl,
+                      keyboardType: TextInputType.number,
                       readOnly: !_controller.isEditable.value,
                       label: "price".tr,
+                      isNumberic: true,
                       value: "${_controller.productDetail.value.price ?? 0}",
                     ),
                     const SizedBox(height: 10),
@@ -143,9 +161,7 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                         ),
                       ],
                       label: "category".tr,
-                      onChanged: (_) {
-                        // print(_?.name);
-                      },
+                      onChanged: (_) => _controller.onDropdownValueChanged(_),
                     ),
                     const SizedBox(height: 10),
                     Visibility(

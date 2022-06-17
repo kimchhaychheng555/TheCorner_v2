@@ -19,7 +19,7 @@ class TablePageWidget extends StatelessWidget {
           reponseScreenSizes: const [ScreenSize.xs],
           headers: [
             DatatableHeader(
-              text: "Image",
+              text: "",
               value: "image",
               show: true,
               textAlign: TextAlign.center,
@@ -49,6 +49,20 @@ class TablePageWidget extends StatelessWidget {
               sourceBuilder: (value, row) {
                 return TextWidget(
                   text: row["name"],
+                  fontFamily: "Siemreap",
+                  color: Colors.black,
+                  textAlign: TextAlign.center,
+                );
+              },
+            ),
+            DatatableHeader(
+              text: "Cost",
+              value: "cost",
+              show: true,
+              textAlign: TextAlign.center,
+              sourceBuilder: (value, row) {
+                return TextWidget(
+                  text: AppService.currencyFormat(row["cost"]),
                   fontFamily: "Siemreap",
                   color: Colors.black,
                   textAlign: TextAlign.center,

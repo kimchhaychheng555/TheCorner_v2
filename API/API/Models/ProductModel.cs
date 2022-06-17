@@ -14,8 +14,10 @@ namespace API.Models
         [Key]
         public Guid id { get; set; }
         public string name { get; set; }
+        public decimal? cost { get; set; }
         public decimal? price { get; set; }
         public string image { get; set; }
+        public bool stockable { get; set; }
 
 
         public Guid category_id { get; set; }

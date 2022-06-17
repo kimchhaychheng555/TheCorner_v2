@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'package:pos/models/api_models/response_model.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:path/path.dart' as p;
 
 class APIService {
   static const int _timeoutDuration = 20;
@@ -96,30 +96,25 @@ class APIService {
     }
   }
 
-  // static Future<POSTResponse> RESIZEUPLOADIMAGE(
-  //     File? image, String? imageName) async {
-  //   image = image ?? File("");
-  //   var extension = p.extension(image.path); // '.dart'
+  static Future<POSTResponse> uploadFile({
+    required File file,
+    String? fileName,
+  }) async {
+    var extension = p.extension(file.path);
+    var name = fileName ?? p.basename(file.path);
+    var uri = Uri.parse(AppService.apiApp + "upload");
+    var request = http.MultipartRequest("POST", uri);
+    List<int> bytes = await file.readAsBytes();
 
-  //   Image? imageTemp = decodeImage(image.readAsBytesSync());
-
-  //   if (imageTemp == null) {
-  //     POSTResponse resp = POSTResponse(700);
-  //     return resp;
-  //   } else {
-  //     Image imageUpload = copyResize(imageTemp, width: 300);
-  //     var uri = Uri.parse(AppService.apiApp + "upload");
-  //     var request = http.MultipartRequest("POST", uri);
-  //     var multipartFile = http.MultipartFile.fromBytes(
-  //       'file',
-  //       encodeJpg(imageUpload),
-  //       filename: "$imageName$extension",
-  //     );
-  //     request.files.add(multipartFile);
-  //     var response = await request.send();
-  //     POSTResponse resp = POSTResponse(response.statusCode.toInt());
-
-  //     return resp;
-  //   }
-  // }
+    var multipartFile = http.MultipartFile.fromBytes(
+      'file',
+      bytes,
+      filename: name,
+    );
+    request.files.add(multipartFile);
+    var response = await request.send();
+    POSTResponse resp = POSTResponse(response.statusCode.toInt());
+    resp.message = name;
+    return resp;
+  }
 }
