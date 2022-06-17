@@ -326,7 +326,6 @@ class SaleController extends GetxController {
       AppAlert.errorAlert(title: "save_sale_error".tr);
     }
 
-    print(jsonEncode(sale.value));
     isLoading(false);
   }
 

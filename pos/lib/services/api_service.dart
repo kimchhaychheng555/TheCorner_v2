@@ -100,7 +100,6 @@ class APIService {
     required File file,
     String? fileName,
   }) async {
-    var extension = p.extension(file.path);
     var name = fileName ?? p.basename(file.path);
     var uri = Uri.parse(AppService.apiApp + "upload");
     var request = http.MultipartRequest("POST", uri);

@@ -125,7 +125,6 @@ class ProductDetailController extends GetxController {
       );
       productDetail(_product);
     }
-    print(jsonEncode(productDetail.value));
     var _resp =
         await APIService.post("product/save", jsonEncode(productDetail.value));
     if (_resp.isSuccess) {
