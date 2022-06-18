@@ -59,5 +59,23 @@ namespace API.Controllers
 
             return Ok(st);
         }
+
+
+        [HttpPost("Delete/{key}")]
+        public async Task<IActionResult> Post([FromODataUri] Guid key)
+        {
+            var dataList = db.StockTransactions.Where(p => p.id == key);
+            if (!dataList.Any())
+            {
+                return NotFound();
+            }
+            var data = dataList.FirstOrDefault();
+            data.is_deleted = true;
+
+            db.StockTransactions.Update(data);
+            await db.SaveChangesAsync();
+
+            return Ok(data);
+        }
     }
 }

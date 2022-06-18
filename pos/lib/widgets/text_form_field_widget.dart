@@ -26,7 +26,7 @@ class TextFormFieldWidget extends StatelessWidget {
     return TextFormField(
       inputFormatters: isNumberic
           ? <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
             ]
           : null,
       keyboardType: keyboardType,

@@ -57,5 +57,22 @@ namespace API.Controllers
 
             return Ok(category);
         }
+
+        [HttpPost("Delete/{key}")]
+        public async Task<IActionResult> Post([FromODataUri] Guid key)
+        {
+            var categories = db.Categories.Where(p => p.id == key);
+            if (!categories.Any())
+            {
+                return NotFound();
+            }
+            var category = categories.FirstOrDefault();
+            category.is_deleted = true;
+
+            db.Categories.Update(category);
+            await db.SaveChangesAsync();
+
+            return Ok(category);
+        }
     }
 }

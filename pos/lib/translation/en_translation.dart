@@ -91,4 +91,6 @@ Map<String, String> get enTranslation => {
       "save": "Save",
       "edit_product": "Edit Product",
       "upload_file_error": "Upload File Error",
+      "are_you_sure": "Are you sure ?",
+      "product_delete": "Delete @name",
     };

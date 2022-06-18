@@ -75,5 +75,6 @@ namespace API.Controllers
 
             return Ok(SingleResult.Create(role));
         }
+
     }
 }

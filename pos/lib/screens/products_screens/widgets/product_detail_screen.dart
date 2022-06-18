@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/product_controllers/product_detail_controller.dart';
 import 'package:get/get.dart';
-import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
@@ -53,34 +51,7 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    if (_controller.isUploadImage.value)
-                      CircleAvatar(
-                        maxRadius: 70,
-                        backgroundImage:
-                            FileImage(_controller.imageFile.value!),
-                      ),
-                    Visibility(
-                      visible: !_controller.isUploadImage.value,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "${AppService.baseUrl}uploads/${_controller.productDetail.value.image}",
-                        imageBuilder: (context, imageProvider) => CircleAvatar(
-                          maxRadius: 70,
-                          backgroundImage: CachedNetworkImageProvider(
-                            "${AppService.baseUrl}uploads/${_controller.productDetail.value.image}",
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const CircleAvatar(
-                          maxRadius: 70,
-                          backgroundImage: AssetImage(
-                            "assets/images/noimage.png",
-                          ),
-                        ),
-                      ),
-                    ),
+                    _controller.getImageWidget,
                     const SizedBox(height: 10),
                     Visibility(
                       visible: _controller.isEditable.value,
@@ -123,7 +94,6 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                       controller: _controller.productNameCtrl,
                       readOnly: !_controller.isEditable.value,
                       label: "product_name".tr,
-                      value: _controller.productDetail.value.name,
                       fontFamily: "Siemreap",
                     ),
                     const SizedBox(height: 10),
@@ -133,7 +103,6 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                       isNumberic: true,
                       readOnly: !_controller.isEditable.value,
                       label: "cost".tr,
-                      value: "${_controller.productDetail.value.cost ?? 0}",
                     ),
                     const SizedBox(height: 10),
                     TextFormFieldWidget(
@@ -142,7 +111,6 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                       readOnly: !_controller.isEditable.value,
                       label: "price".tr,
                       isNumberic: true,
-                      value: "${_controller.productDetail.value.price ?? 0}",
                     ),
                     const SizedBox(height: 10),
                     DropdownButtonFormFieldWidget<String>(

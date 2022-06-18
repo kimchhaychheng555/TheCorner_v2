@@ -64,13 +64,6 @@ class ProductScren extends GetResponsiveView<dynamic> {
                     ),
                     const Spacer(),
                     IconTextButtonWidget(
-                      onPressed: () => _controller.onAddCategoryPressed(),
-                      label: TextWidget(text: "add_category".tr),
-                      backgroundColor: primaryColor,
-                      icon: const Icon(Icons.add_rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    IconTextButtonWidget(
                       onPressed: () => _controller.onAddProductPressed(),
                       label: TextWidget(text: "add_product".tr),
                       backgroundColor: primaryColor,

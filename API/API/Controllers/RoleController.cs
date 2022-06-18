@@ -57,5 +57,23 @@ namespace API.Controllers
 
             return Ok(role);
         }
+
+
+        [HttpPost("Delete/{key}")]
+        public async Task<IActionResult> Post([FromODataUri] Guid key)
+        {
+            var dataList = db.Roles.Where(p => p.id == key);
+            if (!dataList.Any())
+            {
+                return NotFound();
+            }
+            var data = dataList.FirstOrDefault();
+            data.is_deleted = true;
+
+            db.Roles.Update(data);
+            await db.SaveChangesAsync();
+
+            return Ok(data);
+        }
     }
 }

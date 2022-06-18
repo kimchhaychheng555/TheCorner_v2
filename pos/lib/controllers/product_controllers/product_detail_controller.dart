@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
@@ -25,7 +26,6 @@ class ProductDetailController extends GetxController {
   var productNameCtrl = TextEditingController();
   var costCtrl = TextEditingController();
   var priceCtrl = TextEditingController();
-  var categoryCtrl = TextEditingController();
 
   @override
   void onInit() async {
@@ -45,7 +45,10 @@ class ProductDetailController extends GetxController {
     if (arg != null) {
       var _data = ProductModel.fromJson(arg);
       productDetail(_data);
-      tempProductDetail(productDetail.value);
+      productNameCtrl.text = productDetail.value.name ?? "";
+      costCtrl.text = "${productDetail.value.cost ?? 0}";
+      priceCtrl.text = "${productDetail.value.price ?? 0}";
+      tempProductDetail(_data);
     }
 
     if (productDetail.value.id == null) {
@@ -94,6 +97,37 @@ class ProductDetailController extends GetxController {
 
   void onClearImagePressed() {
     isUploadImage(false);
+    productDetail.value.image = "noimage.png";
+  }
+
+  Widget get getImageWidget {
+    ImageProvider _backgroundImage =
+        const AssetImage("assets/images/noimage.png");
+    if (isUploadImage.value) {
+      _backgroundImage = FileImage(imageFile.value!);
+    } else {
+      return CachedNetworkImage(
+        imageUrl: "${AppService.baseUrl}uploads/${productDetail.value.image}",
+        imageBuilder: (context, imageProvider) => CircleAvatar(
+          maxRadius: 70,
+          backgroundImage: CachedNetworkImageProvider(
+            "${AppService.baseUrl}uploads/${productDetail.value.image}",
+          ),
+        ),
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const CircleAvatar(
+          maxRadius: 70,
+          backgroundImage: AssetImage(
+            "assets/images/noimage.png",
+          ),
+        ),
+      );
+    }
+
+    return CircleAvatar(
+      maxRadius: 70,
+      backgroundImage: _backgroundImage,
+    );
   }
 
   void onDropdownValueChanged(String? value) {
@@ -111,7 +145,10 @@ class ProductDetailController extends GetxController {
         return;
       }
       imageName = _uploadImage.message;
+    } else {
+      imageName = tempProductDetail.value.image ?? "noimage.png";
     }
+
     if (productDetail.value.id == null) {
       var _product = ProductModel(
         id: Uuid.NAMESPACE_NIL,
@@ -124,7 +161,21 @@ class ProductDetailController extends GetxController {
         image: imageName,
       );
       productDetail(_product);
+    } else {
+      var _product = ProductModel.fromJson(
+          jsonDecode(jsonEncode(tempProductDetail.value)));
+      _product.name = productNameCtrl.text;
+      _product.cost = double.tryParse(costCtrl.text) ?? 0;
+      _product.price = double.tryParse(priceCtrl.text) ?? 0;
+      _product.image = imageName;
+      _product.category = null;
+
+      tempProductDetail(_product);
+      print(productDetail.value.category_id);
+      print(tempProductDetail.value.category_id);
+      productDetail(tempProductDetail.value);
     }
+
     var _resp =
         await APIService.post("product/save", jsonEncode(productDetail.value));
     if (_resp.isSuccess) {
