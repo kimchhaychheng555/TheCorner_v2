@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/product_models/product_model.dart';
+import 'package:pos/screens/products_screens/category_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
@@ -41,7 +42,13 @@ class ProductController extends GetxController {
     return temp;
   }
 
-  void onAddCategoryPressed() {}
+  void onCategoryPressed() {
+    Get.toNamed(
+      CategoryScreen.routeName,
+      preventDuplicates: true,
+    );
+  }
+
   void onAddProductPressed() {
     Get.toNamed(
       ProductDetailScreen.routeName,

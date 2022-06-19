@@ -86,4 +86,9 @@ Map<String, String> get khTranslation => {
       "upload_file_error": "បរាជ័យឯកសារ",
       "are_you_sure": "តើអ្នកប្រាកដទេ ?",
       "product_delete": "លុប @name",
+      "edit_category": "កែប្រែ @name",
+      "delete_category": "លុប @name",
+      "edit": "កែប្រែ",
+      "restore": "ស្តារ",
+      "active": "សកម្ម",
     };

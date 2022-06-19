@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:pos/helper/app_bindings.dart';
 import 'package:pos/main_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
+import 'package:pos/screens/products_screens/category_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/screens/report_screens/report_screen.dart';
@@ -57,6 +58,11 @@ class AppRoute {
         GetPage(
           page: () => ProductDetailScreen(),
           name: ProductDetailScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => CategoryScreen(),
+          name: CategoryScreen.routeName,
           binding: AppBindings(),
         ),
       ];

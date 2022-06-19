@@ -171,8 +171,6 @@ class ProductDetailController extends GetxController {
       _product.category = null;
 
       tempProductDetail(_product);
-      print(productDetail.value.category_id);
-      print(tempProductDetail.value.category_id);
       productDetail(tempProductDetail.value);
     }
 

@@ -74,5 +74,21 @@ namespace API.Controllers
 
             return Ok(product);
         }
+        [HttpPost("Restore/{key}")]
+        public async Task<IActionResult> PostRestore([FromODataUri] Guid key)
+        {
+            var products = db.Products.Where(p => p.id == key);
+            if (!products.Any())
+            {
+                return NotFound();
+            }
+            var product = products.FirstOrDefault();
+            product.is_deleted = false;
+
+            db.Products.Update(product);
+            await db.SaveChangesAsync();
+
+            return Ok(product);
+        }
     }
 }
