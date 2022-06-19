@@ -13,18 +13,39 @@ class ProductController extends GetxController {
   var isLoading = false.obs;
   RxList<ProductModel> productList = (<ProductModel>[]).obs;
 
+  //Pagination
+  var totalPage = 0.obs;
+  var topCount = 0.obs;
+  var currentPage = 1.obs;
+  var offset = 0.obs;
+  var pager = 5.obs;
+  RxList<int> pagerList = (<int>[]).obs;
+
   @override
   void onInit() async {
     super.onInit();
     isLoading(true);
+    onInitPagerList();
     await onLoadProduct();
     isLoading(false);
   }
 
+  void onInitPagerList() {
+    var _temp = [5, 10, 15, 25, 50];
+    pagerList.assignAll(_temp);
+    pager(_temp.first);
+  }
+
+  void onPagerChanged(int? value) {
+    pager(value);
+  }
+
   Future<void> onLoadProduct() async {
     var _resp = await APIService.oDataGet(
-        "product?\$expand=category&\$filter=is_deleted eq false");
+        "product?\$expand=category&\$count=true&\$filter=is_deleted eq false");
     if (_resp.isSuccess) {
+      totalPage((_resp.count / pager.value).ceil());
+
       List<dynamic> _dyn = [];
       _dyn = jsonDecode(_resp.content);
       var _dataList = _dyn.map((e) => ProductModel.fromJson(e)).toList();
