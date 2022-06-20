@@ -77,6 +77,7 @@ class ProductController extends GetxController {
   }
 
   void onFilterPressed() {
+    Get.back();
     if (tempStatus == "active") {
       isDeletedFilter(false);
     } else {

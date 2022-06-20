@@ -156,6 +156,7 @@ class SmartHomeController extends GetxController {
   void onUserPressed() {}
   void onUsersPressed() => Get.toNamed(UserScreen.routeName);
   void onSettingPressed() => Get.toNamed(SettingScreen.routeName);
+
   void onLogoutPressed() {
     AppService.storage.remove("account_store");
     Get.offAllNamed(LoginScreen.routeName);
