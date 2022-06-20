@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pos/helper/app_bindings.dart';
 import 'package:pos/main_screen.dart';
+import 'package:pos/screens/business_report_screens/overview_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
@@ -69,6 +70,11 @@ class AppRoute {
         GetPage(
           page: () => UserScreen(),
           name: UserScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => OverviewScreen(),
+          name: OverviewScreen.routeName,
           binding: AppBindings(),
         ),
       ];

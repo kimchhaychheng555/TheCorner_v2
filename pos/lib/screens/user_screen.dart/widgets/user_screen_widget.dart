@@ -11,8 +11,8 @@ import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class TablePageWidget extends StatelessWidget {
-  const TablePageWidget({Key? key}) : super(key: key);
+class UserScreenWidget extends StatelessWidget {
+  const UserScreenWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TablePageWidget extends StatelessWidget {
                 reponseScreenSizes: const [ScreenSize.xs],
                 headers: [
                   DatatableHeader(
-                    text: "",
+                    text: "Profile Image",
                     value: "image",
                     show: true,
                     textAlign: TextAlign.center,
@@ -58,13 +58,13 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "name".tr,
-                    value: "name",
+                    text: "Full Name",
+                    value: "full_name",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: row["name"],
+                        text: row["full_name"],
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -72,13 +72,13 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Cost",
-                    value: "cost",
+                    text: "Username",
+                    value: "username",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: AppService.currencyFormat(row["cost"]),
+                        text: AppService.currencyFormat(row["username"]),
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -86,27 +86,13 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Price",
-                    value: "price",
+                    text: "Role",
+                    value: "role",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: AppService.currencyFormat(row["price"]),
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "Category",
-                    value: "id",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: row["category"]["name"],
+                        text: AppService.currencyFormat(row["role"]),
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -156,20 +142,6 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                 ],
-                footers: [
-                  if (_controller.dataSource.isEmpty)
-                    Expanded(
-                      child: Container(
-                        color: HexColor("#ededed"),
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: TextWidget(
-                          text: "no_data_available_in_table".tr,
-                          color: textColor,
-                        ),
-                      ),
-                    ),
-                ],
                 source: _controller.dataSource,
                 selecteds: _controller.dataSource,
                 autoHeight: false,
@@ -200,84 +172,83 @@ class TablePageWidget extends StatelessWidget {
                 selectedTextStyle: const TextStyle(color: Colors.white),
               ),
             ),
-            if (_controller.dataSource.isNotEmpty) const SizedBox(height: 10),
-            if (_controller.dataSource.isNotEmpty)
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 2.5,
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 2.5,
+                ),
+                ButtonPaginationWidget(
+                  onPressed: _controller.currentPage.value == 1
+                      ? null
+                      : () => _controller
+                          .onPagePressed(_controller.currentPage.value - 1),
+                  backgroundColor: HexColor("#eaeaea"),
+                  child: Icon(
+                    Icons.chevron_left_rounded,
+                    color: _controller.currentPage.value == 1
+                        ? HexColor("#AAAAAA")
+                        : null,
                   ),
+                ),
+                for (var i = 1; i <= _controller.totalPage.value; i++)
                   ButtonPaginationWidget(
-                    onPressed: _controller.currentPage.value == 1
-                        ? null
-                        : () => _controller
-                            .onPagePressed(_controller.currentPage.value - 1),
-                    backgroundColor: HexColor("#eaeaea"),
-                    child: Icon(
-                      Icons.chevron_left_rounded,
-                      color: _controller.currentPage.value == 1
-                          ? HexColor("#AAAAAA")
-                          : null,
+                    onPressed: () => _controller.onPagePressed(i),
+                    backgroundColor: _controller.currentPage.value == i
+                        ? infoColor
+                        : HexColor("#eaeaea"),
+                    child: TextWidget(
+                      text: "$i",
+                      color: _controller.currentPage.value == i
+                          ? Colors.white
+                          : textColor,
                     ),
                   ),
-                  for (var i = 1; i <= _controller.totalPage.value; i++)
-                    ButtonPaginationWidget(
-                      onPressed: () => _controller.onPagePressed(i),
-                      backgroundColor: _controller.currentPage.value == i
-                          ? infoColor
-                          : HexColor("#eaeaea"),
-                      child: TextWidget(
-                        text: "$i",
-                        color: _controller.currentPage.value == i
-                            ? Colors.white
-                            : textColor,
-                      ),
-                    ),
-                  ButtonPaginationWidget(
-                    onPressed: _controller.currentPage.value ==
+                ButtonPaginationWidget(
+                  onPressed: _controller.currentPage.value ==
+                          _controller.totalPage.value
+                      ? null
+                      : () => _controller
+                          .onPagePressed(_controller.currentPage.value + 1),
+                  backgroundColor: HexColor("#eaeaea"),
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    color: _controller.currentPage.value ==
                             _controller.totalPage.value
-                        ? null
-                        : () => _controller
-                            .onPagePressed(_controller.currentPage.value + 1),
-                    backgroundColor: HexColor("#eaeaea"),
-                    child: Icon(
-                      Icons.chevron_right_rounded,
-                      color: _controller.currentPage.value ==
-                              _controller.totalPage.value
-                          ? HexColor("#AAAAAA")
-                          : null,
-                    ),
+                        ? HexColor("#AAAAAA")
+                        : null,
                   ),
-                  const SizedBox(
-                    width: 2.5,
-                  ),
-                  const Spacer(),
-                  TextWidget(
-                    text: _controller.getResultPageInfo,
-                    color: textColor,
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    height: 40,
-                    width: 65,
-                    child: DropdownButtonFormFieldWidget<int>(
-                      items: [
-                        ..._controller.pagerList.map(
-                          (p) => DropdownMenuItem<int>(
-                            child: TextWidget(
-                              text: "$p",
-                              color: textColor,
-                            ),
-                            value: p,
+                ),
+                const SizedBox(
+                  width: 2.5,
+                ),
+                const Spacer(),
+                TextWidget(
+                  text: _controller.getResultPageInfo,
+                  color: textColor,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  height: 40,
+                  width: 65,
+                  child: DropdownButtonFormFieldWidget<int>(
+                    items: [
+                      ..._controller.pagerList.map(
+                        (p) => DropdownMenuItem<int>(
+                          child: TextWidget(
+                            text: "$p",
+                            color: textColor,
                           ),
+                          value: p,
                         ),
-                      ],
-                      value: _controller.pager.value,
-                      onChanged: (_) => _controller.onPagerChanged(_),
-                    ),
+                      ),
+                    ],
+                    value: _controller.pager.value,
+                    onChanged: (_) => _controller.onPagerChanged(_),
                   ),
-                ],
-              )
+                ),
+              ],
+            )
           ],
         ),
       ),
