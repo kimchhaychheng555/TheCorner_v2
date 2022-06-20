@@ -58,7 +58,7 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Name",
+                    text: "name".tr,
                     value: "name",
                     show: true,
                     textAlign: TextAlign.center,
