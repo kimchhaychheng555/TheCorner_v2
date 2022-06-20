@@ -22,18 +22,6 @@ class UserScreen extends GetResponsiveView<dynamic> {
                 margin: const EdgeInsets.only(top: 20.0),
                 width: 1000,
                 height: 800,
-                // height: 700,
-                // decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(15),
-                //     color: HexColor("#ffffff"),
-                //     boxShadow: [
-                //       BoxShadow(
-                //         // blurRadius: 1,
-                //         spreadRadius: 0.1,
-                //         offset: const Offset(0, 1),
-                //         color: HexColor("#000000").withOpacity(0.1),
-                //       )
-                //     ]),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: ListView(children: [
