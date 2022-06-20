@@ -10,6 +10,7 @@ import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 import 'package:pos/screens/setting_screens/setting_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
+import 'package:pos/screens/user_screen.dart/user_screen.dart';
 
 class AppRoute {
   static String initialRoute = MainScreen.routeName;
@@ -63,6 +64,11 @@ class AppRoute {
         GetPage(
           page: () => CategoryScreen(),
           name: CategoryScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => UserScreen(),
+          name: UserScreen.routeName,
           binding: AppBindings(),
         ),
       ];
