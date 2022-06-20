@@ -91,4 +91,10 @@ Map<String, String> get khTranslation => {
       "edit": "កែប្រែ",
       "restore": "ស្តារ",
       "active": "សកម្ម",
+      "filter": "ច្រោះ",
+      "status": "ស្ថានភាព",
+      "all": "ទាំងអស់",
+      "deleted": "បានលុប",
+      "show": "បង្ហាញ",
+      "of": "នៃ",
     };

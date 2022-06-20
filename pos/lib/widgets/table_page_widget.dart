@@ -119,24 +119,40 @@ class TablePageWidget extends StatelessWidget {
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            splashRadius: 30,
-                            onPressed: () {
-                              _controller.onProductDeletePressed(
-                                id: value,
-                                name: row["name"],
-                              );
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              color: errorColor,
-                            ),
-                          )
-                        ],
-                      );
+                      return row["is_deleted"]
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  splashRadius: 30,
+                                  onPressed: () {
+                                    _controller.onProductRestorePressed(value);
+                                  },
+                                  icon: Icon(
+                                    Icons.replay_rounded,
+                                    color: successColor,
+                                  ),
+                                )
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  splashRadius: 30,
+                                  onPressed: () {
+                                    _controller.onProductDeletePressed(
+                                      id: value,
+                                      name: row["name"],
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: errorColor,
+                                  ),
+                                )
+                              ],
+                            );
                     },
                   ),
                 ],
@@ -170,19 +186,28 @@ class TablePageWidget extends StatelessWidget {
                 selectedTextStyle: const TextStyle(color: Colors.white),
               ),
             ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 const SizedBox(
                   width: 2.5,
                 ),
                 ButtonPaginationWidget(
-                  onPressed: () {},
+                  onPressed: _controller.currentPage.value == 1
+                      ? null
+                      : () => _controller
+                          .onPagePressed(_controller.currentPage.value - 1),
                   backgroundColor: HexColor("#eaeaea"),
-                  child: const Icon(Icons.chevron_left_rounded),
+                  child: Icon(
+                    Icons.chevron_left_rounded,
+                    color: _controller.currentPage.value == 1
+                        ? HexColor("#AAAAAA")
+                        : null,
+                  ),
                 ),
                 for (var i = 1; i <= _controller.totalPage.value; i++)
                   ButtonPaginationWidget(
-                    onPressed: () {},
+                    onPressed: () => _controller.onPagePressed(i),
                     backgroundColor: _controller.currentPage.value == i
                         ? infoColor
                         : HexColor("#eaeaea"),
@@ -194,16 +219,26 @@ class TablePageWidget extends StatelessWidget {
                     ),
                   ),
                 ButtonPaginationWidget(
-                  onPressed: () {},
+                  onPressed: _controller.currentPage.value ==
+                          _controller.totalPage.value
+                      ? null
+                      : () => _controller
+                          .onPagePressed(_controller.currentPage.value + 1),
                   backgroundColor: HexColor("#eaeaea"),
-                  child: const Icon(Icons.chevron_right_rounded),
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    color: _controller.currentPage.value ==
+                            _controller.totalPage.value
+                        ? HexColor("#AAAAAA")
+                        : null,
+                  ),
                 ),
                 const SizedBox(
                   width: 2.5,
                 ),
                 const Spacer(),
                 TextWidget(
-                  text: "${"results".tr}: 1 - 15 ${"of".tr} 321",
+                  text: _controller.getResultPageInfo,
                   color: textColor,
                 ),
                 const SizedBox(width: 10),

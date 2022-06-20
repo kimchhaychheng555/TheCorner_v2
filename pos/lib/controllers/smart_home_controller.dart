@@ -160,4 +160,13 @@ class SmartHomeController extends GetxController {
     AppService.storage.remove("account_store");
     Get.offAllNamed(LoginScreen.routeName);
   }
+
+  Stream<int> streamBuild = (() async* {
+    var i = 1;
+    while (i > 0) {
+      print("========= $i");
+      await Future.delayed(const Duration(seconds: 1));
+      yield i;
+    }
+  })();
 }

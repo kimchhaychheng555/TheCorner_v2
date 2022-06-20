@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
+import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
 import 'package:pos/widgets/icon_text_button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/table_page_widget.dart';
@@ -15,15 +16,28 @@ class ProductScren extends GetResponsiveView<dynamic> {
   @override
   Widget builder() {
     ProductController _controller = Get.find();
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Obx(
       () => Scaffold(
+        key: _key,
+        endDrawer: const ProductDrawerWidget(),
         appBar: AppBar(
           title: Text("products".tr),
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(Icons.keyboard_backspace),
+          ),
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.filter_list),
-            )
+              onPressed: () => _controller.onLoadProduct(),
+              icon: const Icon(Icons.refresh_rounded),
+            ),
+            IconButton(
+              onPressed: () {
+                _key.currentState!.openEndDrawer();
+              },
+              icon: const Icon(Icons.filter_list_rounded),
+            ),
           ],
         ),
         body: LoadingOverlayWidget(

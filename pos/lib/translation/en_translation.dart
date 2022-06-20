@@ -98,4 +98,10 @@ Map<String, String> get enTranslation => {
       "edit": "Edit",
       "restore": "Restore",
       "active": "Active",
+      "filter": "Filter",
+      "status": "Status",
+      "all": "All",
+      "deleted": "Deleted",
+      "show": "Show",
+      "of": "Of",
     };
