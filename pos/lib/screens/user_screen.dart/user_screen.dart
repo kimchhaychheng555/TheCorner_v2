@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/constants/constants.dart';
+import 'package:pos/controllers/product_controllers/product_controller.dart';
+import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
+import 'package:pos/widgets/icon_text_button_widget.dart';
+import 'package:pos/widgets/loading_overlay_widget.dart';
+import 'package:pos/widgets/table_page_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class UserScreen extends GetResponsiveView<dynamic> {
@@ -10,259 +15,92 @@ class UserScreen extends GetResponsiveView<dynamic> {
 
   @override
   Widget builder() {
-    return Scaffold(
+    ProductController _controller = Get.find();
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
+    return Obx(
+      () => Scaffold(
+        key: _key,
+        endDrawer: const ProductDrawerWidget(),
         appBar: AppBar(
-          title: Text("setting".tr),
+          title: Text("users".tr),
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(Icons.keyboard_backspace),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () => _controller.onLoadProduct(),
+              icon: const Icon(Icons.refresh_rounded),
+            ),
+            IconButton(
+              onPressed: () {
+                _key.currentState!.openEndDrawer();
+              },
+              icon: const Icon(Icons.filter_list_rounded),
+            ),
+          ],
         ),
-        body: Stack(
-          children: [
-            Container(
-              alignment: Alignment.topCenter,
-              child: Container(
-                margin: const EdgeInsets.only(top: 20.0),
-                width: 1000,
-                height: 800,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ListView(children: [
-                    Card(
-                      color: Colors.white,
-                      // elevation: 4.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: Column(
-                          children: [
-                            Card(
-                                elevation: 0.5,
-                                child: ListTile(
-                                  title: TextWidget(
-                                    text: "privacy_setting".tr,
-                                    color: HexColor("#0169F8"),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                  ),
-                                )),
-                            const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 20, right: 20, top: 10),
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.language,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                title: TextWidget(
-                                  text: "language",
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 160),
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "english".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: Colors.white,
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "khmer".tr,
-                                          fontFamily: 'Siemreap',
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: Colors.white,
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10),
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.send,
-                                  color: HexColor("#0F99FC"),
-                                  size: 40,
-                                ),
-                                title: TextWidget(
-                                  text: "sent_telegram".tr,
-                                  fontSize: 18,
-                                  color: HexColor("#000000"),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 160),
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "agree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "disagree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10),
-                              child: ListTile(
-                                leading: const Icon(
-                                  Icons.wifi_protected_setup,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                title: TextWidget(
-                                  text: "vat".tr,
-                                  fontSize: 18,
-                                  color: HexColor("#000000"),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 160),
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "agree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "disagree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                                elevation: 0.3,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10),
-                                  child: ListTile(
-                                    leading: Icon(
-                                      Icons.logout,
-                                      color: HexColor("#FF0D19"),
-                                      size: 40,
-                                    ),
-                                    title: TextWidget(
-                                      text: "log_out".tr,
-                                      color: HexColor("#FF0D19"),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                )),
-                          ],
+        body: LoadingOverlayWidget(
+          isLoading: _controller.isLoading.value,
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 20,
+                          ),
+                          filled: true,
+                          isCollapsed: true,
+                          hintText: "search".tr,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
                       ),
                     ),
-                  ]),
+                    const Spacer(),
+                    IconTextButtonWidget(
+                      onPressed: () => _controller.onCategoryPressed(),
+                      label: TextWidget(text: "category".tr),
+                      backgroundColor: primaryColor,
+                      icon: const Icon(Icons.category_rounded),
+                    ),
+                    const SizedBox(width: 10),
+                    IconTextButtonWidget(
+                      onPressed: () => _controller.onAddProductPressed(),
+                      label: TextWidget(text: "add_product".tr),
+                      backgroundColor: primaryColor,
+                      icon: const Icon(Icons.add_rounded),
+                    ),
+                  ],
                 ),
-              ),
+                const SizedBox(height: 15),
+                const Expanded(
+                  child: TablePageWidget(),
+                ),
+              ],
             ),
-          ],
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }
