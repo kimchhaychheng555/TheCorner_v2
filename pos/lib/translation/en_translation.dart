@@ -104,4 +104,5 @@ Map<String, String> get enTranslation => {
       "deleted": "Deleted",
       "show": "Show",
       "of": "Of",
+      "add_user": "Add User",
     };

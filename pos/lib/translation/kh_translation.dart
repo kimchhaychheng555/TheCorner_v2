@@ -97,4 +97,5 @@ Map<String, String> get khTranslation => {
       "deleted": "បានលុប",
       "show": "បង្ហាញ",
       "of": "នៃ",
+      "add_user": "បន្ថែមអ្នកប្រើប្រាស់",
     };

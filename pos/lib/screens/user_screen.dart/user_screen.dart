@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
 import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
+import 'package:pos/screens/user_screen.dart/widgets/user_screen_widget.dart';
 import 'package:pos/widgets/icon_text_button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/table_page_widget.dart';
@@ -78,15 +79,8 @@ class UserScreen extends GetResponsiveView<dynamic> {
                     ),
                     const Spacer(),
                     IconTextButtonWidget(
-                      onPressed: () => _controller.onCategoryPressed(),
-                      label: TextWidget(text: "category".tr),
-                      backgroundColor: primaryColor,
-                      icon: const Icon(Icons.category_rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    IconTextButtonWidget(
                       onPressed: () => _controller.onAddProductPressed(),
-                      label: TextWidget(text: "add_product".tr),
+                      label: TextWidget(text: "add_user".tr),
                       backgroundColor: primaryColor,
                       icon: const Icon(Icons.add_rounded),
                     ),
@@ -94,7 +88,7 @@ class UserScreen extends GetResponsiveView<dynamic> {
                 ),
                 const SizedBox(height: 15),
                 const Expanded(
-                  child: TablePageWidget(),
+                  child: UserScreenWidget(),
                 ),
               ],
             ),
