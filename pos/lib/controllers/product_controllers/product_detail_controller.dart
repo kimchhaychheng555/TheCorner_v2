@@ -10,6 +10,7 @@ import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/avatar_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductDetailController extends GetxController {
@@ -108,17 +109,25 @@ class ProductDetailController extends GetxController {
     } else {
       return CachedNetworkImage(
         imageUrl: "${AppService.baseUrl}uploads/${productDetail.value.image}",
-        imageBuilder: (context, imageProvider) => CircleAvatar(
-          maxRadius: 70,
-          backgroundImage: CachedNetworkImageProvider(
-            "${AppService.baseUrl}uploads/${productDetail.value.image}",
+        imageBuilder: (context, imageProvider) => AvatarWidget(
+          maxRadius: 140,
+          child: CachedNetworkImage(
+            imageUrl:
+                "${AppService.baseUrl}uploads/${productDetail.value.image}",
+            fit: BoxFit.cover,
           ),
         ),
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => const CircleAvatar(
-          maxRadius: 70,
-          backgroundImage: AssetImage(
+        placeholder: (context, url) => const AvatarWidget(
+          maxRadius: 140,
+          padding: EdgeInsets.all(10),
+          backgroundColor: Colors.white,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        ),
+        errorWidget: (context, url, error) => AvatarWidget(
+          maxRadius: 140,
+          child: Image.asset(
             "assets/images/noimage.png",
+            fit: BoxFit.cover,
           ),
         ),
       );
