@@ -6,6 +6,7 @@ import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/user_controllers/user_controller.dart';
 import 'package:pos/screens/users_screens/widgets/user_detail_screen.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/avatar_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
@@ -36,22 +37,22 @@ class UserTablePageWidget extends StatelessWidget {
                       return CachedNetworkImage(
                         imageUrl:
                             "${AppService.baseUrl}uploads/${row["profile"]}",
-                        imageBuilder: (context, imageProvider) => CircleAvatar(
-                          maxRadius: 25,
-                          backgroundImage: CachedNetworkImageProvider(
-                            "${AppService.baseUrl}uploads/${row["profile"]}",
+                        imageBuilder: (context, imageProvider) => AvatarWidget(
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "${AppService.baseUrl}uploads/${row["profile"]}",
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        placeholder: (context, url) => const CircleAvatar(
+                        placeholder: (context, url) => const AvatarWidget(
+                          padding: EdgeInsets.all(10),
                           backgroundColor: Colors.white,
-                          maxRadius: 25,
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(strokeWidth: 2),
                         ),
-                        errorWidget: (context, url, error) =>
-                            const CircleAvatar(
-                          maxRadius: 25,
-                          backgroundImage: AssetImage(
+                        errorWidget: (context, url, error) => AvatarWidget(
+                          child: Image.asset(
                             "assets/images/noimage.png",
+                            fit: BoxFit.cover,
                           ),
                         ),
                       );
