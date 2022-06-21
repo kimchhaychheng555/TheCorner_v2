@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
 import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
 import 'package:pos/screens/report_screens/widgets/report_screen_widget.dart';
-import 'package:pos/screens/user_screen.dart/widgets/user_screen_widget.dart';
-import 'package:pos/widgets/icon_text_button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
-import 'package:pos/widgets/table_page_widget.dart';
-import 'package:pos/widgets/text_widget.dart';
 
 class ReportScreen extends GetResponsiveView<dynamic> {
   ReportScreen({Key? key}) : super(key: key);

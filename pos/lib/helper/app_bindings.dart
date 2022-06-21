@@ -8,6 +8,8 @@ import 'package:pos/controllers/report_controllers/report_controller.dart';
 import 'package:pos/controllers/sale_controllers/sale_controller.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/controllers/smart_home_controller.dart';
+import 'package:pos/controllers/user_controllers/role_controller.dart';
+import 'package:pos/controllers/user_controllers/user_controller.dart';
 
 class AppBindings extends Bindings {
   @override
@@ -21,5 +23,7 @@ class AppBindings extends Bindings {
     Get.lazyPut<ProductController>(() => ProductController());
     Get.lazyPut<ProductDetailController>(() => ProductDetailController());
     Get.lazyPut<CategoryController>(() => CategoryController());
+    Get.lazyPut<UserController>(() => UserController());
+    Get.lazyPut<RoleController>(() => RoleController());
   }
 }

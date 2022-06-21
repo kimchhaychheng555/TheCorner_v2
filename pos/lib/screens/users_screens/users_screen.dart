@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
+import 'package:pos/controllers/user_controllers/user_controller.dart';
 import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
-import 'package:pos/screens/products_screens/widgets/product_table_page_widget.dart';
+import 'package:pos/screens/users_screens/widgets/user_table_page_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/icon_text_button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
-class ProductScren extends GetResponsiveView<dynamic> {
-  ProductScren({Key? key}) : super(key: key);
+class UsersScreen extends GetResponsiveView<dynamic> {
+  UsersScreen({Key? key}) : super(key: key);
 
-  static const String routeName = "/products";
+  static const String routeName = "/users";
 
   @override
   Widget builder() {
-    ProductController _controller = Get.find();
+    UserController _controller = Get.find();
     final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Obx(
       () => Scaffold(
         key: _key,
         endDrawer: const ProductDrawerWidget(),
         appBar: AppBar(
-          title: Text("products".tr),
+          title: Text("users".tr),
           leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(Icons.keyboard_backspace),
           ),
           actions: [
             IconButton(
-              onPressed: () => _controller.onLoadProduct(),
+              onPressed: () => _controller.onLoadUser(),
               icon: const Icon(Icons.refresh_rounded),
             ),
             IconButton(
@@ -100,14 +100,14 @@ class ProductScren extends GetResponsiveView<dynamic> {
                     const Spacer(),
                     IconTextButtonWidget(
                       onPressed: () => _controller.onCategoryPressed(),
-                      label: TextWidget(text: "category".tr),
+                      label: TextWidget(text: "role".tr),
                       backgroundColor: primaryColor,
-                      icon: const Icon(Icons.category_rounded),
+                      icon: const Icon(Icons.grid_view_rounded),
                     ),
                     const SizedBox(width: 10),
                     IconTextButtonWidget(
                       onPressed: () => _controller.onAddProductPressed(),
-                      label: TextWidget(text: "add_product".tr),
+                      label: TextWidget(text: "add_user".tr),
                       backgroundColor: primaryColor,
                       icon: const Icon(Icons.add_rounded),
                     ),
@@ -115,7 +115,7 @@ class ProductScren extends GetResponsiveView<dynamic> {
                 ),
                 const SizedBox(height: 15),
                 const Expanded(
-                  child: ProductTablePageWidget(),
+                  child: UserTablePageWidget(),
                 ),
               ],
             ),

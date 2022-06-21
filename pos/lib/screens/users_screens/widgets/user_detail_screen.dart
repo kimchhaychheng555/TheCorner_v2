@@ -9,8 +9,8 @@ import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/text_form_field_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
-class UserDetialScreen extends GetResponsiveView<dynamic> {
-  UserDetialScreen({Key? key}) : super(key: key);
+class UserDetailScreen extends GetResponsiveView<dynamic> {
+  UserDetailScreen({Key? key}) : super(key: key);
 
   static const String routeName = "/user-detail";
 
@@ -20,11 +20,12 @@ class UserDetialScreen extends GetResponsiveView<dynamic> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text("product_detail".tr),
+          title: Text("user_detail".tr),
           actions: [
             Visibility(
               visible: !(_controller.titleScreen.value == "add_product"),
               child: IconButton(
+                tooltip: "edit".tr,
                 onPressed: () => _controller.onEditablePressed(),
                 icon: const Icon(Icons.edit),
               ),
@@ -33,12 +34,11 @@ class UserDetialScreen extends GetResponsiveView<dynamic> {
         ),
         body: LoadingOverlayWidget(
           isLoading: _controller.isLoading.value,
-          child: Center(
-            child: Container(
-              height: double.infinity,
-              constraints: const BoxConstraints(maxWidth: 600),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 600),
                 child: Column(
                   children: [
                     Visibility(

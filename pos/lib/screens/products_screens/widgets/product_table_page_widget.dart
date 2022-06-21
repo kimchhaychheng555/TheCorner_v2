@@ -11,8 +11,8 @@ import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class TablePageWidget extends StatelessWidget {
-  const TablePageWidget({Key? key}) : super(key: key);
+class ProductTablePageWidget extends StatelessWidget {
+  const ProductTablePageWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "name".tr,
+                    text: "product_name".tr,
                     value: "name",
                     show: true,
                     textAlign: TextAlign.center,
@@ -72,7 +72,7 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Cost",
+                    text: "cost".tr,
                     value: "cost",
                     show: true,
                     textAlign: TextAlign.center,
@@ -86,7 +86,7 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Price",
+                    text: "price".tr,
                     value: "price",
                     show: true,
                     textAlign: TextAlign.center,
@@ -100,7 +100,7 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Category",
+                    text: "category".tr,
                     value: "id",
                     show: true,
                     textAlign: TextAlign.center,
@@ -114,7 +114,21 @@ class TablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Action",
+                    text: "created".tr,
+                    value: "price",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: row["created_by"] ?? "",
+                        fontFamily: "Siemreap",
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "action".tr,
                     value: "id",
                     show: true,
                     textAlign: TextAlign.center,

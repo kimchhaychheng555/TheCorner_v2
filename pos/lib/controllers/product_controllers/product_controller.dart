@@ -12,6 +12,7 @@ import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductController extends GetxController {
+  var keywordCtrl = TextEditingController();
   var isLoading = false.obs;
   var isDeletedFilter = false.obs;
   var currentCategoryId = Rxn<String>();
@@ -90,12 +91,16 @@ class ProductController extends GetxController {
     onLoadProduct();
   }
 
+  void onKeywordSearch() {
+    onLoadProduct();
+  }
+
   Future<void> onLoadProduct() async {
     isLoading(true);
     var _offset = ((currentPage.value - 1) * pager.value);
     var _pagingation = "\$count=true&\$skip=$_offset&\$top=${pager.value}";
     var _query =
-        "product?$_pagingation&\$expand=category&\$filter=is_deleted eq ${isDeletedFilter.value}";
+        "product?keyword=${keywordCtrl.text}&$_pagingation&\$expand=category&\$filter=is_deleted eq ${isDeletedFilter.value}";
     if ((currentCategoryId.value ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
       _query += " and category_id eq ${currentCategoryId.value}";
     }

@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,31 @@ namespace API.Controllers
             }
 
             return Ok(SingleResult.Create(sale));
+        }
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get(string keyword = "")
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return Ok(db.Sales);
+
+            }
+            else
+            {
+                var data = from r in db.Sales
+                           where
+                                 EF.Functions.Like(
+                                     (
+                                        (r.invoice_number ?? " ")
+                                     ).ToLower().Trim(), $"%{keyword}%".ToLower().Trim())
+                           select r;
+
+                return Ok(data);
+
+            }
+
         }
 
         [HttpPost("Save")]

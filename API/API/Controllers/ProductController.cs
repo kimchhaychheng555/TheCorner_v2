@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,33 @@ namespace API.Controllers
             }
 
             return Ok(SingleResult.Create(product));
+        }
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get(string keyword = "")
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return Ok(db.Products);
+
+            }
+            else
+            {
+                var data = from r in db.Products
+                           where
+                                 EF.Functions.Like(
+                                     (
+                                        (r.name ?? " ") +
+                                        (r.price.ToString() ?? " ") +
+                                        (r.cost.ToString() ?? " ")
+                                     ).ToLower().Trim(), $"%{keyword}%".ToLower().Trim())
+                           select r;
+
+                return Ok(data);
+
+            }
+
         }
 
         [HttpPost("Save")]

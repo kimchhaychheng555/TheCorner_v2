@@ -1,188 +1,200 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
-import 'package:pos/models/category_models/category_model.dart';
-import 'package:pos/models/product_models/product_model.dart';
+import 'package:pos/models/user_models/user_model.dart';
+import 'package:pos/screens/products_screens/category_screen.dart';
+import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
-import 'package:pos/services/app_service.dart';
-import 'package:uuid/uuid.dart';
+import 'package:pos/widgets/button_action_widget.dart';
 
-class UserDetailController extends GetxController {
-  var titleScreen = "".obs;
+class UserController extends GetxController {
+  var keywordCtrl = TextEditingController();
   var isLoading = false.obs;
-  var isEditable = false.obs;
-  //
-  var isUploadImage = false.obs;
-  var imageFile = Rxn<File>();
-  var productDetail = ProductModel().obs;
-  var tempProductDetail = ProductModel().obs;
-  RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
-  //
-  var productNameCtrl = TextEditingController();
-  var costCtrl = TextEditingController();
-  var priceCtrl = TextEditingController();
+  var isDeletedFilter = false.obs;
+
+  RxList<UserModel> userList = (<UserModel>[]).obs;
+  // RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
+
+  //Pagination
+  var totalPage = 0.obs;
+  var topCount = 0.obs;
+  var currentPage = 1.obs;
+  var totalRecords = 0.obs;
+  var pager = 5.obs;
+  RxList<int> pagerList = (<int>[]).obs;
 
   @override
   void onInit() async {
     super.onInit();
-    await onLoadCategory();
-    onGetArgument();
-  }
-
-  @override
-  void onClose() {
-    ProductController productCtrl = Get.find();
-    productCtrl.onLoadProduct();
-  }
-
-  Future<void> onGetArgument() async {
-    var arg = Get.arguments;
-    if (arg != null) {
-      var _data = ProductModel.fromJson(arg);
-      productDetail(_data);
-      productNameCtrl.text = productDetail.value.name ?? "";
-      costCtrl.text = "${productDetail.value.cost ?? 0}";
-      priceCtrl.text = "${productDetail.value.price ?? 0}";
-      tempProductDetail(_data);
-    }
-
-    if (productDetail.value.id == null) {
-      titleScreen("add_product");
-      isEditable(true);
-    }
-  }
-
-  Future<void> onLoadCategory() async {
     isLoading(true);
-
-    var _resp =
-        await APIService.oDataGet("category?\$filter=is_deleted eq false");
-    if (_resp.isSuccess) {
-      List<dynamic> _dynamic = [];
-      _dynamic = jsonDecode(_resp.content);
-      var _dataList = _dynamic.map((e) => CategoryModel.fromJson(e)).toList();
-      categoryList.assignAll(_dataList);
-    }
-
+    // onInitCategory();
+    onInitPagerList();
+    await onLoadUser();
     isLoading(false);
   }
 
-  void onEditablePressed() {
-    titleScreen("edit_product");
-    isEditable(!isEditable.value);
+  // void onInitCategory() async {
+  //   isLoading(true);
+  //   var _resp =
+  //       await APIService.oDataGet("category?\$filter=is_deleted eq false");
+  //   if (_resp.isSuccess) {
+  //     List<dynamic> _listDyn = jsonDecode(_resp.content);
+  //     var _dataList = _listDyn.map((e) => CategoryModel.fromJson(e)).toList();
+  //     categoryList.assignAll(_dataList);
+  //     categoryList.insert(
+  //       0,
+  //       CategoryModel(
+  //           id: Uuid.NAMESPACE_NIL, is_deleted: false, name: "all".tr),
+  //     );
+  //     currentCategoryId(categoryList.first.id);
+  //   }
+  //   isLoading(false);
+  // }
+
+  void onInitPagerList() {
+    var _temp = [5, 10, 15, 25, 50];
+    pagerList.assignAll(_temp);
+    pager(_temp.first);
   }
 
-  void onStockableChanged(bool? value) {
-    tempProductDetail.value.stockable = value;
-    tempProductDetail.refresh();
+  void onPagerChanged(int? value) {
+    pager(value);
+    currentPage(1);
+    onLoadUser();
   }
 
-  void onUploadPressed() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'jpeg', 'png'],
-    );
-
-    if (result != null) {
-      File file = File(result.files.single.path ?? "");
-      isUploadImage(true);
-      imageFile(file);
-    }
+  String tempStatus = "active";
+  void onStatusFilterChanged(String? value) {
+    tempStatus = value ?? "active";
   }
 
-  void onClearImagePressed() {
-    isUploadImage(false);
-    productDetail.value.image = "noimage.png";
+  String? _tempCategoryId;
+  void onCategoryFilterChanged(String? value) {
+    _tempCategoryId = value;
   }
 
-  Widget get getImageWidget {
-    ImageProvider _backgroundImage =
-        const AssetImage("assets/images/noimage.png");
-    if (isUploadImage.value) {
-      _backgroundImage = FileImage(imageFile.value!);
-    } else {
-      return CachedNetworkImage(
-        imageUrl: "${AppService.baseUrl}uploads/${productDetail.value.image}",
-        imageBuilder: (context, imageProvider) => CircleAvatar(
-          maxRadius: 70,
-          backgroundImage: CachedNetworkImageProvider(
-            "${AppService.baseUrl}uploads/${productDetail.value.image}",
-          ),
-        ),
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => const CircleAvatar(
-          maxRadius: 70,
-          backgroundImage: AssetImage(
-            "assets/images/noimage.png",
-          ),
-        ),
-      );
-    }
+  void onFilterPressed() {
+    Get.back();
+    // if (tempStatus == "active") {
+    //   isDeletedFilter(false);
+    // } else {
+    //   isDeletedFilter(true);
+    // }
 
-    return CircleAvatar(
-      maxRadius: 70,
-      backgroundImage: _backgroundImage,
-    );
+    // if ((_tempCategoryId ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
+    //   currentCategoryId(_tempCategoryId);
+    // }
+    onLoadUser();
   }
 
-  void onDropdownValueChanged(String? value) {
-    tempProductDetail.value.category_id = value;
+  void onKeywordSearch() {
+    onLoadUser();
   }
 
-  void onCancelProductDetail() => Get.back();
-  void onSaveProductDetail() async {
+  Future<void> onLoadUser() async {
     isLoading(true);
-    var imageName = "noimage.png";
-    if (isUploadImage.value) {
-      var _uploadImage = await APIService.uploadFile(file: imageFile.value!);
-      if (!_uploadImage.isSuccess) {
-        AppAlert.errorAlert(title: "upload_file_error".tr);
-        return;
-      }
-      imageName = _uploadImage.message;
-    } else {
-      imageName = tempProductDetail.value.image ?? "noimage.png";
-    }
+    var _offset = ((currentPage.value - 1) * pager.value);
+    var _pagingation = "\$count=true&\$skip=$_offset&\$top=${pager.value}";
+    var _query =
+        "user?keyword=${keywordCtrl.text}&$_pagingation&\$filter=is_deleted eq ${isDeletedFilter.value}";
 
-    if (productDetail.value.id == null) {
-      var _product = ProductModel(
-        id: Uuid.NAMESPACE_NIL,
-        name: productNameCtrl.text,
-        cost: double.tryParse(costCtrl.text) ?? 0,
-        price: double.tryParse(priceCtrl.text) ?? 0,
-        category_id: tempProductDetail.value.category_id,
-        stockable: tempProductDetail.value.stockable,
-        created_by: AppService.currentUser?.fullname,
-        image: imageName,
-      );
-      productDetail(_product);
-    } else {
-      var _product = ProductModel.fromJson(
-          jsonDecode(jsonEncode(tempProductDetail.value)));
-      _product.name = productNameCtrl.text;
-      _product.cost = double.tryParse(costCtrl.text) ?? 0;
-      _product.price = double.tryParse(priceCtrl.text) ?? 0;
-      _product.image = imageName;
-      _product.category = null;
-
-      tempProductDetail(_product);
-      productDetail(tempProductDetail.value);
-    }
-
-    var _resp =
-        await APIService.post("product/save", jsonEncode(productDetail.value));
+    var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {
-      Get.back();
-      AppAlert.successAlert(title: "save_product_success".tr);
+      totalRecords(_resp.count);
+      totalPage((_resp.count / pager.value).ceil());
+
+      List<dynamic> _dyn = [];
+      _dyn = jsonDecode(_resp.content);
+      var _dataList = _dyn.map((e) => UserModel.fromJson(e)).toList();
+      userList.assignAll(_dataList);
+    }
+    isLoading(false);
+  }
+
+// Convert to map for Table Responsive
+  List<Map<String, dynamic>> get dataSource {
+    List<Map<String, dynamic>> temp = [];
+    for (var product in userList) {
+      Map<String, dynamic> p = jsonDecode(jsonEncode(product));
+      temp.add(p);
+    }
+    return temp;
+  }
+
+  void onCategoryPressed() {
+    Get.toNamed(
+      CategoryScreen.routeName,
+      preventDuplicates: true,
+    );
+  }
+
+  void onAddProductPressed() {
+    Get.toNamed(
+      ProductDetailScreen.routeName,
+      preventDuplicates: true,
+    );
+  }
+
+  void onProductDeletePressed({
+    required String id,
+    required String name,
+  }) {
+    Get.defaultDialog(
+      radius: 5,
+      title: "product_delete".trParams({
+        "name": name,
+      }),
+      titleStyle: const TextStyle(fontFamily: "Siemreap"),
+      middleText: "are_you_sure".tr,
+      actions: [
+        ButtonActionWidget(
+          confirmText: "yes".tr,
+          cancelText: "no".tr,
+          onCancelPressed: () => Get.back(),
+          onConfirmPressed: () {
+            _productDeleteProcess(id);
+          },
+        ),
+      ],
+    );
+  }
+
+  void _productDeleteProcess(String? id) async {
+    Get.back();
+    isLoading(true);
+    var _resp = await APIService.post("product/delete/$id");
+    if (_resp.isSuccess) {
+      AppAlert.successAlert(title: "delete_product_success".tr);
+      onLoadUser();
     } else {
-      AppAlert.errorAlert(title: "save_product_error".tr);
+      AppAlert.errorAlert(title: "delete_product_error".tr);
+    }
+    isLoading(false);
+  }
+
+  void onPagePressed(int page) {
+    currentPage(page);
+    onLoadUser();
+  }
+
+  void onProductRestorePressed(String? value) async {
+    isLoading(true);
+    var _resp = await APIService.post("product/restore/$value");
+    if (_resp.isSuccess) {
+      AppAlert.successAlert(title: "restore_product_success".tr);
+    } else {
+      isLoading(false);
+      AppAlert.errorAlert(title: "restore_product_error".tr);
+      return;
     }
 
+    onLoadUser();
     isLoading(false);
+  }
+
+  String get getResultPageInfo {
+    return "${"show".tr}: ${((currentPage.value - 1) * pager.value) + 1} - ${(currentPage.value * pager.value)} ${"show".tr} ${totalRecords.value}";
   }
 }

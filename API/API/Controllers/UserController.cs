@@ -2,6 +2,7 @@
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,32 @@ namespace API.Controllers
             }
 
             return Ok(SingleResult.Create(people));
+        }
+
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 8)] 
+        public IActionResult Get(string keyword="")
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return Ok(db.Users);
+
+            }
+            else
+            {
+                var data = from r in db.Users
+                           where
+                                 EF.Functions.Like(
+                                     (
+                                        (r.fullname ?? " ") +
+                                        (r.username ?? " ")
+                                     ).ToLower().Trim(), $"%{keyword}%".ToLower().Trim())
+                           select r;
+
+                return Ok(data);
+
+            }
+             
         }
 
         [HttpPost("Save")]

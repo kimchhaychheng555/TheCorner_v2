@@ -25,6 +25,7 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
             Visibility(
               visible: !(_controller.titleScreen.value == "add_product"),
               child: IconButton(
+                tooltip: "edit".tr,
                 onPressed: () => _controller.onEditablePressed(),
                 icon: const Icon(Icons.edit),
               ),
@@ -33,12 +34,11 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
         ),
         body: LoadingOverlayWidget(
           isLoading: _controller.isLoading.value,
-          child: Center(
-            child: Container(
-              height: double.infinity,
-              constraints: const BoxConstraints(maxWidth: 600),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 600),
                 child: Column(
                   children: [
                     Visibility(

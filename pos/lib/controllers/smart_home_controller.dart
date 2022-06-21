@@ -10,7 +10,7 @@ import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/report_screens/report_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 import 'package:pos/screens/setting_screens/setting_screen.dart';
-import 'package:pos/screens/user_screen.dart/user_screen.dart';
+import 'package:pos/screens/users_screens/users_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
@@ -156,7 +156,7 @@ class SmartHomeController extends GetxController {
   void onAddExpensePressed() {}
   void onViewExpensePressed() {}
   void onUserPressed() {}
-  void onUsersPressed() => Get.toNamed(UserScreen.routeName);
+  void onUsersPressed() => Get.toNamed(UsersScreen.routeName);
   void onSettingPressed() => Get.toNamed(SettingScreen.routeName);
 
   void onLogoutPressed() {
