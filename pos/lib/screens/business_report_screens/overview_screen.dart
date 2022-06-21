@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/overview_screen_widget.dart';
-import 'package:pos/widgets/text_widget.dart';
 
 class OverviewScreen extends GetResponsiveView<dynamic> {
   OverviewScreen({Key? key}) : super(key: key);

@@ -46,7 +46,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
           body: SafeArea(
             child: Center(
               child: Container(
-                // color: Colors.red,
                 constraints: const BoxConstraints(maxWidth: 450),
                 height: double.infinity,
                 alignment: Alignment.center,

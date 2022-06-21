@@ -25,13 +25,11 @@ class CategoryScreen extends GetResponsiveView<dynamic> {
         ),
         body: LoadingOverlayWidget(
           isLoading: _controller.isLoading.value,
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              constraints: const BoxConstraints(maxWidth: 600),
-              height: double.infinity,
-              alignment: Alignment.topCenter,
-              child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 600),
                 child: Column(
                   children: [
                     TextWidget(
@@ -49,11 +47,17 @@ class CategoryScreen extends GetResponsiveView<dynamic> {
                                 _controller.onDeletePressed(category),
                           ),
                         ),
-                    const Divider(),
-                    TextWidget(
-                      text: "restore".tr,
-                      color: textColor,
-                    ),
+                    if (_controller.categoryList
+                        .where((c) => (c.is_deleted ?? false))
+                        .isNotEmpty)
+                      const Divider(),
+                    if (_controller.categoryList
+                        .where((c) => (c.is_deleted ?? false))
+                        .isNotEmpty)
+                      TextWidget(
+                        text: "restore".tr,
+                        color: textColor,
+                      ),
                     ..._controller.categoryList
                         .where((c) => (c.is_deleted ?? false))
                         .map(

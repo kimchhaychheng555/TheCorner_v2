@@ -35,7 +35,7 @@ class OverviewScreenWidget extends StatelessWidget {
           BoxShadow(
             blurRadius: 1,
             spreadRadius: 1,
-            offset: Offset(3, 3),
+            offset: const Offset(3, 3),
             color: shadowColor ?? HexColor("#50B402").withOpacity(0.2),
           )
         ],
@@ -83,7 +83,7 @@ class OverviewScreenWidget extends StatelessWidget {
                 color: backgroundColor,
               ),
               child: icon ??
-                  Icon(
+                  const Icon(
                     Icons.shopping_cart,
                   ),
             )
