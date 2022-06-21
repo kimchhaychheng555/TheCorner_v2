@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/user_controllers/user_controller.dart';
-import 'package:pos/screens/users_screens/widgets/user_detail_screen.dart';
+import 'package:pos/screens/users_screens/user_detail_screen.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/avatar_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
@@ -105,6 +105,9 @@ class UserTablePageWidget extends StatelessWidget {
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
+                      if (AppService.currentUser?.id == row["id"]) {
+                        return Container();
+                      }
                       return row["is_deleted"]
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +115,7 @@ class UserTablePageWidget extends StatelessWidget {
                                 IconButton(
                                   splashRadius: 30,
                                   onPressed: () {
-                                    _controller.onProductRestorePressed(value);
+                                    _controller.onUserRestorePressed(value);
                                   },
                                   icon: Icon(
                                     Icons.replay_rounded,
@@ -127,9 +130,9 @@ class UserTablePageWidget extends StatelessWidget {
                                 IconButton(
                                   splashRadius: 30,
                                   onPressed: () {
-                                    _controller.onProductDeletePressed(
+                                    _controller.onUserDeletePressed(
                                       id: value,
-                                      name: row["name"],
+                                      name: row["fullname"],
                                     );
                                   },
                                   icon: Icon(

@@ -155,7 +155,6 @@ class SmartHomeController extends GetxController {
   void onInventoryTransactionPressed() {}
   void onAddExpensePressed() {}
   void onViewExpensePressed() {}
-  void onUserPressed() {}
   void onUsersPressed() => Get.toNamed(UsersScreen.routeName);
   void onSettingPressed() => Get.toNamed(SettingScreen.routeName);
 

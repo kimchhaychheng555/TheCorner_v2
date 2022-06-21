@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/constants.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
+import 'package:pos/controllers/user_controllers/user_controller.dart';
 import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:get/get.dart';
 
-class ProductDrawerWidget extends StatelessWidget {
-  const ProductDrawerWidget({Key? key}) : super(key: key);
+class UserDrawerWidget extends StatelessWidget {
+  const UserDrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ProductController _controller = Get.find();
+    UserController _controller = Get.find();
     return SafeArea(
       child: Drawer(
         child: Container(
@@ -52,23 +52,6 @@ class ProductDrawerWidget extends StatelessWidget {
                       onChanged: (_) => _controller.onStatusFilterChanged(_),
                     ),
                     const SizedBox(height: 20),
-                    DropdownButtonFormFieldWidget<String>(
-                      value: _controller.currentCategoryId.value,
-                      label: "category".tr,
-                      items: [
-                        ..._controller.categoryList.map(
-                          (category) => DropdownMenuItem(
-                            child: TextWidget(
-                              text: category.name ?? "",
-                              color: textColor,
-                              fontFamily: "Siemreap",
-                            ),
-                            value: category.id,
-                          ),
-                        ),
-                      ],
-                      onChanged: (_) => _controller.onCategoryFilterChanged(_),
-                    )
                   ],
                 ),
               ),

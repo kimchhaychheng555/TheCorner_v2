@@ -83,7 +83,7 @@ namespace API.Controllers
             }
             else
             {
-                var checkUser = db.Users.Where(r => r.username == user.username && r.is_deleted == false);
+                var checkUser = db.Users.Where(r => r.id != user.id && r.username == user.username && r.is_deleted == false);
                 if (checkUser.Any())
                 {
                     return BadRequest(new BadRequestModel() { message = "username_has_already_exists" });

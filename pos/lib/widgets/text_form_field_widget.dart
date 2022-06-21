@@ -8,8 +8,10 @@ class TextFormFieldWidget extends StatelessWidget {
   final String? label;
   final String? value;
   final String? fontFamily;
-  final bool readOnly, isNumberic;
+  final bool readOnly, isNumberic, isPassword;
   final TextInputType? keyboardType;
+  final Widget? suffixIcon;
+  final String? Function(String?)? validator;
   const TextFormFieldWidget({
     Key? key,
     this.controller,
@@ -19,6 +21,9 @@ class TextFormFieldWidget extends StatelessWidget {
     this.readOnly = false,
     this.isNumberic = false,
     this.keyboardType,
+    this.suffixIcon,
+    this.isPassword = false,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -33,7 +38,10 @@ class TextFormFieldWidget extends StatelessWidget {
       readOnly: readOnly,
       controller: controller ?? TextEditingController(text: value),
       style: TextStyle(fontFamily: fontFamily, color: textColor),
+      obscureText: isPassword,
+      validator: validator,
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         isDense: true,
         label: TextWidget(
           text: label ?? "",

@@ -11,6 +11,7 @@ import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 import 'package:pos/screens/setting_screens/setting_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
+import 'package:pos/screens/users_screens/user_detail_screen.dart';
 import 'package:pos/screens/users_screens/users_screen.dart';
 
 class AppRoute {
@@ -68,13 +69,18 @@ class AppRoute {
           binding: AppBindings(),
         ),
         GetPage(
+          page: () => OverviewScreen(),
+          name: OverviewScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
           page: () => UsersScreen(),
           name: UsersScreen.routeName,
           binding: AppBindings(),
         ),
         GetPage(
-          page: () => OverviewScreen(),
-          name: OverviewScreen.routeName,
+          page: () => UserDetailScreen(),
+          name: UserDetailScreen.routeName,
           binding: AppBindings(),
         ),
       ];

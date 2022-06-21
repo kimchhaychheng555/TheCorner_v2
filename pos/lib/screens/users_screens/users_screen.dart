@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/user_controllers/user_controller.dart';
-import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
+import 'package:pos/screens/users_screens/widgets/user_drawer_widget.dart';
 import 'package:pos/screens/users_screens/widgets/user_table_page_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/icon_text_button_widget.dart';
@@ -21,7 +21,7 @@ class UsersScreen extends GetResponsiveView<dynamic> {
     return Obx(
       () => Scaffold(
         key: _key,
-        endDrawer: const ProductDrawerWidget(),
+        endDrawer: const UserDrawerWidget(),
         appBar: AppBar(
           title: Text("users".tr),
           leading: IconButton(
@@ -99,14 +99,7 @@ class UsersScreen extends GetResponsiveView<dynamic> {
                     ),
                     const Spacer(),
                     IconTextButtonWidget(
-                      onPressed: () => _controller.onCategoryPressed(),
-                      label: TextWidget(text: "role".tr),
-                      backgroundColor: primaryColor,
-                      icon: const Icon(Icons.grid_view_rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    IconTextButtonWidget(
-                      onPressed: () => _controller.onAddProductPressed(),
+                      onPressed: () => _controller.onAddUserPressed(),
                       label: TextWidget(text: "add_user".tr),
                       backgroundColor: primaryColor,
                       icon: const Icon(Icons.add_rounded),

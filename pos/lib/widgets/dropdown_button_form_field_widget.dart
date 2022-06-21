@@ -8,6 +8,7 @@ class DropdownButtonFormFieldWidget<T> extends StatelessWidget {
   final bool readOnly;
   final List<DropdownMenuItem<T>> items;
   final Function(T?)? onChanged;
+  final String? Function(T?)? validator;
   const DropdownButtonFormFieldWidget({
     Key? key,
     this.label,
@@ -15,6 +16,7 @@ class DropdownButtonFormFieldWidget<T> extends StatelessWidget {
     this.readOnly = false,
     required this.items,
     required this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class DropdownButtonFormFieldWidget<T> extends StatelessWidget {
     return IgnorePointer(
       ignoring: readOnly,
       child: DropdownButtonFormField<T>(
+        validator: validator,
         items: items,
         onChanged: onChanged,
         value: value,

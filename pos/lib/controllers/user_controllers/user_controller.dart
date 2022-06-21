@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/user_models/user_model.dart';
-import 'package:pos/screens/products_screens/category_screen.dart';
-import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
+import 'package:pos/screens/users_screens/user_detail_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/widgets/button_action_widget.dart';
@@ -15,7 +14,6 @@ class UserController extends GetxController {
   var isDeletedFilter = false.obs;
 
   RxList<UserModel> userList = (<UserModel>[]).obs;
-  // RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
 
   //Pagination
   var totalPage = 0.obs;
@@ -29,29 +27,10 @@ class UserController extends GetxController {
   void onInit() async {
     super.onInit();
     isLoading(true);
-    // onInitCategory();
     onInitPagerList();
     await onLoadUser();
     isLoading(false);
   }
-
-  // void onInitCategory() async {
-  //   isLoading(true);
-  //   var _resp =
-  //       await APIService.oDataGet("category?\$filter=is_deleted eq false");
-  //   if (_resp.isSuccess) {
-  //     List<dynamic> _listDyn = jsonDecode(_resp.content);
-  //     var _dataList = _listDyn.map((e) => CategoryModel.fromJson(e)).toList();
-  //     categoryList.assignAll(_dataList);
-  //     categoryList.insert(
-  //       0,
-  //       CategoryModel(
-  //           id: Uuid.NAMESPACE_NIL, is_deleted: false, name: "all".tr),
-  //     );
-  //     currentCategoryId(categoryList.first.id);
-  //   }
-  //   isLoading(false);
-  // }
 
   void onInitPagerList() {
     var _temp = [5, 10, 15, 25, 50];
@@ -70,22 +49,13 @@ class UserController extends GetxController {
     tempStatus = value ?? "active";
   }
 
-  String? _tempCategoryId;
-  void onCategoryFilterChanged(String? value) {
-    _tempCategoryId = value;
-  }
-
   void onFilterPressed() {
     Get.back();
-    // if (tempStatus == "active") {
-    //   isDeletedFilter(false);
-    // } else {
-    //   isDeletedFilter(true);
-    // }
-
-    // if ((_tempCategoryId ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-    //   currentCategoryId(_tempCategoryId);
-    // }
+    if (tempStatus == "active") {
+      isDeletedFilter(false);
+    } else {
+      isDeletedFilter(true);
+    }
     onLoadUser();
   }
 
@@ -116,36 +86,27 @@ class UserController extends GetxController {
 // Convert to map for Table Responsive
   List<Map<String, dynamic>> get dataSource {
     List<Map<String, dynamic>> temp = [];
-    for (var product in userList) {
-      Map<String, dynamic> p = jsonDecode(jsonEncode(product));
+    for (var user in userList) {
+      Map<String, dynamic> p = jsonDecode(jsonEncode(user));
       temp.add(p);
     }
     return temp;
   }
 
-  void onCategoryPressed() {
+  void onAddUserPressed() {
     Get.toNamed(
-      CategoryScreen.routeName,
+      UserDetailScreen.routeName,
       preventDuplicates: true,
     );
   }
 
-  void onAddProductPressed() {
-    Get.toNamed(
-      ProductDetailScreen.routeName,
-      preventDuplicates: true,
-    );
-  }
-
-  void onProductDeletePressed({
+  void onUserDeletePressed({
     required String id,
     required String name,
   }) {
     Get.defaultDialog(
       radius: 5,
-      title: "product_delete".trParams({
-        "name": name,
-      }),
+      title: "${"delete".tr} $name",
       titleStyle: const TextStyle(fontFamily: "Siemreap"),
       middleText: "are_you_sure".tr,
       actions: [
@@ -164,13 +125,14 @@ class UserController extends GetxController {
   void _productDeleteProcess(String? id) async {
     Get.back();
     isLoading(true);
-    var _resp = await APIService.post("product/delete/$id");
+    var _resp = await APIService.post("user/delete/$id");
     if (_resp.isSuccess) {
-      AppAlert.successAlert(title: "delete_product_success".tr);
+      AppAlert.successAlert(title: "delete_user_success".tr);
       onLoadUser();
     } else {
-      AppAlert.errorAlert(title: "delete_product_error".tr);
+      AppAlert.errorAlert(title: "delete_user_error".tr);
     }
+
     isLoading(false);
   }
 
@@ -179,14 +141,14 @@ class UserController extends GetxController {
     onLoadUser();
   }
 
-  void onProductRestorePressed(String? value) async {
+  void onUserRestorePressed(String? value) async {
     isLoading(true);
-    var _resp = await APIService.post("product/restore/$value");
+    var _resp = await APIService.post("user/restore/$value");
     if (_resp.isSuccess) {
-      AppAlert.successAlert(title: "restore_product_success".tr);
+      AppAlert.successAlert(title: "restore_user_success".tr);
     } else {
       isLoading(false);
-      AppAlert.errorAlert(title: "restore_product_error".tr);
+      AppAlert.errorAlert(title: "restore_user_error".tr);
       return;
     }
 

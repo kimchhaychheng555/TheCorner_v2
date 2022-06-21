@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
-import 'package:pos/models/category_models/category_model.dart';
-import 'package:pos/models/product_models/product_model.dart';
+import 'package:pos/controllers/user_controllers/user_controller.dart';
+import 'package:pos/models/role_models/role_model.dart';
+import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
@@ -16,70 +16,70 @@ class UserDetailController extends GetxController {
   var titleScreen = "".obs;
   var isLoading = false.obs;
   var isEditable = false.obs;
+  var visibilityPassword = false.obs;
+  var formKey = GlobalKey<FormState>();
   //
   var isUploadImage = false.obs;
   var imageFile = Rxn<File>();
-  var productDetail = ProductModel().obs;
-  var tempProductDetail = ProductModel().obs;
-  RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
+  var userDetail = UserModel().obs;
+  var tempUserDetail = UserModel().obs;
+  RxList<RoleModel> roleList = (<RoleModel>[]).obs;
   //
-  var productNameCtrl = TextEditingController();
-  var costCtrl = TextEditingController();
-  var priceCtrl = TextEditingController();
+  var fullNameCtrl = TextEditingController();
+  var usernameCtrl = TextEditingController();
+  var passwordCtrl = TextEditingController();
 
   @override
   void onInit() async {
     super.onInit();
-    await onLoadCategory();
+    await onLoadRole();
     onGetArgument();
   }
 
   @override
   void onClose() {
-    ProductController productCtrl = Get.find();
-    productCtrl.onLoadProduct();
+    UserController userCtrl = Get.find();
+    userCtrl.onLoadUser();
   }
 
   Future<void> onGetArgument() async {
     var arg = Get.arguments;
     if (arg != null) {
-      var _data = ProductModel.fromJson(arg);
-      productDetail(_data);
-      productNameCtrl.text = productDetail.value.name ?? "";
-      costCtrl.text = "${productDetail.value.cost ?? 0}";
-      priceCtrl.text = "${productDetail.value.price ?? 0}";
-      tempProductDetail(_data);
+      var _data = UserModel.fromJson(arg);
+      userDetail(_data);
+      fullNameCtrl.text = userDetail.value.fullname ?? "";
+      usernameCtrl.text = "${userDetail.value.username ?? 0}";
+      passwordCtrl.text = "${userDetail.value.password ?? 0}";
+      tempUserDetail(_data);
     }
 
-    if (productDetail.value.id == null) {
-      titleScreen("add_product");
+    if (userDetail.value.id == null) {
+      titleScreen("add_user");
       isEditable(true);
     }
   }
 
-  Future<void> onLoadCategory() async {
+  void onVisibilityPassword() {
+    visibilityPassword(!visibilityPassword.value);
+  }
+
+  Future<void> onLoadRole() async {
     isLoading(true);
 
-    var _resp =
-        await APIService.oDataGet("category?\$filter=is_deleted eq false");
+    var _resp = await APIService.oDataGet("role?\$filter=is_deleted eq false");
     if (_resp.isSuccess) {
       List<dynamic> _dynamic = [];
       _dynamic = jsonDecode(_resp.content);
-      var _dataList = _dynamic.map((e) => CategoryModel.fromJson(e)).toList();
-      categoryList.assignAll(_dataList);
+      var _dataList = _dynamic.map((e) => RoleModel.fromJson(e)).toList();
+      roleList.assignAll(_dataList);
     }
 
     isLoading(false);
   }
 
   void onEditablePressed() {
-    titleScreen("edit_product");
+    titleScreen("edit_user");
     isEditable(!isEditable.value);
-  }
-
-  void onStockableChanged(bool? value) {
-    tempProductDetail.value.stockable = value;
-    tempProductDetail.refresh();
   }
 
   void onUploadPressed() async {
@@ -97,7 +97,7 @@ class UserDetailController extends GetxController {
 
   void onClearImagePressed() {
     isUploadImage(false);
-    productDetail.value.image = "noimage.png";
+    userDetail.value.profile = "noimage.png";
   }
 
   Widget get getImageWidget {
@@ -107,11 +107,11 @@ class UserDetailController extends GetxController {
       _backgroundImage = FileImage(imageFile.value!);
     } else {
       return CachedNetworkImage(
-        imageUrl: "${AppService.baseUrl}uploads/${productDetail.value.image}",
+        imageUrl: "${AppService.baseUrl}uploads/${userDetail.value.profile}",
         imageBuilder: (context, imageProvider) => CircleAvatar(
           maxRadius: 70,
           backgroundImage: CachedNetworkImageProvider(
-            "${AppService.baseUrl}uploads/${productDetail.value.image}",
+            "${AppService.baseUrl}uploads/${userDetail.value.profile}",
           ),
         ),
         placeholder: (context, url) => const CircularProgressIndicator(),
@@ -131,58 +131,58 @@ class UserDetailController extends GetxController {
   }
 
   void onDropdownValueChanged(String? value) {
-    tempProductDetail.value.category_id = value;
+    tempUserDetail.value.role_id = value;
   }
 
   void onCancelProductDetail() => Get.back();
   void onSaveProductDetail() async {
     isLoading(true);
-    var imageName = "noimage.png";
-    if (isUploadImage.value) {
-      var _uploadImage = await APIService.uploadFile(file: imageFile.value!);
-      if (!_uploadImage.isSuccess) {
-        AppAlert.errorAlert(title: "upload_file_error".tr);
-        return;
+    if (formKey.currentState!.validate()) {
+      var imageName = "noimage.png";
+      if (isUploadImage.value) {
+        var _uploadImage = await APIService.uploadFile(file: imageFile.value!);
+        if (!_uploadImage.isSuccess) {
+          AppAlert.errorAlert(title: "upload_file_error".tr);
+          return;
+        }
+        imageName = _uploadImage.message;
+      } else {
+        imageName = tempUserDetail.value.profile ?? "noimage.png";
       }
-      imageName = _uploadImage.message;
-    } else {
-      imageName = tempProductDetail.value.image ?? "noimage.png";
+
+      if (userDetail.value.id == null) {
+        var _user = UserModel(
+          id: Uuid.NAMESPACE_NIL,
+          fullname: fullNameCtrl.text,
+          username: usernameCtrl.text,
+          password: passwordCtrl.text,
+          role_id: tempUserDetail.value.role_id,
+          created_by: AppService.currentUser?.fullname,
+          profile: imageName,
+        );
+        userDetail(_user);
+      } else {
+        var _user =
+            UserModel.fromJson(jsonDecode(jsonEncode(tempUserDetail.value)));
+        _user.fullname = fullNameCtrl.text;
+        _user.username = usernameCtrl.text;
+        _user.password = passwordCtrl.text;
+        _user.profile = imageName;
+        _user.role_id = tempUserDetail.value.role_id;
+
+        tempUserDetail(_user);
+        userDetail(tempUserDetail.value);
+      }
+
+      var _resp =
+          await APIService.post("user/save", jsonEncode(userDetail.value));
+      if (_resp.isSuccess) {
+        Get.back();
+        AppAlert.successAlert(title: "save_user_success".tr);
+      } else {
+        AppAlert.errorAlert(title: _resp.message.tr);
+      }
     }
-
-    if (productDetail.value.id == null) {
-      var _product = ProductModel(
-        id: Uuid.NAMESPACE_NIL,
-        name: productNameCtrl.text,
-        cost: double.tryParse(costCtrl.text) ?? 0,
-        price: double.tryParse(priceCtrl.text) ?? 0,
-        category_id: tempProductDetail.value.category_id,
-        stockable: tempProductDetail.value.stockable,
-        created_by: AppService.currentUser?.fullname,
-        image: imageName,
-      );
-      productDetail(_product);
-    } else {
-      var _product = ProductModel.fromJson(
-          jsonDecode(jsonEncode(tempProductDetail.value)));
-      _product.name = productNameCtrl.text;
-      _product.cost = double.tryParse(costCtrl.text) ?? 0;
-      _product.price = double.tryParse(priceCtrl.text) ?? 0;
-      _product.image = imageName;
-      _product.category = null;
-
-      tempProductDetail(_product);
-      productDetail(tempProductDetail.value);
-    }
-
-    var _resp =
-        await APIService.post("product/save", jsonEncode(productDetail.value));
-    if (_resp.isSuccess) {
-      Get.back();
-      AppAlert.successAlert(title: "save_product_success".tr);
-    } else {
-      AppAlert.errorAlert(title: "save_product_error".tr);
-    }
-
     isLoading(false);
   }
 }

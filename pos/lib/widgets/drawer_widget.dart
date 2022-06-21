@@ -205,7 +205,7 @@ class DrawerWidget extends StatelessWidget {
                       text: "users".tr,
                       onPressed: () {
                         Get.back();
-                        _controller.onUserPressed();
+                        _controller.onUsersPressed();
                       },
                     ),
                     tile(
