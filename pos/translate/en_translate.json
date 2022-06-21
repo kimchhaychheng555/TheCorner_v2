@@ -100,5 +100,6 @@
     "deleted": "Deleted",
     "show": "Show",
     "of": "Of",
-    "no_data_available_in_table": "No data available in table"
+    "no_data_available_in_table": "No data available in table",
+    "business_overview": "Business Overview"
 }
