@@ -68,7 +68,7 @@ class UserController extends GetxController {
     var _offset = ((currentPage.value - 1) * pager.value);
     var _pagingation = "\$count=true&\$skip=$_offset&\$top=${pager.value}";
     var _query =
-        "user?keyword=${keywordCtrl.text}&$_pagingation&\$filter=is_deleted eq ${isDeletedFilter.value}";
+        "user?keyword=${keywordCtrl.text}&$_pagingation&\$filter=is_deleted eq ${isDeletedFilter.value}&\$expand=role";
 
     var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {

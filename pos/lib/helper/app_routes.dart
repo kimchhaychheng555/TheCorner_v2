@@ -3,6 +3,7 @@ import 'package:pos/helper/app_bindings.dart';
 import 'package:pos/main_screen.dart';
 import 'package:pos/screens/business_report_screens/overview_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
+import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
@@ -81,6 +82,11 @@ class AppRoute {
         GetPage(
           page: () => UserDetailScreen(),
           name: UserDetailScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => PermissionScreen(),
+          name: PermissionScreen.routeName,
           binding: AppBindings(),
         ),
       ];

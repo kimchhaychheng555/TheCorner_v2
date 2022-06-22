@@ -86,6 +86,31 @@ class UserTablePageWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
+                    text: "role".tr,
+                    value: "role",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: infoColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: TextWidget(
+                            text: value["name"],
+                            fontFamily: "Siemreap",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  DatatableHeader(
                     text: "created_by".tr,
                     value: "created_by",
                     show: true,

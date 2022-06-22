@@ -20,56 +20,33 @@ namespace API.Controllers
             db = _db;
         }
 
+
         [HttpGet]
-        public IActionResult Get()
+        [EnableQuery]
+        public IQueryable<UserModel> Get()
         {
-            return Ok(db.Users);
+            return db.Users;
+
         }
 
         [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 8)] 
+        [EnableQuery(MaxExpansionDepth = 8)]
         public IActionResult Get([FromODataUri] Guid key)
         {
-            var people = db.Users.Where(p => p.id == key);
+            var users = db.Users.Where(p => p.id == key);
 
-            if (!people.Any())
+            if (!users.Any())
             {
                 return NotFound();
             }
 
-            return Ok(SingleResult.Create(people));
-        }
-
-        [HttpGet]
-        [EnableQuery(MaxExpansionDepth = 8)] 
-        public IActionResult Get(string keyword="")
-        {
-            if (string.IsNullOrEmpty(keyword))
-            {
-                return Ok(db.Users);
-
-            }
-            else
-            {
-                var data = from r in db.Users
-                           where
-                                 EF.Functions.Like(
-                                     (
-                                        (r.fullname ?? " ") +
-                                        (r.username ?? " ")
-                                     ).ToLower().Trim(), $"%{keyword}%".ToLower().Trim())
-                           select r;
-
-                return Ok(data);
-
-            }
-             
+            return Ok(SingleResult.Create(users));
         }
 
         [HttpPost("Save")]
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
-            if(user.id == Guid.Empty)
+            if (user.id == Guid.Empty)
             {
                 var checkUser = db.Users.Where(r => r.username == user.username && r.is_deleted == false);
                 if (checkUser.Any())
@@ -77,7 +54,7 @@ namespace API.Controllers
                     return BadRequest(new BadRequestModel() { message = "username_has_already_exists" });
                 }
 
-                 
+
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
             }
@@ -92,22 +69,10 @@ namespace API.Controllers
                 db.Users.Update(user);
                 await db.SaveChangesAsync();
             }
-            
+
             return Ok(user);
         }
 
-
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] UserModel model)
-        {
-            var user = db.Users.Where(u => u.username == model.username && u.password == model.password && u.is_deleted == false);
-            if (user.Any())
-            {
-                return Ok(user.FirstOrDefault());
-            }
-
-            return NotFound();
-        }
 
         [HttpPost("Delete/{key}")]
         public async Task<IActionResult> Post([FromODataUri] Guid key)
@@ -142,5 +107,47 @@ namespace API.Controllers
             return Ok(data);
         }
 
+        [HttpGet]
+        [EnableQuery(MaxExpansionDepth = 8)]
+        public IActionResult Get(string keyword = "")
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return Ok(db.Users);
+
+            }
+            else
+            {
+                var data = from r in db.Users
+                           where
+                                 EF.Functions.Like(
+                                     (
+                                        (r.fullname ?? " ") +
+                                        (r.username ?? " ")
+                                     ).ToLower().Trim(), $"%{keyword}%".ToLower().Trim())
+                           select r;
+
+                return Ok(data);
+
+            }
+
+        }
+
+
+
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] UserModel model)
+        {
+            var user = db.Users.Where(u => u.username == model.username && u.password == model.password && u.is_deleted == false);
+            if (user.Any())
+            {
+                return Ok(user.FirstOrDefault());
+            }
+
+            return NotFound();
+        }
+         
+
+             
     }
 }

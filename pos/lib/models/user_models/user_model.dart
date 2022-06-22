@@ -16,6 +16,7 @@ class UserModel {
   bool? is_deleted;
   DateTime? deleted_date;
   String? deleted_by;
+
   RoleModel? role;
   UserModel({
     this.id,

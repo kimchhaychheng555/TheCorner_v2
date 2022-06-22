@@ -75,7 +75,7 @@ namespace API.Controllers
 
             return Ok(data);
         }
-        [HttpPost("Delete/{key}")]
+        [HttpPost("Restore/{key}")]
         public async Task<IActionResult> PostRestore([FromODataUri] Guid key)
         {
             var dataList = db.Roles.Where(p => p.id == key);
