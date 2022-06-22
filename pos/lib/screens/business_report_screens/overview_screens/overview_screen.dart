@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/controllers/business_controllers/overview_controller/overview_controller.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_screen_widget.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/text_widget.dart';
 
 class OverviewScreen extends GetResponsiveView<dynamic> {
   OverviewScreen({Key? key}) : super(key: key);
@@ -20,7 +22,7 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
                   OverviewScreenWidget(
@@ -86,7 +88,79 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                   ),
                 ],
               ),
-            )
+            ),
+            //Chart
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      width: 200,
+                      height: 400,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 2),
+                              color: HexColor("#353941").withOpacity(0.2),
+                            )
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextWidget(
+                                  text: "sales_overview".tr,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                                const Icon(Icons.more_horiz),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                TextWidget(
+                                  text: "total_amount_per_month".tr,
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Container(
+                      width: 200,
+                      height: 400,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              offset: Offset(0, 2),
+                              color: HexColor("#353941").withOpacity(0.2),
+                            )
+                          ]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
