@@ -27,6 +27,22 @@ namespace API.Controllers
 
         }
 
+        [HttpPost("Save")]
+        public async Task<IActionResult> Post([FromBody] PrintModel print)
+        {
+            if (print.id == Guid.Empty)
+            {
+                db.Prints.Add(print);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                db.Prints.Update(print);
+                await db.SaveChangesAsync();
+            }
+
+            return Ok(print);
+        }
 
         [HttpPost("Delete/{key}")]
         public async Task<IActionResult> Post([FromODataUri] Guid key)
@@ -36,10 +52,8 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            var data = dataList.FirstOrDefault();
-            data.is_deleted = true;
-
-            db.Prints.Update(data);
+            var data = dataList.FirstOrDefault(); 
+            db.Prints.Remove(data);
             await db.SaveChangesAsync();
 
             return Ok(data);

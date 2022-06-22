@@ -36,7 +36,7 @@ class SaleScreen extends GetResponsiveView<dynamic> {
               ),
               IconButton(
                 splashRadius: 30,
-                onPressed: _controller.onPrintBillPressed,
+                onPressed: _controller.onPrintInvoicePressed,
                 icon: const Icon(Icons.print),
               ),
             ],

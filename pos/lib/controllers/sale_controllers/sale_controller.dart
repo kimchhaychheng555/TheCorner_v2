@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
+import 'package:pos/models/print_models/print_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_payment_models/sale_payment_model.dart';
@@ -154,7 +155,24 @@ class SaleController extends GetxController {
     );
   }
 
-  void onPrintBillPressed() {}
+  void onPrintInvoicePressed() async {
+    isLoading(true);
+    await _onHoldProcess();
+    var printData = PrintModel(
+      created_by: AppService.currentUser?.fullname,
+      id: Uuid.NAMESPACE_NIL,
+      sale_id: sale.value?.id,
+      key: "invoice",
+    );
+
+    var _resp = await APIService.post("print/save", jsonEncode(printData));
+    if (_resp.isSuccess) {
+      AppAlert.successAlert(title: "print_success".tr);
+    } else {
+      AppAlert.errorAlert(title: "print_error".tr);
+    }
+    isLoading(false);
+  }
 
   void onPayPressed() {
     Get.defaultDialog(
@@ -297,6 +315,7 @@ class SaleController extends GetxController {
     var _json = jsonEncode(_saleProcess);
     var _resp = await APIService.post("sale/save", _json);
     if (_resp.isSuccess) {
+      sale(SaleModel.fromJson(jsonDecode(_resp.content)));
       Get.back();
       AppAlert.successAlert(title: "save_sale_successfully".tr);
     } else {
