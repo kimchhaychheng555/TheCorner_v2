@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pos/screens/business_report_screens/overview_screens/overview_screen_widget.dart';
+import 'package:pos/controllers/business_controllers/overview_controller/overview_controller.dart';
+import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_screen_widget.dart';
+import 'package:pos/services/app_service.dart';
 
 class OverviewScreen extends GetResponsiveView<dynamic> {
   OverviewScreen({Key? key}) : super(key: key);
@@ -9,6 +11,7 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
 
   @override
   Widget builder() {
+    OverviewController _controller = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: Text("business_overview".tr),
@@ -21,9 +24,9 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
               child: Row(
                 children: [
                   OverviewScreenWidget(
-                    title: "Total Sale",
-                    subtitle: "per month",
-                    total: "1200",
+                    title: "total_sale".tr,
+                    subtitle: "per_month".tr,
+                    total: "${_controller.totalSale.value}",
                     totalColor: HexColor("#50B402"),
                     backgroundColor: HexColor("#50B402"),
                     icon: Icon(
@@ -36,9 +39,9 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                   ),
                   const SizedBox(width: 20),
                   OverviewScreenWidget(
-                    title: "Total Order",
-                    subtitle: "per month",
-                    total: "1299",
+                    title: "total_order".tr,
+                    subtitle: "per_month".tr,
+                    total: "${_controller.totalOrder.value}",
                     totalColor: HexColor("#FEA026"),
                     backgroundColor: HexColor("#FEA026"),
                     icon: Icon(
@@ -51,9 +54,10 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                   ),
                   const SizedBox(width: 20),
                   OverviewScreenWidget(
-                    title: "Total Revenue",
-                    subtitle: "per month",
-                    total: "1299",
+                    title: "total_revenue".tr,
+                    subtitle: "per_month".tr,
+                    total: AppService.currencyFormat(
+                        _controller.totalRevenue.value),
                     totalColor: HexColor("#7E46F1"),
                     backgroundColor: HexColor("#7E46F1"),
                     icon: Icon(
@@ -66,9 +70,10 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                   ),
                   const SizedBox(width: 20),
                   OverviewScreenWidget(
-                    title: "Total Profit",
-                    subtitle: "per month",
-                    total: "1220",
+                    title: "total_profit".tr,
+                    subtitle: "per_month".tr,
+                    total: AppService.currencyFormat(
+                        _controller.totalProfit.value),
                     totalColor: HexColor("#007CDF"),
                     backgroundColor: HexColor("#007CDF"),
                     borderColor: HexColor("#007CDF"),

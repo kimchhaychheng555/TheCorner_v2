@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pos/controllers/business_controllers/overview_controller/overview_controller.dart';
 import 'package:pos/controllers/login_controllers/login_controller.dart';
 import 'package:pos/controllers/main_controller.dart';
 import 'package:pos/controllers/product_controllers/category_controller.dart';
@@ -27,5 +28,6 @@ class AppBindings extends Bindings {
     Get.lazyPut<UserController>(() => UserController());
     Get.lazyPut<UserDetailController>(() => UserDetailController());
     Get.lazyPut<RoleController>(() => RoleController());
+    Get.lazyPut<OverviewController>(() => OverviewController());
   }
 }
