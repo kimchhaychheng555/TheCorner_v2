@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
+import 'package:pos/models/api_models/response_model.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/services/api_service.dart';
@@ -20,6 +23,7 @@ class ProductDetailController extends GetxController {
   //
   var isUploadImage = false.obs;
   var imageFile = Rxn<File>();
+  var imageFileRaw = Rxn<Uint8List>();
   var productDetail = ProductModel().obs;
   var tempProductDetail = ProductModel().obs;
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
@@ -90,9 +94,15 @@ class ProductDetailController extends GetxController {
     );
 
     if (result != null) {
-      File file = File(result.files.single.path ?? "");
+      if (kIsWeb) {
+        Uint8List? fileBytes = result.files.first.bytes;
+        imageFileRaw(fileBytes);
+      } else {
+        File file = File(result.files.single.path ?? "");
+        imageFile(file);
+      }
+
       isUploadImage(true);
-      imageFile(file);
     }
   }
 
@@ -102,10 +112,20 @@ class ProductDetailController extends GetxController {
   }
 
   Widget get getImageWidget {
-    ImageProvider _backgroundImage =
-        const AssetImage("assets/images/noimage.png");
+    Widget _backgroundImage = Image.asset("assets/images/noimage.png");
+
     if (isUploadImage.value) {
-      _backgroundImage = FileImage(imageFile.value!);
+      if (kIsWeb) {
+        _backgroundImage = Image.memory(
+          imageFileRaw.value!,
+          fit: BoxFit.cover,
+        );
+      } else {
+        _backgroundImage = Image.file(
+          imageFile.value!,
+          fit: BoxFit.cover,
+        );
+      }
     } else {
       return CachedNetworkImage(
         imageUrl: "${AppService.baseUrl}uploads/${productDetail.value.image}",
@@ -133,9 +153,9 @@ class ProductDetailController extends GetxController {
       );
     }
 
-    return CircleAvatar(
-      maxRadius: 70,
-      backgroundImage: _backgroundImage,
+    return AvatarWidget(
+      maxRadius: 140,
+      child: _backgroundImage,
     );
   }
 
@@ -148,12 +168,22 @@ class ProductDetailController extends GetxController {
     isLoading(true);
     var imageName = "noimage.png";
     if (isUploadImage.value) {
-      var _uploadImage = await APIService.uploadFile(file: imageFile.value!);
-      if (!_uploadImage.isSuccess) {
-        AppAlert.errorAlert(title: "upload_file_error".tr);
-        return;
+      POSTResponse _uploadImage;
+      if (kIsWeb) {
+        _uploadImage = await APIService.uploadFile(
+          uint8list: imageFileRaw.value,
+          fileName: const Uuid().v4(),
+        );
+      } else {
+        _uploadImage = await APIService.uploadFile(file: imageFile.value!);
+        if (!_uploadImage.isSuccess) {
+          AppAlert.errorAlert(title: "upload_file_error".tr);
+          return;
+        }
       }
-      imageName = _uploadImage.message;
+      imageName = imageFileRaw.value == null
+          ? _uploadImage.message
+          : _uploadImage.message + ".jpg";
     } else {
       imageName = tempProductDetail.value.image ?? "noimage.png";
     }

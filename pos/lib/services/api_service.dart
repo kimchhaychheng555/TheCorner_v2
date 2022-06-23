@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:pos/models/api_models/response_model.dart';
 import 'package:pos/services/app_service.dart';
@@ -97,18 +98,19 @@ class APIService {
   }
 
   static Future<POSTResponse> uploadFile({
-    required File file,
+    File? file,
     String? fileName,
+    Uint8List? uint8list,
   }) async {
-    var name = fileName ?? p.basename(file.path);
+    var name = fileName ?? p.basename(file!.path);
     var uri = Uri.parse(AppService.apiApp + "upload");
     var request = http.MultipartRequest("POST", uri);
-    List<int> bytes = await file.readAsBytes();
+    List<int> bytes = uint8list ?? await file!.readAsBytes();
 
     var multipartFile = http.MultipartFile.fromBytes(
       'file',
       bytes,
-      filename: name,
+      filename: file == null ? name + ".jpg" : name,
     );
     request.files.add(multipartFile);
     var response = await request.send();

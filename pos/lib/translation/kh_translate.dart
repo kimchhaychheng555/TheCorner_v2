@@ -1,4 +1,5 @@
-{
+Map<String, String> get khTranslate {
+  return {
     "login": "ចូលគណនី",
     "welcome": "សូមស្វាគមន៍",
     "remember_me": "ចងចាំខ្ញុំ",
@@ -98,4 +99,5 @@
     "of": "នៃ",
     "no_data_available_in_table": "តារាងពុំមានទិន្នន័យ",
     "business_overview": "ទិដ្ឋភាពទូទៅនៃអាជីវកម្ម"
+  };
 }

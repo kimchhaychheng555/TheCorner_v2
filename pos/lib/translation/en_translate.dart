@@ -1,4 +1,5 @@
-{
+Map<String, String> get enTranslate {
+  return {
     "login": "Login",
     "welcome": "Welcome",
     "remember_me": "Remember Me",
@@ -29,9 +30,11 @@
     "permission": "Permission",
     "business_report": "Business Report",
     "users": "Users",
-    "are_you_sure_you_want_to_start_sale": "Are you sure you want to start sale ?",
+    "are_you_sure_you_want_to_start_sale":
+        "Are you sure you want to start sale ?",
     "stop_sale": "Stop Sale",
-    "are_you_sure_you_want_to_stop_sale": "Are you sure you want to stop sale ?",
+    "are_you_sure_you_want_to_stop_sale":
+        "Are you sure you want to stop sale ?",
     "no": "No",
     "yes": "Yes",
     "please_start_sale": "Please Start Sale",
@@ -52,7 +55,8 @@
     "do_you_want_to_cancel_this_bill": "Do you want to cancel this bill ?",
     "login_failed": "Login Failed",
     "remove": "Remove",
-    "do_you_want_to_remove_this_product": "Do you want to remove this product ?",
+    "do_you_want_to_remove_this_product":
+        "Do you want to remove this product ?",
     "free": "Free",
     "menu": "Menu",
     "overview": "Overview",
@@ -102,4 +106,5 @@
     "of": "Of",
     "no_data_available_in_table": "No data available in table",
     "business_overview": "Business Overview"
+  };
 }

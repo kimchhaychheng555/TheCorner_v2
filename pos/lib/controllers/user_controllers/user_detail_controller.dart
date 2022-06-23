@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/user_controllers/user_controller.dart';
+import 'package:pos/models/api_models/response_model.dart';
 import 'package:pos/models/role_models/role_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/avatar_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class UserDetailController extends GetxController {
@@ -21,6 +25,7 @@ class UserDetailController extends GetxController {
   //
   var isUploadImage = false.obs;
   var imageFile = Rxn<File>();
+  var imageFileRaw = Rxn<Uint8List>();
   var userDetail = UserModel().obs;
   var tempUserDetail = UserModel().obs;
   RxList<RoleModel> roleList = (<RoleModel>[]).obs;
@@ -89,9 +94,15 @@ class UserDetailController extends GetxController {
     );
 
     if (result != null) {
-      File file = File(result.files.single.path ?? "");
+      if (kIsWeb) {
+        Uint8List? fileBytes = result.files.first.bytes;
+        imageFileRaw(fileBytes);
+      } else {
+        File file = File(result.files.single.path ?? "");
+        imageFile(file);
+      }
+
       isUploadImage(true);
-      imageFile(file);
     }
   }
 
@@ -101,32 +112,50 @@ class UserDetailController extends GetxController {
   }
 
   Widget get getImageWidget {
-    ImageProvider _backgroundImage =
-        const AssetImage("assets/images/noimage.png");
+    Widget _backgroundImage = Image.asset("assets/images/noimage.png");
+
     if (isUploadImage.value) {
-      _backgroundImage = FileImage(imageFile.value!);
+      if (kIsWeb) {
+        _backgroundImage = Image.memory(
+          imageFileRaw.value!,
+          fit: BoxFit.cover,
+        );
+      } else {
+        _backgroundImage = Image.file(
+          imageFile.value!,
+          fit: BoxFit.cover,
+        );
+      }
     } else {
       return CachedNetworkImage(
         imageUrl: "${AppService.baseUrl}uploads/${userDetail.value.profile}",
-        imageBuilder: (context, imageProvider) => CircleAvatar(
-          maxRadius: 70,
-          backgroundImage: CachedNetworkImageProvider(
-            "${AppService.baseUrl}uploads/${userDetail.value.profile}",
+        imageBuilder: (context, imageProvider) => AvatarWidget(
+          maxRadius: 140,
+          child: CachedNetworkImage(
+            imageUrl:
+                "${AppService.baseUrl}uploads/${userDetail.value.profile}",
+            fit: BoxFit.cover,
           ),
         ),
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => const CircleAvatar(
-          maxRadius: 70,
-          backgroundImage: AssetImage(
+        placeholder: (context, url) => const AvatarWidget(
+          maxRadius: 140,
+          padding: EdgeInsets.all(10),
+          backgroundColor: Colors.white,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        ),
+        errorWidget: (context, url, error) => AvatarWidget(
+          maxRadius: 140,
+          child: Image.asset(
             "assets/images/noimage.png",
+            fit: BoxFit.cover,
           ),
         ),
       );
     }
 
-    return CircleAvatar(
-      maxRadius: 70,
-      backgroundImage: _backgroundImage,
+    return AvatarWidget(
+      maxRadius: 140,
+      child: _backgroundImage,
     );
   }
 
@@ -140,16 +169,25 @@ class UserDetailController extends GetxController {
     if (formKey.currentState!.validate()) {
       var imageName = "noimage.png";
       if (isUploadImage.value) {
-        var _uploadImage = await APIService.uploadFile(file: imageFile.value!);
-        if (!_uploadImage.isSuccess) {
-          AppAlert.errorAlert(title: "upload_file_error".tr);
-          return;
+        POSTResponse _uploadImage;
+        if (kIsWeb) {
+          _uploadImage = await APIService.uploadFile(
+            uint8list: imageFileRaw.value,
+            fileName: const Uuid().v4(),
+          );
+        } else {
+          _uploadImage = await APIService.uploadFile(file: imageFile.value!);
+          if (!_uploadImage.isSuccess) {
+            AppAlert.errorAlert(title: "upload_file_error".tr);
+            return;
+          }
         }
-        imageName = _uploadImage.message;
+        imageName = imageFileRaw.value == null
+            ? _uploadImage.message
+            : _uploadImage.message + ".jpg";
       } else {
         imageName = tempUserDetail.value.profile ?? "noimage.png";
       }
-
       if (userDetail.value.id == null) {
         var _user = UserModel(
           id: Uuid.NAMESPACE_NIL,
