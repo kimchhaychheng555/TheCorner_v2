@@ -105,6 +105,7 @@ Map<String, String> get enTranslate {
     "show": "Show",
     "of": "Of",
     "no_data_available_in_table": "No data available in table",
-    "business_overview": "Business Overview"
+    "business_overview": "Business Overview",
+    "total_sale": "Total Sale"
   };
 }

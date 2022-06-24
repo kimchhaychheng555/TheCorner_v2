@@ -98,6 +98,7 @@ Map<String, String> get khTranslate {
     "show": "បង្ហាញ",
     "of": "នៃ",
     "no_data_available_in_table": "តារាងពុំមានទិន្នន័យ",
-    "business_overview": "ទិដ្ឋភាពទូទៅនៃអាជីវកម្ម"
+    "business_overview": "ទិដ្ឋភាពទូទៅនៃអាជីវកម្ម",
+    "total_sale": "ការលក់សរុប"
   };
 }
