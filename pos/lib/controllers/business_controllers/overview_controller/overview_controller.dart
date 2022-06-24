@@ -12,30 +12,33 @@ class OverviewController extends GetxController {
   var tooltip = TooltipBehavior();
   var tooltipBehavior = TooltipBehavior();
 
-  get dataSource => null;
+  // get dataSource => null;
+  RxList<PiaData> dataSource = (<PiaData>[]).obs;
 
   @override
   void onInit() {
     data([
-      ChartData('CHdN', 12),
-      ChartData('CHeN', 12),
-      ChartData('CHsN', 12),
-      ChartData('CHN', 12),
-      ChartData('GER', 15),
-      ChartData('RUS', 30),
-      ChartData('BRZ', 6.4),
-      ChartData('IND', 14)
+      ChartData('Jan', 34),
+      ChartData('Feb', 43),
+      ChartData('Mar', 45),
+      ChartData('Apr', 50),
+      ChartData('May', 52),
+      ChartData('Jun', 45),
+      ChartData('Jul', 73),
+      ChartData('Aug', 35),
+      ChartData('Sep', 82),
+      ChartData('Oct', 86),
+      ChartData('Nov', 90),
+      ChartData('Dec', 98),
     ]);
-    dataSource:
-    [
+    dataSource([
       // Bind data source
-      ChartData('Jan', 35),
-      ChartData('Feb', 28),
-      ChartData('Mar', 34),
-      ChartData('Apr', 32),
-      ChartData('May', 40)
-    ];
-
+      PiaData('ងាវឆាអំពិលទំ', 35),
+      PiaData('ខាត់ណាទឹកភ្នែក', 28),
+      PiaData('Angkor Beer', 34),
+      PiaData('ឆាក្ដៅមាន់', 3),
+    ]);
+    tooltipBehavior = TooltipBehavior(enable: true);
     tooltip = TooltipBehavior(enable: true);
     super.onInit();
   }
@@ -46,4 +49,11 @@ class ChartData {
 
   final String x;
   final double y;
+}
+
+class PiaData {
+  final String x;
+  final double y;
+
+  PiaData(this.x, this.y);
 }
