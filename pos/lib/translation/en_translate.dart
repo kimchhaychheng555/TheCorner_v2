@@ -17,7 +17,7 @@ Map<String, String> get enTranslate {
     "setting": "Setting",
     "account_setting": "Account Setting",
     "language": "Language",
-    "sent_telegram": "Sent Log To Telegram",
+    "send_to_log_telegram": "Sent Log To Telegram",
     "logout": "Logout",
     "agree": "Agree",
     "disagree": "Disagree",
@@ -124,5 +124,7 @@ Map<String, String> get enTranslate {
     "total_number": "Total Number",
     "payment_status": "Payment Status",
     "payment_method": "Payment Method",
+    "admin": "Admin",
+    "allow_vat": "Allow VAT",
   };
 }

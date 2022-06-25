@@ -17,7 +17,7 @@ Map<String, String> get khTranslate {
     "setting": "ការកំណត់",
     "account_setting": "គណនីរបស់អ្នក",
     "language": "ប្ដូរភាសា",
-    "sent_telegram": "ផ្ដល់ដំណឹងទៅតេឡេក្រាមពេលដែលចូលគណនីរបស់អ្នក",
+    "send_to_log_telegram": "ផ្ដល់ដំណឹងទៅតេឡេក្រាមពេលដែលចូលគណនីរបស់អ្នក",
     "logout": "ចាកចេញ",
     "agree": "យល់ព្រម",
     "disagree": "មិនយល់ព្រម",
@@ -117,5 +117,7 @@ Map<String, String> get khTranslate {
     "total_number": "ចំនួនសរុប",
     "payment_status": "ស្ថានភាពការទូទាត់",
     "payment_method": "វិធី​សា​ស្រ្ត​ទូទាត់",
+    "admin": "អ្នកគ្រប់គ្រង",
+    "allow_vat": "ពន្ធលើតម្លៃបន្ថែម",
   };
 }
