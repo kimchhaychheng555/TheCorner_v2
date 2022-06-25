@@ -80,7 +80,7 @@ class OverviewTableWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "payment_status".tr,
+                    text: "payment_method".tr,
                     value: "price",
                     show: true,
                     textAlign: TextAlign.center,
