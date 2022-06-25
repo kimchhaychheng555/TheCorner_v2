@@ -1,14 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
-import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/services/app_service.dart';
-import 'package:pos/widgets/avatar_widget.dart';
-import 'package:pos/widgets/button_pagintaion_widget.dart';
-import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 

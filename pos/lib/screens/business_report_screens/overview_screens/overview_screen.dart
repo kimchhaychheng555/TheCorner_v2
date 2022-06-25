@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/controllers/business_controllers/overview_chart_controller.dart';
 import 'package:pos/controllers/business_controllers/overview_controller/overview_controller.dart';
+import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_piachart_widget.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_screen_widget.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_table_widets.dart';
 import 'package:pos/services/app_service.dart';
@@ -186,27 +187,28 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                             )
                           ],
                         ),
-                        child: SfCircularChart(
-                          legend: Legend(
-                            iconBorderWidth: 10,
-                            isVisible: true,
-
-                            // toggleSeriesVisibility: true,
-                            // iconWidth: 30,
-                          ),
-                          // Enables the tooltip for all the series in chart
-                          tooltipBehavior: _controller.tooltipBehavior,
-                          series: [
-                            PieSeries<PiaData, String>(
-                              enableTooltip: true,
-                              dataSource: _controller.dataSource,
-                              xValueMapper: (PiaData data, _) => data.x,
-                              yValueMapper: (PiaData data, _) => data.y,
-                              dataLabelSettings: const DataLabelSettings(
-                                isVisible: true,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextWidget(
+                                    text: "top_sale".tr,
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                  ),
+                                  const Icon(Icons.more_horiz),
+                                ],
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 10),
+                              Expanded(
+                                child: OverviewPiaChatWidget(),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -247,7 +249,6 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                                     fontSize: 18,
                                     color: Colors.black,
                                   ),
-                                  const Icon(Icons.more_horiz),
                                 ],
                               ),
                               const SizedBox(height: 10),
