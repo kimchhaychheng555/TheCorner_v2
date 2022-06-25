@@ -38,10 +38,10 @@ class SettingScreen extends GetResponsiveView<dynamic> {
                               ),
                               Positioned(
                                 bottom: 30,
-                                right: 0,
+                                right: 10,
                                 child: Container(
-                                  width: 30,
-                                  height: 30,
+                                  width: 20,
+                                  height: 20,
                                   decoration: BoxDecoration(
                                     color: HexColor("#019BDF"),
                                     borderRadius: BorderRadius.circular(50),
@@ -62,7 +62,7 @@ class SettingScreen extends GetResponsiveView<dynamic> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: HexColor("#104984"),
-                            )
+                            ),
                           ],
                         )
                       ],
