@@ -60,6 +60,9 @@ dependencies:
   translations_loader: ^1.0.2
 
   syncfusion_flutter_charts: ^20.1.61
+  fl_chart: ^0.2.0
+  pie_chart: ^5.3.1
+  
 
 dev_dependencies:
   flutter_test:

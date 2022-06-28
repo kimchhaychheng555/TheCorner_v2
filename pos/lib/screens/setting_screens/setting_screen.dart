@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/constants/constants.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class SettingScreen extends GetResponsiveView<dynamic> {
@@ -22,255 +23,141 @@ class SettingScreen extends GetResponsiveView<dynamic> {
                 margin: const EdgeInsets.only(top: 20.0),
                 width: 1000,
                 height: 800,
-                // height: 700,
-                // decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(15),
-                //     color: HexColor("#ffffff"),
-                //     boxShadow: [
-                //       BoxShadow(
-                //         // blurRadius: 1,
-                //         spreadRadius: 0.1,
-                //         offset: const Offset(0, 1),
-                //         color: HexColor("#000000").withOpacity(0.1),
-                //       )
-                //     ]),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: ListView(children: [
-                    Card(
-                      color: Colors.white,
-                      // elevation: 4.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: Column(
+                  child: Center(
+                    child: ListView(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Card(
-                                elevation: 0.5,
-                                child: ListTile(
-                                  title: TextWidget(
-                                    text: "privacy_setting".tr,
-                                    color: HexColor("#0169F8"),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
+                            Stack(children: [
+                              const CircleAvatar(
+                                radius: 100,
+                                backgroundImage: NetworkImage(
+                                    "https://1.bp.blogspot.com/-MPERJogHDwk/XOtBSslix6I/AAAAAAAAALc/R-p7KNm9lOUCCTEQSalvD5k-im03CnZvQCLcBGAs/s1600/61376338_2367029796688087_349062360196972544_n.jpg"),
+                              ),
+                              Positioned(
+                                bottom: 30,
+                                right: 10,
+                                child: Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    color: HexColor("#5CA0FB"),
+                                    borderRadius: BorderRadius.circular(50),
                                   ),
-                                )),
-                            const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 20, right: 20, top: 10),
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.language,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                title: TextWidget(
-                                  text: "language",
-                                  fontSize: 18,
-                                  color: Colors.black,
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 160),
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "english".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: Colors.white,
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "khmer".tr,
-                                          fontFamily: 'Siemreap',
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: Colors.white,
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10),
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.send,
-                                  color: HexColor("#0F99FC"),
-                                  size: 40,
-                                ),
-                                title: TextWidget(
-                                  text: "sent_telegram".tr,
-                                  fontSize: 18,
-                                  color: HexColor("#000000"),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 160),
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "agree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "disagree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            ]),
                             const SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10),
-                              child: ListTile(
-                                leading: const Icon(
-                                  Icons.wifi_protected_setup,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                title: TextWidget(
-                                  text: "vat".tr,
-                                  fontSize: 18,
-                                  color: HexColor("#000000"),
-                                ),
-                              ),
+                            TextWidget(
+                              text: "Phenhchet SURT",
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: HexColor("#104984"),
+                            ),
+                            const SizedBox(height: 5),
+                            TextWidget(
+                              text: "admin".tr,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: HexColor("#104984"),
                             ),
                             const SizedBox(height: 20),
                             Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 160),
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "agree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        TextWidget(
-                                          text: "disagree".tr,
-                                          color: HexColor("#000000"),
-                                          fontSize: 18,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Transform.scale(
-                                            scale: 1.3,
-                                            child: Checkbox(
-                                              checkColor: HexColor("#FFFFFF"),
-                                              value: false,
-                                              onChanged: (bool? value) {},
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Card(
-                                elevation: 0.3,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10),
-                                  child: ListTile(
-                                    leading: Icon(
-                                      Icons.logout,
-                                      color: HexColor("#FF0D19"),
-                                      size: 40,
-                                    ),
-                                    title: TextWidget(
-                                      text: "log_out".tr,
-                                      color: HexColor("#FF0D19"),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const SizedBox(height: 30),
+                                  TextWidget(
+                                    text: "privacy_setting".tr,
+                                    fontSize: 25,
+                                    // fontFamily: "Siemreap",
+                                    fontWeight: FontWeight.w500,
+                                    color: HexColor("#005FF2"),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: ListTile(
+                                      title: TextWidget(
+                                        text: "language".tr,
+                                        fontSize: 20,
+                                        color: HexColor("#000000"),
+                                      ),
+                                      leading: Icon(
+                                        Icons.language,
+                                        size: 30,
+                                        color: HexColor("#005FF2"),
+                                      ),
+                                      trailing:
+                                          const Icon(Icons.arrow_forward_ios),
                                     ),
                                   ),
-                                )),
+                                  const SizedBox(height: 30),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: ListTile(
+                                      title: TextWidget(
+                                        text: "send_to_log_telegram".tr,
+                                        fontSize: 20,
+                                        color: HexColor("#000000"),
+                                      ),
+                                      leading: Icon(
+                                        Icons.telegram,
+                                        size: 30,
+                                        color: HexColor("#005FF2"),
+                                      ),
+                                      trailing:
+                                          const Icon(Icons.arrow_forward_ios),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: ListTile(
+                                      title: TextWidget(
+                                        text: "allow_vat".tr,
+                                        fontSize: 20,
+                                        color: HexColor("#000000"),
+                                      ),
+                                      leading: Icon(
+                                        Icons.account_balance,
+                                        size: 30,
+                                        color: HexColor("#005FF2"),
+                                      ),
+                                      trailing:
+                                          const Icon(Icons.arrow_forward_ios),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: ListTile(
+                                      title: TextWidget(
+                                        text: "log_out".tr,
+                                        fontSize: 20,
+                                        color: HexColor("#FC181F"),
+                                      ),
+                                      leading: Icon(
+                                        Icons.logout,
+                                        size: 30,
+                                        color: HexColor("#FC181F"),
+                                      ),
+                                      trailing:
+                                          const Icon(Icons.arrow_forward_ios),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                ],
+                              ),
+                            )
                           ],
-                        ),
-                      ),
+                        )
+                      ],
                     ),
-                  ]),
+                  ),
                 ),
               ),
             ),
