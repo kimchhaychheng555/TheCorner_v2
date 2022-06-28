@@ -14,12 +14,7 @@ namespace API.Models
         [Key]
         public Guid id { get; set; }
         public string slug { get; set; }
-        public string description { get; set; }
-
-        public Guid role_id { get; set; }
-
-        [ForeignKey("role_id")]
-        public RoleModel role { get; set; }
+        public string description { get; set; } 
 
     }
 }

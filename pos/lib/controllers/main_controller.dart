@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:pos/models/permission_models/permission_model.dart';
+import 'package:pos/models/permission_role_models/permission_role_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
@@ -38,10 +40,25 @@ class MainController extends GetxController {
           await APIService.post("user/login", jsonEncode(AppService.loginUser));
       if (_resp.isSuccess) {
         Get.offAndToNamed(SmartHomeScreen.routeName);
-        AppService.currentUser = UserModel.fromJson(jsonDecode(_resp.content));
+        await _onGetPermissionUser(_resp.content);
       } else {
         Get.offAndToNamed(LoginScreen.routeName);
       }
+    }
+  }
+
+  Future<void> _onGetPermissionUser(String jsonString) async {
+    var _tempUser = UserModel.fromJson(jsonDecode(jsonString));
+    var _tempPermissionList = <PermissionModel>[];
+
+    var _resp = await APIService.oDataGet(
+        "PermissionRole?\$expand=permission,role&\$filter=role_id eq ${_tempUser.role_id}");
+    if (_resp.isSuccess) {
+      List<dynamic> dyn = jsonDecode(_resp.content);
+      var tempPermissionRoleList =
+          dyn.map((e) => PermissionRoleMole.fromJson(jsonDecode(e))).toList();
+
+      AppService.currentUser;
     }
   }
 

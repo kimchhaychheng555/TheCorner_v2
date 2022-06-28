@@ -9,7 +9,7 @@ namespace API.Models
 {
 
     [Table("data_permission_role")]
-    public class PermissionRole
+    public class PermissionRoleModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

@@ -76,6 +76,7 @@ namespace API
         public DbSet<StockInventoryModel> StockInventories { get; set; }
         public DbSet<StockTransactionModel> StockTransactions { get; set; }
         public DbSet<TableModel> Tables { get; set; }
+        public DbSet<PermissionRoleModel> PermissionRoles { get; set; }
         public DbSet<UserModel> Users { get; set; }
     }
 }

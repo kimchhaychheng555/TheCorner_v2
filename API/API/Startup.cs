@@ -115,6 +115,7 @@ namespace API
             odataBuilder.EntitySet<StockTransactionModel>("StockTransaction");
             odataBuilder.EntitySet<TableModel>("Table");
             odataBuilder.EntitySet<UserModel>("User");
+            odataBuilder.EntitySet<PermissionRoleModel>("PermissionRole");
             odataBuilder.EntitySet<ExpenseModel>("Expense");
             return odataBuilder.GetEdmModel();
         }

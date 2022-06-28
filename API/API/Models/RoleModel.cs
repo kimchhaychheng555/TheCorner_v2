@@ -15,7 +15,7 @@ namespace API.Models
         public Guid id { get; set; }
         public string name { get; set; } 
         public List<UserModel> users { get; set; }
-        public List<PermissionRole> permission_roles { get; set; }
+        public List<PermissionRoleModel> permission_roles { get; set; }
 
     }
 }
