@@ -152,7 +152,7 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                             BoxShadow(
                               blurRadius: 2,
                               spreadRadius: 2,
-                              offset: Offset(0, 2),
+                              offset: const Offset(0, 2),
                               color: HexColor("#353941").withOpacity(0.2),
                             )
                           ]),

@@ -13,8 +13,9 @@ namespace API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid id { get; set; }
-        public string name { get; set; }
-        public List<PermissionModel> permissions { get; set; }
+        public string name { get; set; } 
+        public List<UserModel> users { get; set; }
+        public List<PermissionRole> permission_roles { get; set; }
 
     }
 }

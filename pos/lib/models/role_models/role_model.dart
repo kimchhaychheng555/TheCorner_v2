@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pos/models/permission_models/permission_model.dart';
+import 'package:pos/models/user_models/user_model.dart';
 part 'role_model.g.dart';
 
 @JsonSerializable()
@@ -12,7 +13,9 @@ class RoleModel {
   bool? is_deleted;
   DateTime? deleted_date;
   String? deleted_by;
+
   List<PermissionModel>? permissions;
+  List<UserModel>? users;
 
   RoleModel({
     this.id,
