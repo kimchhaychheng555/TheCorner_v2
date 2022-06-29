@@ -28,7 +28,7 @@ class RoleController extends GetxController {
   }
 
   void onInitPagerList() {
-    var _temp = [5, 10, 15, 25, 50];
+    var _temp = [10, 15, 25, 50];
     pagerList.assignAll(_temp);
     pager(_temp.first);
   }
@@ -38,7 +38,7 @@ class RoleController extends GetxController {
     var _offset = ((currentPage.value - 1) * pager.value);
     var _pagingation = "\$count=true&\$skip=$_offset&\$top=${pager.value}";
     var _query =
-        "role?$_pagingation&\$expand=permissions,users&\$filter=is_deleted eq ${isDeletedFilter.value}";
+        "role?$_pagingation&\$expand=users&\$filter=is_deleted eq ${isDeletedFilter.value}";
 
     var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {

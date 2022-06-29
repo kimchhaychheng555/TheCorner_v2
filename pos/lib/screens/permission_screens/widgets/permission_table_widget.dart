@@ -65,8 +65,8 @@ class PermissionTableWidget extends StatelessWidget {
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: "${row["permissions"].length}",
+                      return const TextWidget(
+                        text: "",
                         color: Colors.black,
                         textAlign: TextAlign.center,
                       );

@@ -7,6 +7,7 @@ import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
+import 'package:pos/screens/report_screens/report_detail_screen.dart';
 import 'package:pos/screens/report_screens/report_screen.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
@@ -57,6 +58,11 @@ class AppRoute {
         GetPage(
           page: () => ReportScreen(),
           name: ReportScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => ReportDetailScreen(),
+          name: ReportDetailScreen.routeName,
           binding: AppBindings(),
         ),
         GetPage(

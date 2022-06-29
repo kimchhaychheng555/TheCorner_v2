@@ -13,7 +13,7 @@ import 'package:darq/darq.dart';
 
 class MainController extends GetxController {
   var isLoading = false.obs;
-  var isApiConnected = true.obs;
+  var isApiConnected = false.obs;
   var isAuth = false.obs;
 
   var urlServerCtrl = TextEditingController();

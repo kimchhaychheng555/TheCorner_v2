@@ -56,7 +56,7 @@ class ProductController extends GetxController {
   }
 
   void onInitPagerList() {
-    var _temp = [5, 10, 15, 25, 50];
+    var _temp = [10, 15, 25, 50];
     pagerList.assignAll(_temp);
     pager(_temp.first);
   }

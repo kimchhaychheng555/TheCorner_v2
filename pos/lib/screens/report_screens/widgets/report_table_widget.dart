@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
-import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
+import 'package:pos/controllers/report_controllers/report_controller.dart';
+import 'package:pos/screens/report_screens/report_detail_screen.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
+import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class ReportScreenWidget extends StatelessWidget {
-  const ReportScreenWidget({Key? key}) : super(key: key);
+class ReportTableWidget extends StatelessWidget {
+  const ReportTableWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ProductController _controller = Get.find();
+    ReportController _controller = Get.find();
     return Obx(
       () => Card(
         borderOnForeground: true,
@@ -27,13 +28,40 @@ class ReportScreenWidget extends StatelessWidget {
                 reponseScreenSizes: const [ScreenSize.xs],
                 headers: [
                   DatatableHeader(
-                    text: "Receipt Number",
-                    value: "receipt_number",
+                    text: "invoice_number".tr,
+                    value: "invoice_number",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: row["receipt_number"],
+                        text: value,
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "table".tr,
+                    value: "table",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: "${"table".tr}: ${value["name"]}",
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "sub_total".tr,
+                    value: "sub_total",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: AppService.currencyFormat(value),
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -41,13 +69,19 @@ class ReportScreenWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Data & Time",
-                    value: "data_time",
+                    text: "discount".tr,
+                    value: "discount",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
+                      String _dis = "";
+                      if (row["discount_type"] == "percent") {
+                        _dis = "$value %";
+                      } else {
+                        _dis = AppService.currencyFormat(value);
+                      }
                       return TextWidget(
-                        text: AppService.currencyFormat(row["data_time"]),
+                        text: _dis,
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -55,27 +89,13 @@ class ReportScreenWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Table Number",
-                    value: "table_number",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: AppService.currencyFormat(row["table_number"]),
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "Grand Total",
+                    text: "grand_total".tr,
                     value: "grand_total",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: AppService.currencyFormat(row["grand_total"]),
+                        text: AppService.currencyFormat(value),
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -83,33 +103,42 @@ class ReportScreenWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "Payment Status",
-                    value: "payment_status",
+                    text: "payment_status".tr,
+                    value: "is_paid",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: AppService.currencyFormat(row["payment_status"]),
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
+                      return value
+                          ? StatusWidget(
+                              backgroundColor: successColor,
+                              child: TextWidget(
+                                text: "paid".tr,
+                                color: Colors.white,
+                              ),
+                            )
+                          : StatusWidget(
+                              backgroundColor: warningColor,
+                              child: TextWidget(
+                                text: "unpaid".tr,
+                                color: Colors.white,
+                              ),
+                            );
                     },
                   ),
-                  DatatableHeader(
-                    text: "Other",
-                    value: "other",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: AppService.currencyFormat(row["other"]),
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
+                ],
+                footers: [
+                  if (_controller.dataSource.isEmpty)
+                    Expanded(
+                      child: Container(
+                        color: HexColor("#ededed"),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: TextWidget(
+                          text: "no_data_available_in_table".tr,
+                          color: textColor,
+                        ),
+                      ),
+                    ),
                 ],
                 source: _controller.dataSource,
                 selecteds: _controller.dataSource,
@@ -119,7 +148,7 @@ class ReportScreenWidget extends StatelessWidget {
                 },
                 isExpandRows: false,
                 onTabRow: (_) {
-                  Get.toNamed(ProductDetailScreen.routeName, arguments: _);
+                  Get.toNamed(ReportDetailScreen.routeName, arguments: _);
                 },
                 expanded: [
                   ..._controller.dataSource.map((e) => false),

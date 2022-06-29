@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
-import 'package:pos/screens/products_screens/widgets/product_drawer_widget.dart';
-import 'package:pos/screens/report_screens/widgets/report_screen_widget.dart';
+import 'package:pos/constants/constants.dart';
+import 'package:pos/controllers/report_controllers/report_controller.dart';
+import 'package:pos/screens/report_screens/widgets/report_table_widget.dart';
+import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 
 class ReportScreen extends GetResponsiveView<dynamic> {
@@ -12,12 +13,11 @@ class ReportScreen extends GetResponsiveView<dynamic> {
 
   @override
   Widget builder() {
-    ProductController _controller = Get.find();
+    ReportController _controller = Get.find();
     final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Obx(
       () => Scaffold(
         key: _key,
-        endDrawer: const ProductDrawerWidget(),
         appBar: AppBar(
           title: Text("report".tr),
           leading: IconButton(
@@ -26,14 +26,8 @@ class ReportScreen extends GetResponsiveView<dynamic> {
           ),
           actions: [
             IconButton(
-              onPressed: () => _controller.onLoadProduct(),
+              onPressed: () => _controller.onLoad(),
               icon: const Icon(Icons.refresh_rounded),
-            ),
-            IconButton(
-              onPressed: () {
-                _key.currentState!.openEndDrawer();
-              },
-              icon: const Icon(Icons.filter_list_rounded),
             ),
           ],
         ),
@@ -48,29 +42,49 @@ class ReportScreen extends GetResponsiveView<dynamic> {
                   children: [
                     SizedBox(
                       width: 300,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 20,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _controller.keywordCtrl,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 20,
+                                ),
+                                filled: true,
+                                isCollapsed: true,
+                                hintText: "search".tr,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              onSubmitted: (_) => _controller.onKeywordSearch(),
+                            ),
                           ),
-                          filled: true,
-                          isCollapsed: true,
-                          hintText: "search".tr,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(5),
+                          const SizedBox(width: 5),
+                          ButtonPaginationWidget(
+                            onPressed: () => _controller.onKeywordSearch(),
+                            backgroundColor: primaryColor,
+                            child: const Icon(
+                              Icons.search_rounded,
+                              color: Colors.white,
+                            ),
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
+                        ],
                       ),
                     ),
                     const Spacer(),
@@ -78,7 +92,7 @@ class ReportScreen extends GetResponsiveView<dynamic> {
                 ),
                 const SizedBox(height: 15),
                 const Expanded(
-                  child: ReportScreenWidget(),
+                  child: ReportTableWidget(),
                 ),
               ],
             ),

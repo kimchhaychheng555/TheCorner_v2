@@ -80,7 +80,6 @@ class AppService {
   }
 
   static Future<void> onAppStartUpConfiguration() async {
-    await Future.delayed(const Duration(seconds: 1));
     await onLanguageStartUp();
     await _onAPIUrlLoadStartUp();
     await _onLoadLoginUserStartUp();
@@ -104,7 +103,7 @@ class AppService {
 
   static Future<void> _onAPIUrlLoadStartUp() async {
     if (AppService.storage.hasData("api")) {
-      AppService.apiApp = AppService.storage.read("api");
+      AppService.apiApp = await AppService.storage.read("api");
       var _resp = await APIService.get("connection");
       if (_resp.isSuccess) {
         AppService.isApiConnected = true;
