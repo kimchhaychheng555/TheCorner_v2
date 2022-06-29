@@ -57,7 +57,7 @@ dependencies:
   file_picker: ^4.6.1
   translations_loader: ^1.0.2
 
-  # syncfusion_flutter_charts: ^20.1.61
+  syncfusion_flutter_charts: ^20.1.61
   fl_chart: ^0.55.0
   pie_chart: ^5.3.1
   
