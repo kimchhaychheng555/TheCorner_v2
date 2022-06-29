@@ -9,6 +9,7 @@ import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/smart_home_screens/smart_home_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:darq/darq.dart';
 
 class MainController extends GetxController {
   var isLoading = false.obs;
@@ -39,15 +40,17 @@ class MainController extends GetxController {
       var _resp =
           await APIService.post("user/login", jsonEncode(AppService.loginUser));
       if (_resp.isSuccess) {
-        Get.offAndToNamed(SmartHomeScreen.routeName);
-        await _onGetPermissionUser(_resp.content);
+        var _return = await _onGetPermissionUser(_resp.content);
+        if (_return) {
+          Get.offAndToNamed(SmartHomeScreen.routeName);
+        }
       } else {
         Get.offAndToNamed(LoginScreen.routeName);
       }
     }
   }
 
-  Future<void> _onGetPermissionUser(String jsonString) async {
+  Future<bool> _onGetPermissionUser(String jsonString) async {
     var _tempUser = UserModel.fromJson(jsonDecode(jsonString));
     var _tempPermissionList = <PermissionModel>[];
 
@@ -56,10 +59,20 @@ class MainController extends GetxController {
     if (_resp.isSuccess) {
       List<dynamic> dyn = jsonDecode(_resp.content);
       var tempPermissionRoleList =
-          dyn.map((e) => PermissionRoleMole.fromJson(jsonDecode(e))).toList();
+          dyn.map((e) => PermissionRoleMole.fromJson(e)).toList();
 
-      AppService.currentUser;
+      var group = tempPermissionRoleList.groupBy((e) => e.role_id).source;
+      for (var prl in group) {
+        if (prl.permission != null) {
+          _tempPermissionList.add(prl.permission!);
+        }
+      }
+      _tempUser.permissions = _tempPermissionList;
+      AppService.currentUser = _tempUser;
+      //
+      return true;
     }
+    return false;
   }
 
   void onConnectPressed() async {

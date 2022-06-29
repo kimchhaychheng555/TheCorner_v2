@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/controllers/smart_home_controller.dart';
 import 'package:pos/screens/smart_home_screens/widgets/smart_home_button_widget.dart';
+import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/drawer_widget.dart';
 
 class SmartHomeScreen extends GetResponsiveView<dynamic> {
@@ -84,17 +85,18 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                         textColor: Colors.white,
                         borderRadius: 5,
                       ),
-                    SmartHomeButtonWidget(
-                      onPressed: _controller.onSalePressed,
-                      icon: Icon(
-                        Icons.shopping_cart_rounded,
-                        size: 30,
-                        color: HexColor("#309398"),
+                    if (AppService.hasPermission("sale"))
+                      SmartHomeButtonWidget(
+                        onPressed: _controller.onSalePressed,
+                        icon: Icon(
+                          Icons.shopping_cart_rounded,
+                          size: 30,
+                          color: HexColor("#309398"),
+                        ),
+                        backgroundColor: HexColor("#D5ECEC"),
+                        title: "sale".tr,
+                        borderRadius: 5,
                       ),
-                      backgroundColor: HexColor("#D5ECEC"),
-                      title: "sale".tr,
-                      borderRadius: 5,
-                    ),
                     SmartHomeButtonWidget(
                       onPressed: _controller.onProductPressed,
                       icon: Icon(

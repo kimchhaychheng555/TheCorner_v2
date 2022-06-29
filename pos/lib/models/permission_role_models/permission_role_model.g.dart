@@ -16,7 +16,7 @@ PermissionRoleMole _$PermissionRoleMoleFromJson(Map<String, dynamic> json) =>
           : RoleModel.fromJson(json['role'] as Map<String, dynamic>)
       ..permission = json['permission'] == null
           ? null
-          : PermissionRoleMole.fromJson(
+          : PermissionModel.fromJson(
               json['permission'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$PermissionRoleMoleToJson(PermissionRoleMole instance) =>

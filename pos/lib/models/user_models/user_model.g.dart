@@ -22,9 +22,13 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           ? null
           : DateTime.parse(json['deleted_date'] as String),
       deleted_by: json['deleted_by'] as String?,
-    )..role = json['role'] == null
-        ? null
-        : RoleModel.fromJson(json['role'] as Map<String, dynamic>);
+    )
+      ..role = json['role'] == null
+          ? null
+          : RoleModel.fromJson(json['role'] as Map<String, dynamic>)
+      ..permissions = (json['permissions'] as List<dynamic>?)
+          ?.map((e) => PermissionModel.fromJson(e as Map<String, dynamic>))
+          .toList();
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
@@ -39,4 +43,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'deleted_date': instance.deleted_date?.toIso8601String(),
       'deleted_by': instance.deleted_by,
       'role': instance.role,
+      'permissions': instance.permissions,
     };

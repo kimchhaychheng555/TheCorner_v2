@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
+import 'package:pos/models/permission_models/permission_model.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
@@ -120,6 +121,15 @@ class AppService {
     final oCcy = NumberFormat("#,##0.00", "en_US");
     var number = oCcy.format(price ?? 0);
     return "\$ $number";
+  }
+
+  static bool hasPermission(String? permission) {
+    for (PermissionModel p in (AppService.currentUser?.permissions ?? [])) {
+      if (p.slug == permission) {
+        return true;
+      }
+    }
+    return false;
   }
 
 //   // ===========================================================
