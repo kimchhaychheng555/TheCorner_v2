@@ -22,12 +22,12 @@ class SmartHomeController extends GetxController {
   var isStartSale = false.obs;
 
   @override
-  void onInit() {
-    _onInitStartSaleChecking();
+  void onInit() async {
+    await _onInitStartSaleChecking();
     super.onInit();
   }
 
-  void _onInitStartSaleChecking() async {
+  Future<void> _onInitStartSaleChecking() async {
     var _resp = await APIService.get("document/find/start_sale");
     if (_resp.isSuccess) {
       var _doc = DocumentModel.fromJson(jsonDecode(_resp.content));
@@ -164,11 +164,10 @@ class SmartHomeController extends GetxController {
     Get.offAllNamed(LoginScreen.routeName);
   }
 
-  Stream<int> streamBuild = (() async* {
-    var i = 1;
-    while (i > 0) {
-      await Future.delayed(const Duration(milliseconds: 100));
-      yield i;
+  Stream<void> stream() async* {
+    while (true) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      _onInitStartSaleChecking();
     }
-  })();
+  }
 }

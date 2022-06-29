@@ -38,61 +38,69 @@ class SaleTableScreen extends GetResponsiveView<dynamic> {
 
     SaleTableController _controller = Get.find();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("table".tr),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      secondaryColor,
-                    ),
-                  ),
-                  onPressed: () => _controller.onAddTablePressed(),
-                  child: SizedBox(
-                    height: 40,
+    return StreamBuilder(
+        stream: _controller.stream(),
+        builder: (context, snapshot) {
+          return Obx(
+            () => Scaffold(
+              appBar: AppBar(
+                title: Text("table".tr),
+              ),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Icon(Icons.add),
-                        const SizedBox(width: 15),
-                        Text("add_table".tr),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              secondaryColor,
+                            ),
+                          ),
+                          onPressed: () => _controller.onAddTablePressed(),
+                          child: SizedBox(
+                            height: 40,
+                            child: Row(
+                              children: [
+                                const Icon(Icons.add),
+                                const SizedBox(width: 15),
+                                Text("add_table".tr),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: GridView(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: _grid,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              children: [
-                ..._controller.tableList.map(
-                  (table) => SaleTableWidget(
-                    title: table.name ?? "",
-                    onPressed: () => _controller.onTablePressed(table),
-                    onLongPressed: () => _controller.onTableLongPressed(table),
-                    active: table.isActive ?? false,
+                  Expanded(
+                    child: GridView(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 10),
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: _grid,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                      ),
+                      children: [
+                        ..._controller.tableList.map(
+                          (table) => SaleTableWidget(
+                            title: table.name ?? "",
+                            onPressed: () => _controller.onTablePressed(table),
+                            onLongPressed: () =>
+                                _controller.onTableLongPressed(table),
+                            active: table.isActive ?? false,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

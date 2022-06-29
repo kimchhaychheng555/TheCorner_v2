@@ -106,4 +106,11 @@ class SaleTableController extends GetxController {
     onLoadTable();
     isLoading(false);
   }
+
+  Stream<void> stream() async* {
+    while (true) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      await onLoadTable();
+    }
+  }
 }
