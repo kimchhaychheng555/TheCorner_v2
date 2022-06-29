@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'package:darq/darq.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:pos/services/api_service.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class OverviewController extends GetxController {
+  var isLoading = false.obs;
+
+  //
   var totalSale = 0.obs;
   var totalOrder = 0.obs;
   var totalRevenue = (0.0).obs;
@@ -16,7 +23,59 @@ class OverviewController extends GetxController {
   RxList<PiaData> dataSource = (<PiaData>[]).obs;
 
   @override
-  void onInit() {
+  void onInit() async {
+    isLoading(true);
+    await _onLoadKPI();
+    await _onLoadChartData();
+    await _onLoadTotalInvoice();
+    isLoading(false);
+    super.onInit();
+  }
+
+  Future<void> _onLoadKPI() async {
+    await _onLoadTotalSale();
+    await _onLoadTotalOrder();
+    await _onLoadRevenue();
+  }
+
+  Future<void> _onLoadTotalSale() async {
+    var thisMonthDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    var thisMonthStr = DateFormat("yyyy-MM-dd").format(thisMonthDate);
+    var _resp = await APIService.oDataGet(
+        "sale?\$count=true&\$filter=sale_date ge '$thisMonthStr' and is_paid eq true");
+    if (_resp.isSuccess) {
+      totalSale(_resp.count);
+    }
+  }
+
+  Future<void> _onLoadTotalOrder() async {
+    var thisMonthDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    var thisMonthStr = DateFormat("yyyy-MM-dd").format(thisMonthDate);
+    var _resp = await APIService.oDataGet(
+        "sale?\$count=true&\$filter=sale_date ge '$thisMonthStr' and is_paid eq false");
+    if (_resp.isSuccess) {
+      totalOrder(_resp.count);
+    }
+  }
+
+  Future<void> _onLoadRevenue() async {
+    var thisMonthDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    var thisMonthStr = DateFormat("yyyy-MM-dd").format(thisMonthDate);
+    var _resp = await APIService.oDataGet(
+        "sale?\$count=true&\$filter=sale_date ge '$thisMonthStr' and is_paid eq true&\$select=grand_total");
+    if (_resp.isSuccess) {
+      List<dynamic> _dyn = jsonDecode(_resp.content);
+      double _total = 0;
+      _dyn.forEach((a) {
+        _total += a["grand_total"];
+      });
+      totalRevenue(_total);
+    }
+  }
+
+  Future<void> _onLoadTotalInvoice() async {}
+
+  Future<void> _onLoadChartData() async {
     data([
       ChartData('Jan', 34),
       ChartData('Feb', 43),
@@ -40,7 +99,6 @@ class OverviewController extends GetxController {
     ]);
     tooltipBehavior = TooltipBehavior(enable: true);
     tooltip = TooltipBehavior(enable: true);
-    super.onInit();
   }
 }
 

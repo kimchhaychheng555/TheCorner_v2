@@ -107,7 +107,7 @@ Map<String, String> get enTranslate {
     "no_data_available_in_table": "No data available in table",
     "business_overview": "Business Overview",
     "total_sale": "Total Sale",
-    "per_month": "per month",
+    "this_month": "this month",
     "total_order": "Total Order",
     "total_revenue": "Total Revenue",
     "total_profit": "Total Profit",
