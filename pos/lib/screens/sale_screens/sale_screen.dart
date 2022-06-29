@@ -39,6 +39,11 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                 onPressed: _controller.onPrintInvoicePressed,
                 icon: const Icon(Icons.print),
               ),
+              IconButton(
+                splashRadius: 30,
+                onPressed: _controller.onChangedGridPressed,
+                icon: const Icon(Icons.grid_view_rounded),
+              ),
             ],
             title: Text("sale".tr),
           ),
@@ -57,8 +62,9 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                         child: GridView(
                           shrinkWrap: true,
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                _controller.saleCrossAxisCount.value,
                             mainAxisExtent: 150,
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,

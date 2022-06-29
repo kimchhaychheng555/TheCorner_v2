@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
@@ -22,6 +21,7 @@ import 'package:uuid/uuid.dart';
 
 class SaleController extends GetxController {
   var isLoading = false.obs;
+  var saleCrossAxisCount = 3.obs;
   SaleTableController saleTableCtrl = Get.find();
   var categorySelected = Rxn<CategoryModel>();
   var sale = Rxn<SaleModel>();
@@ -34,10 +34,9 @@ class SaleController extends GetxController {
   @override
   void onInit() async {
     isLoading(true);
-
+    _onSaleCrossAxisCount();
     await _onLoadCategory();
     await _onLoadProduct();
-
     await _onInitController();
     if (table.value?.isActive == false) {
       _onSaleInitValue();
@@ -51,6 +50,13 @@ class SaleController extends GetxController {
   void onClose() async {
     saleTableCtrl.onLoadTable();
     super.onClose();
+  }
+
+  void _onSaleCrossAxisCount() {
+    if (AppService.storage.hasData("saleCount")) {
+      var _saleCount = AppService.storage.read("saleCount");
+      saleCrossAxisCount(_saleCount);
+    }
   }
 
   Future<void> _onInitController() async {
@@ -74,8 +80,12 @@ class SaleController extends GetxController {
   }
 
   Future<void> _onLoadProduct() async {
-    var _resp = await APIService.oDataGet(
-        "product?\$filter=is_deleted eq false and category_id eq ${categorySelected.value?.id}");
+    var _query = "product?\$filter=is_deleted eq false";
+    if (categorySelected.value?.id != Uuid.NAMESPACE_NIL) {
+      _query += " and category_id eq ${categorySelected.value?.id}";
+    }
+
+    var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {
       List<dynamic> _products = jsonDecode(_resp.content) ?? [];
       var _datas = _products.map((p) => ProductModel.fromJson(p)).toList();
@@ -89,6 +99,9 @@ class SaleController extends GetxController {
     if (_resp.isSuccess) {
       List<dynamic> _categories = jsonDecode(_resp.content) ?? [];
       var _datas = _categories.map((c) => CategoryModel.fromJson(c)).toList();
+
+      var _category = CategoryModel(id: Uuid.NAMESPACE_NIL, name: "all".tr);
+      _datas.insert(0, _category);
       categoryList.assignAll(_datas);
       categorySelected(_datas.first);
     }
@@ -379,5 +392,14 @@ class SaleController extends GetxController {
     } else {
       return AppService.currencyFormat(sale.value?.discount);
     }
+  }
+
+  void onChangedGridPressed() {
+    if (saleCrossAxisCount.value <= 7) {
+      saleCrossAxisCount(saleCrossAxisCount.value + 1);
+    } else {
+      saleCrossAxisCount(1);
+    }
+    AppService.storage.write("saleCount", saleCrossAxisCount.value);
   }
 }

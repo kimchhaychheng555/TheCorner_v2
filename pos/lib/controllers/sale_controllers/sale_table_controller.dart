@@ -25,7 +25,6 @@ class SaleTableController extends GetxController {
   }
 
   Future<void> onLoadTable() async {
-    isLoading(true);
     var _sales = await APIService.oDataGet(
         "sale?\$filter=is_deleted eq false and is_paid eq false&\$expand=table");
     if (_sales.isSuccess) {
@@ -45,7 +44,6 @@ class SaleTableController extends GetxController {
       }
       tableList.assignAll(_dataList);
     }
-    isLoading(false);
   }
 
   void onTablePressed(TableModel table) async {
