@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pos/constants/constants.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class SettingScreen extends GetResponsiveView<dynamic> {

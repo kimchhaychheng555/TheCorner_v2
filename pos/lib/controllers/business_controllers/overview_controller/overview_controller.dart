@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
 
 class OverviewController extends GetxController {
   var totalSale = 0.obs;
@@ -9,8 +9,8 @@ class OverviewController extends GetxController {
 
   // Chart
   RxList<ChartData> data = (<ChartData>[]).obs;
-  var tooltip = TooltipBehavior();
-  var tooltipBehavior = TooltipBehavior();
+  // var tooltip = TooltipBehavior();
+  // var tooltipBehavior = TooltipBehavior();
 
   // get dataSource => null;
   RxList<PiaData> dataSource = (<PiaData>[]).obs;
@@ -38,8 +38,8 @@ class OverviewController extends GetxController {
       PiaData('Angkor Beer', 34),
       PiaData('ឆាក្ដៅមាន់', 3),
     ]);
-    tooltipBehavior = TooltipBehavior(enable: true);
-    tooltip = TooltipBehavior(enable: true);
+    // tooltipBehavior = TooltipBehavior(enable: true);
+    // tooltip = TooltipBehavior(enable: true);
     super.onInit();
   }
 }

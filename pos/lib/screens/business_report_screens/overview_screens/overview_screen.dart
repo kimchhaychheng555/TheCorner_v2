@@ -7,7 +7,7 @@ import 'package:pos/screens/business_report_screens/overview_screens/widgets/ove
 import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_table_widets.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/text_widget.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
 
 class OverviewScreen extends GetResponsiveView<dynamic> {
   OverviewScreen({Key? key}) : super(key: key);
@@ -139,30 +139,30 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                                   ),
                                 ],
                               ),
-                              SfCartesianChart(
-                                // Initialize category axis
+                              // SfCartesianChart(
+                              //   // Initialize category axis
 
-                                primaryXAxis: CategoryAxis(),
-                                primaryYAxis: NumericAxis(
-                                    minimum: 0, maximum: 100, interval: 10),
-                                tooltipBehavior: _controller.tooltip,
-                                // series: <ColumnSeries>[
-                                //   ColumnSeries<ChartData, String>(
-                                //       dataSource: _controller.data,
-                                //       xValueMapper: (ChartData data, _) =>
-                                //           data.x,
-                                //       yValueMapper: (ChartData data, _) =>
-                                //           data.y),
-                                // ]
-                                series: <ChartSeries<ChartData, String>>[
-                                  ColumnSeries<ChartData, String>(
-                                    dataSource: _controller.data,
-                                    xValueMapper: (ChartData data, _) => data.x,
-                                    yValueMapper: (ChartData data, _) => data.y,
-                                    name: 'total_amount'.tr,
-                                  )
-                                ],
-                              ),
+                              //   primaryXAxis: CategoryAxis(),
+                              //   primaryYAxis: NumericAxis(
+                              //       minimum: 0, maximum: 100, interval: 10),
+                              //   tooltipBehavior: _controller.tooltip,
+                              //   // series: <ColumnSeries>[
+                              //   //   ColumnSeries<ChartData, String>(
+                              //   //       dataSource: _controller.data,
+                              //   //       xValueMapper: (ChartData data, _) =>
+                              //   //           data.x,
+                              //   //       yValueMapper: (ChartData data, _) =>
+                              //   //           data.y),
+                              //   // ]
+                              //   series: <ChartSeries<ChartData, String>>[
+                              //     ColumnSeries<ChartData, String>(
+                              //       dataSource: _controller.data,
+                              //       xValueMapper: (ChartData data, _) => data.x,
+                              //       yValueMapper: (ChartData data, _) => data.y,
+                              //       name: 'total_amount'.tr,
+                              //     )
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),
