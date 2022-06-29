@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
+import 'package:pos/controllers/business_controllers/overview_controller/overview_total_invoice_controller.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 
@@ -12,7 +14,7 @@ class OverviewTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductController _controller = Get.find();
+    var _controller = Get.put(OverviewTotalInvoiceController());
     return Obx(
       () => Card(
         borderOnForeground: true,
@@ -24,13 +26,40 @@ class OverviewTableWidget extends StatelessWidget {
                 reponseScreenSizes: const [ScreenSize.xs],
                 headers: [
                   DatatableHeader(
-                    text: "receipt_number".tr,
-                    value: "cost",
+                    text: "invoice_number".tr,
+                    value: "invoice_number",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: AppService.currencyFormat(row["cost"]),
+                        text: value,
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "table".tr,
+                    value: "table",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: "${"table".tr}: ${value["name"]}",
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "sub_total".tr,
+                    value: "sub_total",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: AppService.currencyFormat(value),
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -38,13 +67,19 @@ class OverviewTableWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "total_number".tr,
-                    value: "price",
+                    text: "discount".tr,
+                    value: "discount",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
+                      String _dis = "";
+                      if (row["discount_type"] == "percent") {
+                        _dis = "$value %";
+                      } else {
+                        _dis = AppService.currencyFormat(value);
+                      }
                       return TextWidget(
-                        text: AppService.currencyFormat(row["price"]),
+                        text: _dis,
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -52,13 +87,13 @@ class OverviewTableWidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "amount".tr,
-                    value: "id",
+                    text: "grand_total".tr,
+                    value: "grand_total",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: row["category"]["name"],
+                        text: AppService.currencyFormat(value),
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
@@ -67,30 +102,25 @@ class OverviewTableWidget extends StatelessWidget {
                   ),
                   DatatableHeader(
                     text: "payment_status".tr,
-                    value: "price",
+                    value: "is_paid",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: row["created_by"] ?? "",
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "payment_method".tr,
-                    value: "price",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: row["created_by"] ?? "",
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
+                      return value
+                          ? StatusWidget(
+                              backgroundColor: successColor,
+                              child: TextWidget(
+                                text: "paid".tr,
+                                color: Colors.white,
+                              ),
+                            )
+                          : StatusWidget(
+                              backgroundColor: warningColor,
+                              child: TextWidget(
+                                text: "unpaid".tr,
+                                color: Colors.white,
+                              ),
+                            );
                     },
                   ),
                 ],
@@ -132,11 +162,6 @@ class OverviewTableWidget extends StatelessWidget {
                 selectedTextStyle: const TextStyle(color: Colors.white),
               ),
             ),
-            if (_controller.dataSource.isNotEmpty) const SizedBox(height: 10),
-            if (_controller.dataSource.isNotEmpty)
-              Row(
-                children: const [],
-              )
           ],
         ),
       ),

@@ -100,7 +100,7 @@ Map<String, String> get khTranslate {
     "no_data_available_in_table": "តារាងពុំមានទិន្នន័យ",
     "business_overview": "ទិដ្ឋភាពទូទៅនៃអាជីវកម្ម",
     "total_sale": "ការលក់សរុប",
-    "per_month": "ក្នុង១ខែ",
+    "this_month": "ខែនេះ",
     "total_order": "ការកម្មង់សរុប",
     "total_revenue": "ចំណូលសរុប",
     "total_profit": "ផលចំណេញសរុប",
