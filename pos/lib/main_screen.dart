@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     MainController _controller = Get.find();
     return Obx(
-      () => _controller.isLoading.value
+      () => _controller.isApiConnected.value
           ? const SplashScreen()
           : const APIInputUrlWidget(),
     );

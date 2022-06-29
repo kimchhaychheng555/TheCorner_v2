@@ -40,17 +40,15 @@ class MainController extends GetxController {
       var _resp =
           await APIService.post("user/login", jsonEncode(AppService.loginUser));
       if (_resp.isSuccess) {
-        var _return = await _onGetPermissionUser(_resp.content);
-        if (_return) {
-          Get.offAndToNamed(SmartHomeScreen.routeName);
-        }
+        await _onGetPermissionUser(_resp.content);
+        Get.offAndToNamed(SmartHomeScreen.routeName);
       } else {
         Get.offAndToNamed(LoginScreen.routeName);
       }
     }
   }
 
-  Future<bool> _onGetPermissionUser(String jsonString) async {
+  Future<void> _onGetPermissionUser(String jsonString) async {
     var _tempUser = UserModel.fromJson(jsonDecode(jsonString));
     var _tempPermissionList = <PermissionModel>[];
 
@@ -69,10 +67,7 @@ class MainController extends GetxController {
       }
       _tempUser.permissions = _tempPermissionList;
       AppService.currentUser = _tempUser;
-      //
-      return true;
     }
-    return false;
   }
 
   void onConnectPressed() async {
