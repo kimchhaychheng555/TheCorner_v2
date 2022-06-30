@@ -8,6 +8,7 @@ class ProductModel {
   String? id;
   String? name;
   double? price;
+  double? min_quantity;
   double? cost;
   String? image;
   bool? stockable;
@@ -23,6 +24,7 @@ class ProductModel {
     this.id,
     this.name,
     this.price,
+    this.min_quantity,
     this.cost,
     this.image,
     this.stockable = false,

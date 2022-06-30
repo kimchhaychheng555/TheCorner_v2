@@ -9,6 +9,7 @@ import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_payment_models/sale_payment_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
+import 'package:pos/models/stock_transaction_models/stock_transaction_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_discount_widget.dart';
 import 'package:pos/screens/sale_screens/widgets/sale_payment_widget.dart';
@@ -325,6 +326,10 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
+    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
+      await _checkInventoryProcess(_saleProcess, isEdit: false);
+    } else {}
+
     var _json = jsonEncode(_saleProcess);
     var _resp = await APIService.post("sale/save", _json);
     if (_resp.isSuccess) {
@@ -334,6 +339,30 @@ class SaleController extends GetxController {
     } else {
       AppAlert.errorAlert(title: "save_sale_error".tr);
     }
+  }
+
+  Future<void> _checkInventoryProcess(
+    SaleModel sale, {
+    bool isEdit = false,
+  }) async {
+    List<StockTransactionModel> _listStockTransaction = [];
+    if (isEdit == false) {
+      for (SaleProductModel sp in (sale.sale_products ?? [])) {
+        var _inventory = StockTransactionModel(
+          created_by: AppService.currentUser?.fullname,
+          id: Uuid.NAMESPACE_NIL,
+          product_id: sp.product_id,
+          type: "sold",
+          quantity: sp.quantity,
+        );
+        _listStockTransaction.add(_inventory);
+      }
+    }
+
+    var jsonStr = jsonEncode(_listStockTransaction);
+    var _resp = await APIService.post("StockTransaction/Save", jsonStr);
+
+    print(_resp.isSuccess);
   }
 
   Future<void> _onSubmitPaymentProcess() async {

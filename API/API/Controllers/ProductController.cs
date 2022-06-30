@@ -74,15 +74,47 @@ namespace API.Controllers
         {
             if (product.id == Guid.Empty)
             {
-                db.Products.Add(product);
-                await db.SaveChangesAsync();
+                
+                db.Products.Add(product); 
             }
             else
             {
                 db.Products.Update(product);
-                await db.SaveChangesAsync();
             }
 
+            if (product.stockable == true)
+            {
+                var _stockInventories = db.StockInventories.Where(si => si.product_id == product.id);
+
+                if(_stockInventories.Any())
+                {
+                    var _pStock = _stockInventories.FirstOrDefault();
+                    if (product.stockable == false)
+                    {
+                        db.StockInventories.Remove(_pStock);
+                    }
+                    else
+                    {
+                        _pStock.min_quantity = product.min_quantity;
+                        db.StockInventories.Update(_pStock);
+                    }
+
+                }
+                else
+                {
+                    var _tempStockInventory = new StockInventoryModel();
+                    _tempStockInventory.id = Guid.NewGuid();
+                    _tempStockInventory.quantity_stock = 0;
+                    _tempStockInventory.product_id = product.id;
+                    _tempStockInventory.min_quantity = product.min_quantity;
+                    _tempStockInventory.created_by = product.created_by;
+
+                    db.StockInventories.Add(_tempStockInventory);
+                }
+                
+            }
+
+            await db.SaveChangesAsync();
             return Ok(product);
         }
 

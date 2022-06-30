@@ -88,14 +88,13 @@ namespace API.Controllers
                 {
                     updateInvoiceNumber();
                 }
-                await db.SaveChangesAsync();
             }
             else
             {
                 db.Sales.Update(sale);
-                await db.SaveChangesAsync();
             }
 
+            await db.SaveChangesAsync();
             return Ok(sale);
         }
 

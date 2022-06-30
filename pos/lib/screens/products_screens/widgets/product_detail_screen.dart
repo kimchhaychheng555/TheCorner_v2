@@ -89,6 +89,16 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                         )
                       ],
                     ),
+                    if (_controller.tempProductDetail.value.stockable == true)
+                      const SizedBox(height: 10),
+                    if (_controller.tempProductDetail.value.stockable == true)
+                      TextFormFieldWidget(
+                        controller: _controller.minQuantityCtrl,
+                        keyboardType: TextInputType.number,
+                        isNumberic: true,
+                        readOnly: !_controller.isEditable.value,
+                        label: "min_quantity".tr,
+                      ),
                     const SizedBox(height: 10),
                     TextFormFieldWidget(
                       controller: _controller.productNameCtrl,
