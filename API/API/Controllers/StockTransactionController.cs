@@ -44,20 +44,23 @@ namespace API.Controllers
         }
 
         [HttpPost("Save")]
-        public async Task<IActionResult> Post([FromBody] StockTransactionModel st)
+        public async Task<IActionResult> Post([FromBody] List<StockTransactionModel> stList)
         {
-            if (st.id == Guid.Empty)
-            { 
-                db.StockTransactions.Add(st);
-                await db.SaveChangesAsync();
-            }
-            else
+            foreach (StockTransactionModel st in stList)
             {
-                db.StockTransactions.Update(st);
-                await db.SaveChangesAsync();
+                if (st.id == Guid.Empty)
+                {
+                    db.StockTransactions.Add(st);
+                }
+                else
+                {
+                    db.StockTransactions.Update(st); 
+                }
             }
+            await db.SaveChangesAsync();
 
-            return Ok(st);
+
+            return Ok(stList);
         }
 
 

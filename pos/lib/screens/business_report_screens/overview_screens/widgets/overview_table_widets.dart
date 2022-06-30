@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/business_controllers/overview_controller/overview_total_invoice_controller.dart';
-import 'package:pos/controllers/product_controllers/product_controller.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';

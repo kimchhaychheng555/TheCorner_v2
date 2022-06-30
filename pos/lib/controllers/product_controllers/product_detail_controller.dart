@@ -29,6 +29,7 @@ class ProductDetailController extends GetxController {
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
   //
   var productNameCtrl = TextEditingController();
+  var minQuantityCtrl = TextEditingController();
   var costCtrl = TextEditingController();
   var priceCtrl = TextEditingController();
 
@@ -192,6 +193,7 @@ class ProductDetailController extends GetxController {
       var _product = ProductModel(
         id: Uuid.NAMESPACE_NIL,
         name: productNameCtrl.text,
+        min_quantity: double.tryParse(minQuantityCtrl.text),
         cost: double.tryParse(costCtrl.text) ?? 0,
         price: double.tryParse(priceCtrl.text) ?? 0,
         category_id: tempProductDetail.value.category_id,
@@ -204,6 +206,8 @@ class ProductDetailController extends GetxController {
       var _product = ProductModel.fromJson(
           jsonDecode(jsonEncode(tempProductDetail.value)));
       _product.name = productNameCtrl.text;
+
+      _product.min_quantity = double.tryParse(minQuantityCtrl.text);
       _product.cost = double.tryParse(costCtrl.text) ?? 0;
       _product.price = double.tryParse(priceCtrl.text) ?? 0;
       _product.image = imageName;

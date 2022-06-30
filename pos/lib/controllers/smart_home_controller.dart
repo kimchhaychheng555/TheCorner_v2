@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/models/document_models/document_model.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
+import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/inventory_summary_report_screen.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/overview_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/permission_screens/permission_screen.dart';
@@ -147,7 +148,8 @@ class SmartHomeController extends GetxController {
   void onPermissionPressed() => Get.toNamed(PermissionScreen.routeName);
   void onOverviewBusinessReportPressed() =>
       Get.toNamed(OverviewScreen.routeName);
-  void onInventorySummaryReportPressed() {}
+  void onInventorySummaryReportPressed() =>
+      Get.toNamed(InventorySummaryReportScreen.routeName);
   void onSaleSummaryReportPressed() {}
   void onReceiptReportPressed() {}
   void onExpenseReportPressed() {}

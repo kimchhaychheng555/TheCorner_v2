@@ -85,9 +85,7 @@ class ProductController extends GetxController {
       isDeletedFilter(true);
     }
 
-    if ((_tempCategoryId ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      currentCategoryId(_tempCategoryId);
-    }
+    currentCategoryId(_tempCategoryId);
     onLoadProduct();
   }
 
