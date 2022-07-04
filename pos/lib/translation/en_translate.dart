@@ -126,5 +126,18 @@ Map<String, String> get enTranslate {
     "payment_method": "Payment Method",
     "admin": "Admin",
     "allow_vat": "Allow VAT",
+    "save_category_success": "Save Category Successful",
+    "save_category_error": "Save Category Unsuccessful",
+    "delete_category_success": "Delete Category Successful",
+    "delete_category_error": "Delete Category Unsuccessful",
+    "delete_product_success": "Delete Product Successful",
+    "delete_product_error": "Delete Product Unsuccessful",
+    "restore_product_success": "Restore Product Successful",
+    "restore_product_error": "Restore Product Unsuccessful",
+    "save_product_success": "Restore Product Unsuccessful",
+    "save_product_error": "Save Product Unsuccessful",
+    "restore_role_success": "Restore Role Unsuccessful",
+    "restore_role_error": "Restore Role Error",
+    "delete_role_success": "Delete Role Success",
   };
 }
