@@ -1,6 +1,6 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:darq/darq.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/others_models/inventory_summary_report_model.dart';
 import 'package:pos/models/stock_inventory_models/stock_inventory_model.dart';
@@ -34,9 +34,11 @@ class InventorySummaryReportController extends GetxController {
   }
 
   Future<void> onLoad() async {
+    isLoading(true);
     await _onLoadStockInventory();
     await _onLoadStockTransaction();
     await _onAnalyzeDataForReport();
+    isLoading(false);
   }
 
   Future<void> _onLoadStockInventory() async {
@@ -72,7 +74,23 @@ class InventorySummaryReportController extends GetxController {
         InventorySummaryReportModel(
           item_name: stock.product?.name,
           cost: stock.product?.cost,
+          price: stock.product?.price,
           qty_on_hand: stock.quantity_stock,
+          qty_on_hold: tempStockTransactionList
+              .where((st) =>
+                  st.type == "hold" && st.product_id == stock.product_id)
+              .toList()
+              .sum((p) => p.quantity ?? 0),
+          qty_sold: tempStockTransactionList
+              .where((st) =>
+                  st.type == "sold" && st.product_id == stock.product_id)
+              .toList()
+              .sum((p) => p.quantity ?? 0),
+          adjustment: tempStockTransactionList
+              .where((st) =>
+                  st.type == "adjustment" && st.product_id == stock.product_id)
+              .toList()
+              .sum((p) => p.quantity ?? 0),
         ),
       );
     }
@@ -116,4 +134,6 @@ class InventorySummaryReportController extends GetxController {
   }
 
   void onExportPressed() {}
+
+  void onFilterPressed() {}
 }

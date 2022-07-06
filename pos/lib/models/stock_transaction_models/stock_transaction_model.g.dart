@@ -13,6 +13,7 @@ StockTransactionModel _$StockTransactionModelFromJson(
       quantity: (json['quantity'] as num?)?.toDouble(),
       type: json['type'] as String?,
       product_id: json['product_id'] as String?,
+      status: json['status'] as bool?,
       created_date: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
@@ -33,6 +34,7 @@ Map<String, dynamic> _$StockTransactionModelToJson(
       'quantity': instance.quantity,
       'type': instance.type,
       'product_id': instance.product_id,
+      'status': instance.status,
       'created_date': instance.created_date?.toIso8601String(),
       'created_by': instance.created_by,
       'is_deleted': instance.is_deleted,

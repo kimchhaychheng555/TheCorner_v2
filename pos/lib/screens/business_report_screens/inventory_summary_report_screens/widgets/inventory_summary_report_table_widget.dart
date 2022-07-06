@@ -67,12 +67,12 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                   ),
                   DatatableHeader(
                     text: "on_hold".tr,
-                    value: "item_name",
+                    value: "qty_on_hold",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: value,
+                        text: "$value",
                         color: Colors.black,
                         textAlign: TextAlign.center,
                       );
@@ -94,12 +94,12 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                   ),
                   DatatableHeader(
                     text: "sold".tr,
-                    value: "item_name",
+                    value: "qty_sold",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: value,
+                        text: "$value",
                         color: Colors.black,
                         textAlign: TextAlign.center,
                       );
@@ -107,12 +107,12 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                   ),
                   DatatableHeader(
                     text: "adjustment".tr,
-                    value: "item_name",
+                    value: "adjustment",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: value,
+                        text: "$value",
                         color: Colors.black,
                         textAlign: TextAlign.center,
                       );
@@ -120,13 +120,14 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                   ),
                   DatatableHeader(
                     text: "price".tr,
-                    value: "item_name",
+                    value: "price",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
-                        text: value,
+                        text: AppService.currencyFormat(value),
                         color: Colors.black,
+                        fontWeight: FontWeight.bold,
                         textAlign: TextAlign.center,
                       );
                     },

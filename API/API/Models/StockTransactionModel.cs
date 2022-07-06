@@ -14,7 +14,8 @@ namespace API.Models
         [Key]
         public Guid id { get; set; }
         public decimal? quantity { get; set; }
-        public string type { get; set; }
+        public string type { get; set; } 
+        public bool? status { get; set; } = false;
 
         public Guid product_id { get; set; }
         [ForeignKey("product_id")]

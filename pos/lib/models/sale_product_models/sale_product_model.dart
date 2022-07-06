@@ -18,6 +18,7 @@ class SaleProductModel {
   DateTime? created_date;
   String? created_by;
   bool is_deleted;
+  bool stockable;
   DateTime? deleted_date;
   String? deleted_by;
 
@@ -29,6 +30,7 @@ class SaleProductModel {
     this.quantity,
     this.image,
     this.price,
+    this.stockable = false,
     this.is_free = false,
     this.is_remove_stock_done = false,
     this.sale_id,

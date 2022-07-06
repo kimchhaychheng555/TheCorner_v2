@@ -9,6 +9,7 @@ class StockTransactionModel {
   double? quantity;
   String? type;
   String? product_id;
+  bool? status;
   DateTime? created_date;
   String? created_by;
   bool? is_deleted;
@@ -21,6 +22,7 @@ class StockTransactionModel {
     this.quantity,
     this.type,
     this.product_id,
+    this.status,
     this.created_date,
     this.created_by,
     this.is_deleted,

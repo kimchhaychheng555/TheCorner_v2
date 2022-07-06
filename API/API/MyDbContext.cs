@@ -49,6 +49,11 @@ namespace API
                     property.SetDefaultValue(false);
                 }
 
+                if (property.GetColumnBaseName() == "status")
+                {
+                    property.SetDefaultValue(false);
+                }
+
                 if (property.GetColumnBaseName() == "created_date")
                 {
                     property.SetDefaultValueSql("getDate()");

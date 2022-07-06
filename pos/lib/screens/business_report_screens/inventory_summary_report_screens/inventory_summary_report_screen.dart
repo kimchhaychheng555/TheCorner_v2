@@ -16,79 +16,89 @@ class InventorySummaryReportScreen extends GetResponsiveView<dynamic> {
   @override
   Widget builder() {
     InventorySummaryReportController _controller = Get.find();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("inventory_summary_report".tr),
-      ),
-      body: LoadingOverlayWidget(
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 300,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _controller.keywordCtrl,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15,
-                                horizontal: 20,
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text("inventory_summary_report".tr),
+          actions: [
+            IconButton(
+              splashRadius: 30,
+              onPressed: _controller.onFilterPressed,
+              icon: const Icon(Icons.filter_list_rounded),
+            ),
+          ],
+        ),
+        body: LoadingOverlayWidget(
+          isLoading: _controller.isLoading.value,
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _controller.keywordCtrl,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 20,
+                                ),
+                                filled: true,
+                                isCollapsed: true,
+                                hintText: "search".tr,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                               ),
-                              filled: true,
-                              isCollapsed: true,
-                              hintText: "search".tr,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
+                              onSubmitted: (_) => _controller.onKeywordSearch(),
                             ),
-                            onSubmitted: (_) => _controller.onKeywordSearch(),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        ButtonPaginationWidget(
-                          onPressed: () => _controller.onKeywordSearch(),
-                          backgroundColor: primaryColor,
-                          child: const Icon(
-                            Icons.search_rounded,
-                            color: Colors.white,
+                          const SizedBox(width: 5),
+                          ButtonPaginationWidget(
+                            onPressed: () => _controller.onKeywordSearch(),
+                            backgroundColor: primaryColor,
+                            child: const Icon(
+                              Icons.search_rounded,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  IconTextButtonWidget(
-                    onPressed: () => _controller.onExportPressed(),
-                    label: TextWidget(text: "export_to_excel".tr),
-                    backgroundColor: primaryColor,
-                    icon: const Icon(Icons.file_download_rounded),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              const Expanded(
-                child: InventorySummaryReportTablewidget(),
-              ),
-            ],
+                    const Spacer(),
+                    IconTextButtonWidget(
+                      onPressed: () => _controller.onExportPressed(),
+                      label: TextWidget(text: "export_to_excel".tr),
+                      backgroundColor: primaryColor,
+                      icon: const Icon(Icons.file_download_rounded),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                const Expanded(
+                  child: InventorySummaryReportTablewidget(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

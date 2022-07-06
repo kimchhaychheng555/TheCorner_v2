@@ -19,54 +19,18 @@ class SaleProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          clipBehavior: Clip.hardEdge,
-          padding: const EdgeInsets.all(0),
-          decoration: BoxDecoration(
-            border: Border.all(color: secondaryColor, width: 2),
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white,
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(
-                  "${AppService.baseUrl}uploads/${product.image}"),
-              fit: BoxFit.cover,
-            ),
+        CachedNetworkImage(
+          imageUrl: "${AppService.baseUrl}uploads/${product.image}",
+          placeholder: (context, url) => const Center(
+            child: CircularProgressIndicator(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                  ),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: TextWidget(
-                  text: "\$ ${product.price?.toDouble().toString()}",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: TextWidget(
-                  textAlign: TextAlign.center,
-                  text: product.name ?? "",
-                  fontSize: 16,
-                  fontFamily: "Siemreap",
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+          errorWidget: (context, url, error) => _containerImage(
+            imageProvider: const AssetImage("assets/images/noimage.png"),
+            product: product,
+          ),
+          imageBuilder: (context, image) => _containerImage(
+            imageProvider: image,
+            product: product,
           ),
         ),
         Positioned.fill(
@@ -80,4 +44,57 @@ class SaleProductWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget _containerImage({
+  required ProductModel product,
+  required ImageProvider imageProvider,
+}) {
+  return Container(
+    clipBehavior: Clip.hardEdge,
+    padding: const EdgeInsets.all(0),
+    decoration: BoxDecoration(
+      border: Border.all(color: secondaryColor, width: 2),
+      borderRadius: BorderRadius.circular(5),
+      color: Colors.white,
+      image: DecorationImage(
+        image: imageProvider,
+        fit: BoxFit.cover,
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: secondaryColor,
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(5),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: TextWidget(
+            text: "\$ ${product.price?.toDouble().toString()}",
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const Spacer(),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: secondaryColor,
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: product.name ?? "",
+            fontSize: 16,
+            fontFamily: "Siemreap",
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    ),
+  );
 }

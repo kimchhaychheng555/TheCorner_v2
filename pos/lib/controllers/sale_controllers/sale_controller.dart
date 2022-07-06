@@ -200,7 +200,7 @@ class SaleController extends GetxController {
     );
   }
 
-  void _onPaymentProcess(PaymentMethodModel model) {
+  void _onPaymentProcess(PaymentMethodModel model) async {
     List<SalePaymentModel> _salePayments = [];
     _salePayments.add(SalePaymentModel(
       id: Uuid.NAMESPACE_NIL,
@@ -214,6 +214,14 @@ class SaleController extends GetxController {
 
     sale.value?.sale_payments = [];
     sale.value?.sale_payments?.addAll(_salePayments);
+
+    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
+      await _checkInventoryProcess(
+        sale.value ?? SaleModel(),
+        isEdit: false,
+        type: "sold",
+      );
+    }
     _onSubmitPaymentProcess();
   }
 
@@ -232,6 +240,7 @@ class SaleController extends GetxController {
         id: Uuid.NAMESPACE_NIL,
         sale_id: sale.value?.id,
         quantity: 1,
+        stockable: product.stockable ?? false,
         image: product.image,
         price: product.price,
         product_id: product.id,
@@ -327,7 +336,7 @@ class SaleController extends GetxController {
     _saleProcess.grand_total = getGrandTotal;
 
     if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(_saleProcess, isEdit: false);
+      await _checkInventoryProcess(_saleProcess, isEdit: false, type: "hold");
     } else {}
 
     var _json = jsonEncode(_saleProcess);
@@ -344,25 +353,28 @@ class SaleController extends GetxController {
   Future<void> _checkInventoryProcess(
     SaleModel sale, {
     bool isEdit = false,
+    required String type,
   }) async {
     List<StockTransactionModel> _listStockTransaction = [];
     if (isEdit == false) {
       for (SaleProductModel sp in (sale.sale_products ?? [])) {
-        var _inventory = StockTransactionModel(
-          created_by: AppService.currentUser?.fullname,
-          id: Uuid.NAMESPACE_NIL,
-          product_id: sp.product_id,
-          type: "sold",
-          quantity: sp.quantity,
-        );
-        _listStockTransaction.add(_inventory);
+        if (sp.stockable) {
+          var _inventory = StockTransactionModel(
+            created_by: AppService.currentUser?.fullname,
+            id: Uuid.NAMESPACE_NIL,
+            product_id: sp.product_id,
+            type: type,
+            quantity: sp.quantity,
+          );
+          _listStockTransaction.add(_inventory);
+        }
       }
     }
 
     var jsonStr = jsonEncode(_listStockTransaction);
     var _resp = await APIService.post("StockTransaction/Save", jsonStr);
 
-    print(_resp.isSuccess);
+    print(jsonStr);
   }
 
   Future<void> _onSubmitPaymentProcess() async {
