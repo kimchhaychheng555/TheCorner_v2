@@ -33,7 +33,16 @@ class SaleController extends GetxController {
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
 
   @override
-  void onInit() async {
+  void onInit() {
+    onInitLoad();
+    super.onInit();
+  }
+
+  void onRefreshPressed() {
+    onInitLoad();
+  }
+
+  void onInitLoad() async {
     isLoading(true);
     _onSaleCrossAxisCount();
     await _onLoadCategory();
@@ -42,9 +51,7 @@ class SaleController extends GetxController {
     if (table.value?.isActive == false) {
       _onSaleInitValue();
     }
-
     isLoading(false);
-    super.onInit();
   }
 
   @override
@@ -409,7 +416,7 @@ class SaleController extends GetxController {
 
     var jsonStr = jsonEncode(_listStockTransaction);
 
-    print("\x1B[32m OLD SALE");
+    print("\x1B[32m =================================================");
     // var _resp = await APIService.post("StockTransaction/Save", jsonStr);
 
     print(jsonStr);
