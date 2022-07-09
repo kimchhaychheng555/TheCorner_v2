@@ -10,7 +10,6 @@ import 'package:pos/models/stock_inventory_models/stock_inventory_model.dart';
 import 'package:pos/models/stock_transaction_models/stock_transaction_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:universal_html/html.dart' show AnchorElement;
 import 'package:flutter/foundation.dart' show kIsWeb;

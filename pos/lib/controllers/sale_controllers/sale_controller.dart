@@ -215,13 +215,6 @@ class SaleController extends GetxController {
     sale.value?.sale_payments = [];
     sale.value?.sale_payments?.addAll(_salePayments);
 
-    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(
-        sale.value ?? SaleModel(),
-        isEdit: false,
-        type: "sold",
-      );
-    }
     _onSubmitPaymentProcess();
   }
 
@@ -335,19 +328,33 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
-    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(_saleProcess, isEdit: false, type: "hold");
-    } else {}
+    _onSaleSave(_saleProcess, saleType: "hold");
+  }
 
-    var _json = jsonEncode(_saleProcess);
-    var _resp = await APIService.post("sale/save", _json);
-    if (_resp.isSuccess) {
-      sale(SaleModel.fromJson(jsonDecode(_resp.content)));
-      Get.back();
-      AppAlert.successAlert(title: "save_sale_successfully".tr);
+  Future<void> _onSaleSave(
+    SaleModel saleProcess, {
+    required String saleType,
+  }) async {
+    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
+      await _checkInventoryProcess(saleProcess, isEdit: false, type: saleType);
+    } else {}
+    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+      print("\x1B[32m OLD SALE");
+      return;
     } else {
-      AppAlert.errorAlert(title: "save_sale_error".tr);
+      print("\x1B[32m NEW SALE");
+      return;
     }
+
+    // var _json = jsonEncode(saleProcess);
+    // var _resp = await APIService.post("sale/save", _json);
+    // if (_resp.isSuccess) {
+    //   sale(SaleModel.fromJson(jsonDecode(_resp.content)));
+    //   Get.back();
+    //   AppAlert.successAlert(title: "save_sale_successfully".tr);
+    // } else {
+    //   AppAlert.errorAlert(title: "save_sale_error".tr);
+    // }
   }
 
   Future<void> _checkInventoryProcess(
@@ -372,7 +379,8 @@ class SaleController extends GetxController {
     }
 
     var jsonStr = jsonEncode(_listStockTransaction);
-    var _resp = await APIService.post("StockTransaction/Save", jsonStr);
+
+    // var _resp = await APIService.post("StockTransaction/Save", jsonStr);
 
     print(jsonStr);
   }
@@ -390,14 +398,7 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
-    var _json = jsonEncode(_saleProcess);
-    var _resp = await APIService.post("sale/save", _json);
-    if (_resp.isSuccess) {
-      Get.back();
-      AppAlert.successAlert(title: "save_sale_successfully".tr);
-    } else {
-      AppAlert.errorAlert(title: "save_sale_error".tr);
-    }
+    _onSaleSave(_saleProcess, saleType: "sold");
 
     isLoading(false);
   }
