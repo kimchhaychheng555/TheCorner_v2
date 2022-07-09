@@ -63,8 +63,9 @@ class SaleController extends GetxController {
   Future<void> _onInitController() async {
     table(TableModel.fromJson(jsonDecode(Get.arguments["table"])));
     if (table.value?.isActive == true) {
-      var _resp = await APIService.oDataGet(
-          "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products");
+      var _query =
+          "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products";
+      var _resp = await APIService.oDataGet(_query);
       if (_resp.isSuccess) {
         List<dynamic> _data = jsonDecode(_resp.content);
         var _dataSale = _data.map((s) => SaleModel.fromJson(s)).toList();
@@ -262,6 +263,12 @@ class SaleController extends GetxController {
         sp: sp,
         onAccept: (qty, price) {
           if (tempSp.isNotEmpty) {
+            if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+              if (tempSp.first.firstChanged == false) {
+                tempSp.first.old_quantity = tempSp.first.quantity ?? 0;
+                tempSp.first.firstChanged = true;
+              }
+            }
             tempSp.first.quantity = double.parse(qty);
             tempSp.first.price = double.parse(price);
             sale.refresh();
@@ -335,14 +342,12 @@ class SaleController extends GetxController {
     SaleModel saleProcess, {
     required String saleType,
   }) async {
-    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(saleProcess, isEdit: false, type: saleType);
-    } else {}
-    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
-      print("\x1B[32m OLD SALE");
+    var _json = jsonEncode(saleProcess);
+    if ((saleProcess.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+      await _checkInventoryProcess(saleProcess, isEdit: true, type: saleType);
       return;
     } else {
-      print("\x1B[32m NEW SALE");
+      await _checkInventoryProcess(saleProcess, isEdit: false, type: saleType);
       return;
     }
 
@@ -376,10 +381,35 @@ class SaleController extends GetxController {
           _listStockTransaction.add(_inventory);
         }
       }
+    } else {
+      for (SaleProductModel sp in (sale.sale_products ?? [])) {
+        if (sp.stockable) {
+          if (sp.old_quantity == 0) {
+            var _inventory = StockTransactionModel(
+              created_by: AppService.currentUser?.fullname,
+              id: Uuid.NAMESPACE_NIL,
+              product_id: sp.product_id,
+              type: type,
+              quantity: sp.quantity,
+            );
+            _listStockTransaction.add(_inventory);
+          } else {
+            var _inventory = StockTransactionModel(
+              created_by: AppService.currentUser?.fullname,
+              id: Uuid.NAMESPACE_NIL,
+              product_id: sp.product_id,
+              type: "add",
+              quantity: sp.old_quantity,
+            );
+            _listStockTransaction.add(_inventory);
+          }
+        }
+      }
     }
 
     var jsonStr = jsonEncode(_listStockTransaction);
 
+    print("\x1B[32m OLD SALE");
     // var _resp = await APIService.post("StockTransaction/Save", jsonStr);
 
     print(jsonStr);

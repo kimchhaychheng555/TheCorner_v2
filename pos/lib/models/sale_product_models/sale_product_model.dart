@@ -9,6 +9,7 @@ class SaleProductModel {
   String? id;
   String? image;
   String? product_name;
+  double old_quantity;
   double? quantity;
   double? price;
   bool is_free;
@@ -22,11 +23,16 @@ class SaleProductModel {
   DateTime? deleted_date;
   String? deleted_by;
 
+  //
+  bool firstChanged;
+
   SaleModel? sale;
   ProductModel? product;
   SaleProductModel({
     this.id,
     this.product_name,
+    this.old_quantity = 0,
+    this.firstChanged = false,
     this.quantity,
     this.image,
     this.price,
