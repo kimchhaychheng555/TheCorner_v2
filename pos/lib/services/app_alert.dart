@@ -6,7 +6,7 @@ import 'package:pos/widgets/text_widget.dart';
 class AppAlert {
   static SnackbarController? errorAlert({String? title}) {
     if (!Get.isSnackbarOpen) {
-      _alert(
+      alert(
         backgroundColor: errorColor,
         title: title,
         foregroundColor: Colors.white,
@@ -21,7 +21,7 @@ class AppAlert {
 
   static SnackbarController? infoAlert({String? title}) {
     if (!Get.isSnackbarOpen) {
-      _alert(
+      alert(
         backgroundColor: infoColor,
         title: title,
         foregroundColor: Colors.white,
@@ -36,7 +36,7 @@ class AppAlert {
 
   static SnackbarController? warningAlert({String? title}) {
     if (!Get.isSnackbarOpen) {
-      _alert(
+      alert(
         backgroundColor: warningColor,
         title: title,
         foregroundColor: Colors.white,
@@ -51,7 +51,7 @@ class AppAlert {
 
   static SnackbarController? successAlert({String? title}) {
     if (!Get.isSnackbarOpen) {
-      _alert(
+      alert(
         backgroundColor: successColor,
         title: title,
         foregroundColor: Colors.white,
@@ -64,11 +64,14 @@ class AppAlert {
     return null;
   }
 
-  static SnackbarController? _alert({
+  static SnackbarController? alert({
     String? title,
     Icon? icon,
     Color? backgroundColor,
     Color? foregroundColor,
+    bool? isDismissible,
+    bool disableOnTab = false,
+    Duration? duration,
   }) {
     return Get.snackbar(
       title ?? "",
@@ -76,7 +79,7 @@ class AppAlert {
       backgroundColor: (backgroundColor ?? errorColor).withOpacity(0.75),
       maxWidth: 500,
       // duration: const Duration(seconds: 1),
-      duration: const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 2),
       borderRadius: 5,
       padding: const EdgeInsets.symmetric(
         vertical: 10,
@@ -88,7 +91,9 @@ class AppAlert {
         height: 2,
       ),
       onTap: (_) {
-        Get.back();
+        if (!disableOnTab) {
+          Get.back();
+        }
       },
       leftBarIndicatorColor: backgroundColor ?? errorColor,
       shouldIconPulse: false,
@@ -102,6 +107,7 @@ class AppAlert {
       borderWidth: 0.5,
       colorText: foregroundColor ?? Colors.white,
       messageText: Container(),
+      isDismissible: isDismissible,
     );
   }
 }

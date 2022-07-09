@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/permission_models/permission_model.dart';
 import 'package:pos/models/permission_role_models/permission_role_model.dart';
@@ -15,12 +15,14 @@ class MainController extends GetxController {
   var isLoading = false.obs;
   var isApiConnected = false.obs;
   var isAuth = false.obs;
+  var isHasConnection = true.obs;
 
   var urlServerCtrl = TextEditingController();
 
   @override
   void onInit() async {
     isLoading(true);
+    _onInternetCheckConnection();
     // Start up Configuration
     await AppService.onAppStartUpConfiguration();
     if (AppService.isApiConnected) {
@@ -33,6 +35,31 @@ class MainController extends GetxController {
     await Get.updateLocale(AppService.getLanguage);
     isLoading(false);
     super.onInit();
+  }
+
+  void _onInternetCheckConnection() async {
+    // while (true) {
+    //   bool result = await InternetConnectionChecker().hasConnection;
+    //   if (isHasConnection.value != result) {
+    //     if (result == false) {
+    //       AppAlert.alert(
+    //         title: "no_internet_connection",
+    //         backgroundColor: Colors.black,
+    //         disableOnTab: true,
+    //         isDismissible: false,
+    //         icon: const Icon(
+    //           Icons.wifi_off_rounded,
+    //           color: Colors.white,
+    //         ),
+    //         duration: const Duration(hours: 2),
+    //       );
+    //     } else {
+    //       Get.closeCurrentSnackbar();
+    //     }
+    //   }
+    //   isHasConnection(result);
+    //   await Future.delayed(const Duration(milliseconds: 1));
+    // }
   }
 
   Future<void> _onUserAuthLogin() async {
