@@ -162,7 +162,7 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                       children: [
                                         Expanded(
                                           child: TextWidget(
-                                            text: "task_descriptipn".tr,
+                                            text: "sub_total".tr,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: HexColor("#333440"),
@@ -171,7 +171,7 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                         ),
                                         Expanded(
                                           child: TextWidget(
-                                            text: "rate".tr,
+                                            text: "taxes".tr,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: HexColor("#333440"),
@@ -181,7 +181,7 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                         Expanded(
                                           flex: 4,
                                           child: TextWidget(
-                                            text: "hours".tr,
+                                            text: "total".tr,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: HexColor("#333440"),
