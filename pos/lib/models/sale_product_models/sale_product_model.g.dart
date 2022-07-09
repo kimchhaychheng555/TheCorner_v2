@@ -10,6 +10,8 @@ SaleProductModel _$SaleProductModelFromJson(Map<String, dynamic> json) =>
     SaleProductModel(
       id: json['id'] as String?,
       product_name: json['product_name'] as String?,
+      old_quantity: (json['old_quantity'] as num?)?.toDouble() ?? 0,
+      firstChanged: json['firstChanged'] as bool? ?? false,
       quantity: (json['quantity'] as num?)?.toDouble(),
       image: json['image'] as String?,
       price: (json['price'] as num?)?.toDouble(),
@@ -40,6 +42,7 @@ Map<String, dynamic> _$SaleProductModelToJson(SaleProductModel instance) =>
       'id': instance.id,
       'image': instance.image,
       'product_name': instance.product_name,
+      'old_quantity': instance.old_quantity,
       'quantity': instance.quantity,
       'price': instance.price,
       'is_free': instance.is_free,
@@ -52,6 +55,7 @@ Map<String, dynamic> _$SaleProductModelToJson(SaleProductModel instance) =>
       'stockable': instance.stockable,
       'deleted_date': instance.deleted_date?.toIso8601String(),
       'deleted_by': instance.deleted_by,
+      'firstChanged': instance.firstChanged,
       'sale': instance.sale,
       'product': instance.product,
     };

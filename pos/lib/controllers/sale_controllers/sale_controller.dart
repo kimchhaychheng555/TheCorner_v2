@@ -33,7 +33,16 @@ class SaleController extends GetxController {
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
 
   @override
-  void onInit() async {
+  void onInit() {
+    onInitLoad();
+    super.onInit();
+  }
+
+  void onRefreshPressed() {
+    onInitLoad();
+  }
+
+  void onInitLoad() async {
     isLoading(true);
     _onSaleCrossAxisCount();
     await _onLoadCategory();
@@ -42,9 +51,7 @@ class SaleController extends GetxController {
     if (table.value?.isActive == false) {
       _onSaleInitValue();
     }
-
     isLoading(false);
-    super.onInit();
   }
 
   @override
@@ -63,8 +70,9 @@ class SaleController extends GetxController {
   Future<void> _onInitController() async {
     table(TableModel.fromJson(jsonDecode(Get.arguments["table"])));
     if (table.value?.isActive == true) {
-      var _resp = await APIService.oDataGet(
-          "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products");
+      var _query =
+          "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products";
+      var _resp = await APIService.oDataGet(_query);
       if (_resp.isSuccess) {
         List<dynamic> _data = jsonDecode(_resp.content);
         var _dataSale = _data.map((s) => SaleModel.fromJson(s)).toList();
@@ -215,13 +223,6 @@ class SaleController extends GetxController {
     sale.value?.sale_payments = [];
     sale.value?.sale_payments?.addAll(_salePayments);
 
-    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(
-        sale.value ?? SaleModel(),
-        isEdit: false,
-        type: "sold",
-      );
-    }
     _onSubmitPaymentProcess();
   }
 
@@ -269,6 +270,12 @@ class SaleController extends GetxController {
         sp: sp,
         onAccept: (qty, price) {
           if (tempSp.isNotEmpty) {
+            if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+              if (tempSp.first.firstChanged == false) {
+                tempSp.first.old_quantity = tempSp.first.quantity ?? 0;
+                tempSp.first.firstChanged = true;
+              }
+            }
             tempSp.first.quantity = double.parse(qty);
             tempSp.first.price = double.parse(price);
             sale.refresh();
@@ -335,19 +342,31 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
-    if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) == Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(_saleProcess, isEdit: false, type: "hold");
-    } else {}
+    _onSaleSave(_saleProcess, saleType: "hold");
+  }
 
-    var _json = jsonEncode(_saleProcess);
-    var _resp = await APIService.post("sale/save", _json);
-    if (_resp.isSuccess) {
-      sale(SaleModel.fromJson(jsonDecode(_resp.content)));
-      Get.back();
-      AppAlert.successAlert(title: "save_sale_successfully".tr);
+  Future<void> _onSaleSave(
+    SaleModel saleProcess, {
+    required String saleType,
+  }) async {
+    var _json = jsonEncode(saleProcess);
+    if ((saleProcess.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+      await _checkInventoryProcess(saleProcess, isEdit: true, type: saleType);
+      return;
     } else {
-      AppAlert.errorAlert(title: "save_sale_error".tr);
+      await _checkInventoryProcess(saleProcess, isEdit: false, type: saleType);
+      return;
     }
+
+    // var _json = jsonEncode(saleProcess);
+    // var _resp = await APIService.post("sale/save", _json);
+    // if (_resp.isSuccess) {
+    //   sale(SaleModel.fromJson(jsonDecode(_resp.content)));
+    //   Get.back();
+    //   AppAlert.successAlert(title: "save_sale_successfully".tr);
+    // } else {
+    //   AppAlert.errorAlert(title: "save_sale_error".tr);
+    // }
   }
 
   Future<void> _checkInventoryProcess(
@@ -369,10 +388,36 @@ class SaleController extends GetxController {
           _listStockTransaction.add(_inventory);
         }
       }
+    } else {
+      for (SaleProductModel sp in (sale.sale_products ?? [])) {
+        if (sp.stockable) {
+          if (sp.old_quantity == 0) {
+            var _inventory = StockTransactionModel(
+              created_by: AppService.currentUser?.fullname,
+              id: Uuid.NAMESPACE_NIL,
+              product_id: sp.product_id,
+              type: type,
+              quantity: sp.quantity,
+            );
+            _listStockTransaction.add(_inventory);
+          } else {
+            var _inventory = StockTransactionModel(
+              created_by: AppService.currentUser?.fullname,
+              id: Uuid.NAMESPACE_NIL,
+              product_id: sp.product_id,
+              type: "add",
+              quantity: sp.old_quantity,
+            );
+            _listStockTransaction.add(_inventory);
+          }
+        }
+      }
     }
 
     var jsonStr = jsonEncode(_listStockTransaction);
-    var _resp = await APIService.post("StockTransaction/Save", jsonStr);
+
+    print("\x1B[32m =================================================");
+    // var _resp = await APIService.post("StockTransaction/Save", jsonStr);
 
     print(jsonStr);
   }
@@ -390,14 +435,7 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
-    var _json = jsonEncode(_saleProcess);
-    var _resp = await APIService.post("sale/save", _json);
-    if (_resp.isSuccess) {
-      Get.back();
-      AppAlert.successAlert(title: "save_sale_successfully".tr);
-    } else {
-      AppAlert.errorAlert(title: "save_sale_error".tr);
-    }
+    _onSaleSave(_saleProcess, saleType: "sold");
 
     isLoading(false);
   }

@@ -31,6 +31,11 @@ class SaleScreen extends GetResponsiveView<dynamic> {
             actions: [
               IconButton(
                 splashRadius: 30,
+                onPressed: _controller.onRefreshPressed,
+                icon: const Icon(Icons.refresh),
+              ),
+              IconButton(
+                splashRadius: 30,
                 onPressed: _controller.onDiscountPressed,
                 icon: const Icon(Icons.discount),
               ),

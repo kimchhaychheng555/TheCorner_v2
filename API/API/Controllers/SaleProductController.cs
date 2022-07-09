@@ -48,15 +48,14 @@ namespace API.Controllers
         {
             if (sp.id == Guid.Empty)
             { 
-                db.SaleProducts.Add(sp);
-                await db.SaveChangesAsync();
+                db.SaleProducts.Add(sp); 
             }
             else
             {
                 db.SaleProducts.Update(sp);
-                await db.SaveChangesAsync();
             }
 
+            await db.SaveChangesAsync();
             return Ok(sp);
         }
 
