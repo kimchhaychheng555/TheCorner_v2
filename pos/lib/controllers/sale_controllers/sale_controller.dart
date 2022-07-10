@@ -348,25 +348,28 @@ class SaleController extends GetxController {
   Future<void> _onSaleSave(
     SaleModel saleProcess, {
     required String saleType,
+    bool isPayment = false,
   }) async {
-    var _json = jsonEncode(saleProcess);
-    if ((saleProcess.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
-      await _checkInventoryProcess(saleProcess, isEdit: true, type: saleType);
-      return;
-    } else {
-      await _checkInventoryProcess(saleProcess, isEdit: false, type: saleType);
-      return;
+    if (isPayment) {
+      if ((saleProcess.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
+        await _checkInventoryProcess(saleProcess, isEdit: true, type: saleType);
+        return;
+      } else {
+        await _checkInventoryProcess(saleProcess,
+            isEdit: false, type: saleType);
+        return;
+      }
     }
 
-    // var _json = jsonEncode(saleProcess);
-    // var _resp = await APIService.post("sale/save", _json);
-    // if (_resp.isSuccess) {
-    //   sale(SaleModel.fromJson(jsonDecode(_resp.content)));
-    //   Get.back();
-    //   AppAlert.successAlert(title: "save_sale_successfully".tr);
-    // } else {
-    //   AppAlert.errorAlert(title: "save_sale_error".tr);
-    // }
+    var _json = jsonEncode(saleProcess);
+    var _resp = await APIService.post("sale/save", _json);
+    if (_resp.isSuccess) {
+      sale(SaleModel.fromJson(jsonDecode(_resp.content)));
+      Get.back();
+      AppAlert.successAlert(title: "save_sale_successfully".tr);
+    } else {
+      AppAlert.errorAlert(title: "save_sale_error".tr);
+    }
   }
 
   Future<void> _checkInventoryProcess(
@@ -416,10 +419,10 @@ class SaleController extends GetxController {
 
     var jsonStr = jsonEncode(_listStockTransaction);
 
-    print("\x1B[32m =================================================");
-    // var _resp = await APIService.post("StockTransaction/Save", jsonStr);
+    // print("\x1B[32m =================================================");
+    var _resp = await APIService.post("StockTransaction/Save", jsonStr);
 
-    print(jsonStr);
+    // print(jsonStr);
   }
 
   Future<void> _onSubmitPaymentProcess() async {
@@ -435,7 +438,7 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
-    _onSaleSave(_saleProcess, saleType: "sold");
+    _onSaleSave(_saleProcess, saleType: "sold", isPayment: true);
 
     isLoading(false);
   }
