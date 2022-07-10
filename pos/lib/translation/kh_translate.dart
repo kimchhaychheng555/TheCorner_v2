@@ -111,6 +111,7 @@ Map<String, String> get khTranslate {
     "today_invoice": "វិក្កយបត្រថ្ងៃនេះ",
     "summary": "សង្ខេប",
     "invoice": "វិក្កយបត្រ",
+    "invoice_bold": "វិក្កយបត្រ",
     "paid": "បានបង់លុយ",
     "unpaid": "មិនទាន់បង់លុយ",
     "receipt_number": "លេខបង្កាន់ដៃ",
@@ -172,6 +173,5 @@ Map<String, String> get khTranslate {
     "add_user": "បញ្ចូលអ្នកប្រើប្រាស់",
     "created_by": "បង្កើតឡើងដោយ",
     "connect": "តភ្ជាប់",
-
   };
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/report_controllers/report_detail_controller.dart';
 import 'package:pos/screens/report_screens/widgets/report_detail_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
+import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class ReportDetailScreen extends GetResponsiveView<dynamic> {
@@ -56,19 +58,70 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                   ],
                                 ),
                                 const SizedBox(height: 50),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                TextWidget(
+                                                  text: "invoice_#".tr,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: HexColor("#333440"),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 20),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                TextWidget(
+                                                  text: "124578".tr,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: HexColor("#333440"),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Row(
+                                          children: [
+                                            TextWidget(
+                                              text: "invoice_date".tr,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: HexColor("#333440"),
+                                            ),
+                                            const SizedBox(width: 20),
+                                            TextWidget(
+                                              text: "july-09-2022".tr,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: HexColor("#333440"),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 50),
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     TextWidget(
-                                      text: "invoice".tr,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w500,
-                                      color: HexColor("#333440"),
-                                    ),
-                                    TextWidget(
-                                      text: "july-09-2022".tr,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
+                                      text: "invoice_bold".tr,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
                                       color: HexColor("#333440"),
                                     ),
                                   ],
@@ -85,38 +138,46 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Expanded(
-                                        flex: 4,
                                         child: TextWidget(
-                                          text: "task_descriptipn".tr,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                          text: "description".tr,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                           color: HexColor("#333440"),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
                                       Expanded(
                                         child: TextWidget(
-                                          text: "rate".tr,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                          text: "qty".tr,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                           color: HexColor("#333440"),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
                                       Expanded(
                                         child: TextWidget(
-                                          text: "hours".tr,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                          text: "sub_table".tr,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                           color: HexColor("#333440"),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
                                       Expanded(
                                         child: TextWidget(
-                                          text: "total".tr,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                          text: "discount".tr,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: HexColor("#333440"),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "grand_total".tr,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                           color: HexColor("#333440"),
                                           textAlign: TextAlign.center,
                                         ),
@@ -126,73 +187,169 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                 ),
                                 const SizedBox(height: 30),
                                 const ReportDetailWidget(
-                                  name: "មានដុត",
-                                  rate: "0.12",
-                                  hours: "2am",
-                                  total: "100\$",
+                                  description: "ឆាក្ដៅសាច់គោ",
+                                  qty: 2,
+                                  subTable: "1.20\$",
+                                  discount: "0\$",
+                                  grandTotal: "10.00\$",
+                                ),
+                                const SizedBox(height: 20),
+                                const ReportDetailWidget(
+                                  description: "ឆាក្ដៅសាច់គោ",
+                                  qty: 2,
+                                  subTable: "1.20\$",
+                                  discount: "0\$",
+                                  grandTotal: "10.00\$",
+                                ),
+                                const SizedBox(height: 20),
+                                const ReportDetailWidget(
+                                  description: "ឆាក្ដៅសាច់គោ",
+                                  qty: 2,
+                                  subTable: "1.20\$",
+                                  discount: "0\$",
+                                  grandTotal: "10.00\$",
+                                ),
+                                const SizedBox(height: 20),
+                                const ReportDetailWidget(
+                                  description: "ឆាក្ដៅសាច់គោ",
+                                  qty: 2,
+                                  subTable: "1.20\$",
+                                  discount: "0\$",
+                                  grandTotal: "10.00\$",
+                                ),
+                                const SizedBox(height: 20),
+                                const ReportDetailWidget(
+                                  description: "ឆាក្ដៅសាច់គោ",
+                                  qty: 2,
+                                  subTable: "1.20\$",
+                                  discount: "0\$",
+                                  grandTotal: "10.00\$",
                                 ),
                                 const SizedBox(height: 30),
-                                const ReportDetailWidget(
-                                  name: "មានដុត",
-                                  rate: "0.12",
-                                  hours: "2am",
-                                  total: "100\$",
+                                Container(
+                                  width: double.infinity,
+                                  height: 2,
+                                  color: HexColor("#9E9E9E"),
                                 ),
                                 const SizedBox(height: 30),
-                                const ReportDetailWidget(
-                                  name: "មានដុត",
-                                  rate: "0.12",
-                                  hours: "2am",
-                                  total: "100\$",
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Expanded(
+                                        flex: 5,
+                                        child: TextWidget(
+                                          text: "",
+                                          color: HexColor("#333440"),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "total".tr,
+                                          color: HexColor("#333440"),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "\$ 150.00",
+                                          color: HexColor("#333440"),
+                                          textAlign: TextAlign.end,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Expanded(
+                                        flex: 5,
+                                        child: TextWidget(
+                                          text: "",
+                                          color: HexColor("#333440"),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "discount".tr,
+                                          color: HexColor("#333440"),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "\$ 10.00".tr,
+                                          color: HexColor("#333440"),
+                                          textAlign: TextAlign.end,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Container(
+                                  width: double.infinity,
+                                  height: 3,
+                                  color: HexColor("#9E9E9E"),
+                                ),
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: TextWidget(
+                                          text: "",
+                                          color: HexColor("#333440"),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "total_amount_due".tr,
+                                          fontSize: 20,
+                                          color: HexColor("#333440"),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextWidget(
+                                          text: "\$ 140.00".tr,
+                                          fontSize: 20,
+                                          color: HexColor("#333440"),
+                                          textAlign: TextAlign.end,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 50),
-                                Container(
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, right: 50),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: TextWidget(
-                                            text: "sub_total".tr,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                            color: HexColor("#333440"),
-                                            textAlign: TextAlign.right,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: TextWidget(
-                                            text: "taxes".tr,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                            color: HexColor("#333440"),
-                                            textAlign: TextAlign.right,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 4,
-                                          child: TextWidget(
-                                            text: "total".tr,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                            color: HexColor("#333440"),
-                                            textAlign: TextAlign.right,
-                                          ),
-                                        ),
-                                      ],
+                                Center(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 15,
+                                      horizontal: 50,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: HexColor("#FC9403"),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: TextWidget(
+                                      text: "unpaid".tr,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 30),
+                                const SizedBox(height: 50),
                               ],
                             )
                           ],

@@ -175,5 +175,8 @@ Map<String, String> get enTranslate {
     "add_user": "Add Users",
     "created_by": "Created By",
     "connect": "Connect",
+    "invoice_bold": "INVOICE",
+    "total_amount_due": "Total amount due",
+    "total": "Total"
   };
 }
