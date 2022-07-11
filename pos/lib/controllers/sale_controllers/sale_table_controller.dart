@@ -33,7 +33,7 @@ class SaleTableController extends GetxController {
       tempSaleList.assignAll(_dataList);
     }
 
-    var _resp = await APIService.oDataGet("table");
+    var _resp = await APIService.oDataGet("table?\$filter=is_deleted eq false");
     if (_resp.isSuccess) {
       List<dynamic> _data = jsonDecode(_resp.content);
       var _dataList = _data.map((t) => TableModel.fromJson(t)).toList();
