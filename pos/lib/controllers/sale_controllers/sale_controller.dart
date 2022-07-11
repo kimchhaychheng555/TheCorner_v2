@@ -353,11 +353,9 @@ class SaleController extends GetxController {
     if (isPayment) {
       if ((saleProcess.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
         await _checkInventoryProcess(saleProcess, isEdit: true, type: saleType);
-        return;
       } else {
         await _checkInventoryProcess(saleProcess,
             isEdit: false, type: saleType);
-        return;
       }
     }
 

@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/models/document_models/document_model.dart';
@@ -166,21 +164,6 @@ class SmartHomeController extends GetxController {
   void onLogoutPressed() {
     AppService.storage.remove("account_store");
     Get.offAllNamed(LoginScreen.routeName);
-  }
-
-  void onDialogPressed() {
-    Get.dialog(
-      Container(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.5),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   Stream<void> stream() async* {

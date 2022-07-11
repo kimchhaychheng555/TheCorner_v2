@@ -177,6 +177,8 @@ Map<String, String> get enTranslate {
     "connect": "Connect",
     "invoice_bold": "INVOICE",
     "total_amount_due": "Total amount due",
-    "total": "Total"
+    "total": "Total",
+    "no_internet_connection_found": "No Internet Connection Found",
+    "check_your_connection": "Check Your Connection",
   };
 }

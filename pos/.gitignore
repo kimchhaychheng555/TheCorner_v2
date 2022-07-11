@@ -47,5 +47,4 @@ app.*.map.json
 
 
 # Custom Ignore
-/cache/
-cache/
+.cache/

@@ -22,7 +22,6 @@ class MainController extends GetxController {
   @override
   void onInit() async {
     isLoading(true);
-    _onInternetCheckConnection();
     // Start up Configuration
     await AppService.onAppStartUpConfiguration();
     if (AppService.isApiConnected) {
@@ -35,31 +34,6 @@ class MainController extends GetxController {
     await Get.updateLocale(AppService.getLanguage);
     isLoading(false);
     super.onInit();
-  }
-
-  void _onInternetCheckConnection() async {
-    // while (true) {
-    //   bool result = await InternetConnectionChecker().hasConnection;
-    //   if (isHasConnection.value != result) {
-    //     if (result == false) {
-    //       AppAlert.alert(
-    //         title: "no_internet_connection",
-    //         backgroundColor: Colors.black,
-    //         disableOnTab: true,
-    //         isDismissible: false,
-    //         icon: const Icon(
-    //           Icons.wifi_off_rounded,
-    //           color: Colors.white,
-    //         ),
-    //         duration: const Duration(hours: 2),
-    //       );
-    //     } else {
-    //       Get.closeCurrentSnackbar();
-    //     }
-    //   }
-    //   isHasConnection(result);
-    //   await Future.delayed(const Duration(milliseconds: 1));
-    // }
   }
 
   Future<void> _onUserAuthLogin() async {

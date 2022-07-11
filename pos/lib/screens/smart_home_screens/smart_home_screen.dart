@@ -43,11 +43,6 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                   onPressed: _controller.onLogoutPressed,
                   icon: const Icon(Icons.logout),
                 ),
-                IconButton(
-                  tooltip: "logout".tr,
-                  onPressed: _controller.onDialogPressed,
-                  icon: const Icon(Icons.read_more),
-                ),
               ],
             ),
             body: SafeArea(
