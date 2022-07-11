@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
+import 'package:pos/models/payment_method_models/payment_method_model.dart';
 import 'package:pos/models/permission_models/permission_model.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
@@ -21,6 +22,7 @@ class AppService {
   static LoginModel? loginUser;
   static GetStorage storage = GetStorage("setting");
   static StartSaleModel? currentStartSale;
+  static List<PaymentMethodModel> paymentMethodList = [];
 
   static Locale get getLanguage {
     switch (currentLanguage) {
@@ -83,6 +85,17 @@ class AppService {
     await onLanguageStartUp();
     await _onAPIUrlLoadStartUp();
     await _onLoadLoginUserStartUp();
+    await _onLoadPaymentMethod();
+  }
+
+  static Future<void> _onLoadPaymentMethod() async {
+    var _resp =
+        await APIService.oDataGet("paymentMethod?\$filter=is_deleted eq false");
+    if (_resp.isSuccess) {
+      List<dynamic> _dynamic = jsonDecode(_resp.content);
+      var _data = _dynamic.map((e) => PaymentMethodModel.fromJson(e)).toList();
+      paymentMethodList.assignAll(_data);
+    }
   }
 
   static Future<void> _onLoadLoginUserStartUp() async {

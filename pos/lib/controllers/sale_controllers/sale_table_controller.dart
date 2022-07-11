@@ -56,10 +56,28 @@ class SaleTableController extends GetxController {
   }
 
   void onTableLongPressed(TableModel table) async {
+    if (table.isActive == true) {
+      AppAlert.errorAlert(title: "table_is_active".tr);
+      return;
+    }
+    TextEditingController _tempText = TextEditingController(text: table.name);
     Get.defaultDialog(
       radius: 5,
       title: table.name ?? "",
-      content: const SaleTableModelWidget(),
+      content: SaleTableModelWidget(
+        textController: _tempText,
+        onCancelPressed: () => Get.back(),
+        onDeletePressed: () {
+          var _table = table;
+          _table.is_deleted = true;
+          onTableSubmited(tempTable: _table);
+        },
+        onConfirmPressed: (_) {
+          var _table = table;
+          _table.name = _;
+          onTableSubmited(tempTable: _table);
+        },
+      ),
     );
   }
 
@@ -68,39 +86,45 @@ class SaleTableController extends GetxController {
     Get.defaultDialog(
       radius: 5,
       title: "add_table".tr,
-      content: SaleTableAddTableWidget(onSubmited: () => onAddTableSubmited()),
+      content: SaleTableAddTableWidget(onSubmited: () => onTableSubmited()),
       actions: [
         ButtonActionWidget(
           confirmText: "yes".tr,
           cancelText: "no".tr,
           onCancelPressed: () => Get.back(),
-          onConfirmPressed: () => onAddTableSubmited(),
+          onConfirmPressed: () => onTableSubmited(),
         ),
       ],
     );
   }
 
-  void onAddTableSubmited() async {
+  void onTableSubmited({TableModel? tempTable}) async {
     if (Get.isSnackbarOpen) {
       Get.closeAllSnackbars();
     }
     Get.back();
     isLoading(true);
-    var newTable = TableModel(
-      id: Uuid.NAMESPACE_NIL,
-      name: addTableText.text,
-      created_by: AppService.currentUser?.fullname,
-    );
+
+    var _table = TableModel();
+    if (tempTable != null) {
+      _table = tempTable;
+    } else {
+      _table = TableModel(
+        id: Uuid.NAMESPACE_NIL,
+        name: addTableText.text,
+        created_by: AppService.currentUser?.fullname,
+      );
+    }
 
     var _resp = await APIService.post(
       "table/save",
-      jsonEncode(newTable),
+      jsonEncode(_table),
     );
 
     if (_resp.isSuccess) {
-      AppAlert.successAlert(title: "add_table_success".tr);
+      AppAlert.successAlert(title: "save_table_success".tr);
     } else {
-      AppAlert.errorAlert(title: "add_table_error".tr);
+      AppAlert.errorAlert(title: "save_table_error".tr);
     }
 
     onLoadTable();

@@ -51,6 +51,33 @@ namespace API.Controllers
                 if (st.id == Guid.Empty)
                 {
                     db.StockTransactions.Add(st);
+
+                    var si = db.StockInventories.Where(p => p.product_id == st.product_id).FirstOrDefault();
+                    if (st.type == "sold")
+                    {
+                        // Sold from Sale
+                        si.quantity_stock = si.quantity_stock - st.quantity;
+                    }
+                    else if (st.type == "purchase_order")
+                    {
+                        //  Purchase Order
+                        si.quantity_stock = si.quantity_stock + st.quantity;
+                    }
+                    else if (st.type == "adjustment")
+                    {
+                        // Adjustment or Take from stock
+                        si.quantity_stock = si.quantity_stock - st.quantity;
+
+                    }
+                    else if (st.type == "add")
+                    {
+                        // Add Stock from edit while sold
+
+                        si.quantity_stock = si.quantity_stock + st.quantity;
+
+                    }
+
+                    db.StockInventories.Update(si);
                 }
                 else
                 {

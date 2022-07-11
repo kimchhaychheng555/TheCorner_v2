@@ -537,9 +537,6 @@ namespace API.Migrations
                     b.Property<bool?>("is_free")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("is_remove_stock_done")
-                        .HasColumnType("bit");
-
                     b.Property<decimal?>("price")
                         .HasColumnType("decimal(18,2)");
 
@@ -555,6 +552,9 @@ namespace API.Migrations
 
                     b.Property<Guid>("sale_id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("stockable")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 

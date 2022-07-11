@@ -153,7 +153,11 @@ class SaleController extends GetxController {
 
   void onHoldBillPressed() async {
     isLoading(true);
-    await _onHoldProcess();
+    if ((sale.value?.sale_products?.length ?? 0) > 0) {
+      await _onHoldProcess();
+    } else {
+      AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
+    }
     isLoading(false);
   }
 
@@ -179,33 +183,41 @@ class SaleController extends GetxController {
 
   void onPrintInvoicePressed() async {
     isLoading(true);
-    await _onHoldProcess();
-    var printData = PrintModel(
-      created_by: AppService.currentUser?.fullname,
-      id: Uuid.NAMESPACE_NIL,
-      sale_id: sale.value?.id,
-      key: "invoice",
-    );
+    if ((sale.value?.sale_products?.length ?? 0) > 0) {
+      await _onHoldProcess();
+      var printData = PrintModel(
+        created_by: AppService.currentUser?.fullname,
+        id: Uuid.NAMESPACE_NIL,
+        sale_id: sale.value?.id,
+        key: "invoice",
+      );
 
-    var _resp = await APIService.post("print/save", jsonEncode(printData));
-    if (_resp.isSuccess) {
-      AppAlert.successAlert(title: "print_success".tr);
+      var _resp = await APIService.post("print/save", jsonEncode(printData));
+      if (_resp.isSuccess) {
+        AppAlert.successAlert(title: "print_success".tr);
+      } else {
+        AppAlert.errorAlert(title: "print_error".tr);
+      }
     } else {
-      AppAlert.errorAlert(title: "print_error".tr);
+      AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
     }
     isLoading(false);
   }
 
   void onPayPressed() {
-    Get.defaultDialog(
-      title: "payment".tr,
-      radius: 5,
-      content: SalePaymentWidget(
-        onAcceptPressed: (payment) {
-          _onPaymentProcess(payment);
-        },
-      ),
-    );
+    if ((sale.value?.sale_products?.length ?? 0) > 0) {
+      Get.defaultDialog(
+        title: "payment".tr,
+        radius: 5,
+        content: SalePaymentWidget(
+          onAcceptPressed: (payment) {
+            _onPaymentProcess(payment);
+          },
+        ),
+      );
+    } else {
+      AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
+    }
   }
 
   void _onPaymentProcess(PaymentMethodModel model) async {
@@ -271,7 +283,8 @@ class SaleController extends GetxController {
         onAccept: (qty, price) {
           if (tempSp.isNotEmpty) {
             if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
-              if (tempSp.first.firstChanged == false) {
+              if (tempSp.first.firstChanged == false &&
+                  sale.value?.is_paid == true) {
                 tempSp.first.old_quantity = tempSp.first.quantity ?? 0;
                 tempSp.first.firstChanged = true;
               }
@@ -392,16 +405,7 @@ class SaleController extends GetxController {
     } else {
       for (SaleProductModel sp in (sale.sale_products ?? [])) {
         if (sp.stockable) {
-          if (sp.old_quantity == 0) {
-            var _inventory = StockTransactionModel(
-              created_by: AppService.currentUser?.fullname,
-              id: Uuid.NAMESPACE_NIL,
-              product_id: sp.product_id,
-              type: type,
-              quantity: sp.quantity,
-            );
-            _listStockTransaction.add(_inventory);
-          } else {
+          if (sp.old_quantity > 0) {
             var _inventory = StockTransactionModel(
               created_by: AppService.currentUser?.fullname,
               id: Uuid.NAMESPACE_NIL,
@@ -411,6 +415,14 @@ class SaleController extends GetxController {
             );
             _listStockTransaction.add(_inventory);
           }
+          var _inventory = StockTransactionModel(
+            created_by: AppService.currentUser?.fullname,
+            id: Uuid.NAMESPACE_NIL,
+            product_id: sp.product_id,
+            type: type,
+            quantity: sp.quantity,
+          );
+          _listStockTransaction.add(_inventory);
         }
       }
     }

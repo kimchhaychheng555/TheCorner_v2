@@ -18,7 +18,7 @@ namespace API.Models
         public decimal? quantity { get; set; }
         public decimal? price { get; set; }
         public bool? is_free { get; set; } = false;
-        public bool? is_remove_stock_done { get; set; } = false;
+        public bool? stockable { get; set; } = false;
 
         public Guid sale_id { get; set; }
         [ForeignKey("sale_id")]
