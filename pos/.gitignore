@@ -29,9 +29,10 @@
 .packages
 .pub-cache/
 .pub/
+*.gs
+*.bak
 /build/
 /cache/
-cache/
 /cache
 
 # Web related
@@ -51,3 +52,4 @@ app.*.map.json
 
 # Custom Ignore
 .cache/
+cache/
