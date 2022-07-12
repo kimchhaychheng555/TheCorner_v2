@@ -3,6 +3,7 @@ import 'package:pos/helper/app_bindings.dart';
 import 'package:pos/main_screen.dart';
 import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/inventory_summary_report_screen.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/overview_screen.dart';
+import 'package:pos/screens/business_report_screens/receipt_report_screens/receipt_report_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
@@ -99,6 +100,11 @@ class AppRoute {
         GetPage(
           page: () => InventorySummaryReportScreen(),
           name: InventorySummaryReportScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => ReceiptReportScreen(),
+          name: ReceiptReportScreen.routeName,
           binding: AppBindings(),
         ),
       ];

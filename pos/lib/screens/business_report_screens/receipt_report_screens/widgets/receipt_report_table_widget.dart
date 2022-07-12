@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pos/constants/constants.dart';
-import 'package:pos/controllers/business_controllers/inventory_summary_report_controller/inventory_summary_report_controller.dart';
+import 'package:pos/controllers/business_controllers/receipt_report_controller/receipt_report_controller.dart';
+import 'package:pos/screens/report_screens/report_detail_screen.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
+import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class InventorySummaryReportTablewidget extends StatelessWidget {
-  const InventorySummaryReportTablewidget({Key? key}) : super(key: key);
+class ReceiptReportTableWidget extends StatelessWidget {
+  const ReceiptReportTableWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    InventorySummaryReportController _controller = Get.find();
+    ReceiptReportController _controller = Get.find();
     return Obx(
       () => Card(
         borderOnForeground: true,
@@ -26,8 +28,8 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                 reponseScreenSizes: const [ScreenSize.xs],
                 headers: [
                   DatatableHeader(
-                    text: "item_name".tr,
-                    value: "item_name",
+                    text: "invoice_number".tr,
+                    value: "invoice_number",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
@@ -39,110 +41,88 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                     },
                   ),
                   DatatableHeader(
-                    text: "cost".tr,
-                    value: "cost",
+                    text: "table".tr,
+                    value: "table",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: "${"table".tr}: ${value["name"]}",
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "sub_total".tr,
+                    value: "sub_total",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
                         text: AppService.currencyFormat(value),
+                        fontFamily: "Siemreap",
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                         textAlign: TextAlign.center,
                       );
                     },
                   ),
                   DatatableHeader(
-                    text: "qty_ordered".tr,
-                    value: "qty_ordered",
+                    text: "discount".tr,
+                    value: "discount",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
+                      String _dis = "";
+                      if (row["discount_type"] == "percent") {
+                        _dis = "$value %";
+                      } else {
+                        _dis = AppService.currencyFormat(value);
+                      }
                       return TextWidget(
-                        text: "$value",
+                        text: _dis,
+                        fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
                       );
                     },
                   ),
                   DatatableHeader(
-                    text: "on_hold".tr,
-                    value: "qty_on_hold",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: "$value",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "on_hand".tr,
-                    value: "qty_on_hand",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: "$value",
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "sold".tr,
-                    value: "qty_sold",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: "$value",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "adjustment".tr,
-                    value: "adjustment",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: "$value",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  DatatableHeader(
-                    text: "price".tr,
-                    value: "price",
+                    text: "grand_total".tr,
+                    value: "grand_total",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
                         text: AppService.currencyFormat(value),
+                        fontFamily: "Siemreap",
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                         textAlign: TextAlign.center,
                       );
                     },
                   ),
                   DatatableHeader(
-                    text: "balance".tr,
-                    value: "item_name",
+                    text: "payment_status".tr,
+                    value: "is_paid",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: value,
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
+                      return value
+                          ? StatusWidget(
+                              backgroundColor: successColor,
+                              child: TextWidget(
+                                text: "paid".tr,
+                                color: Colors.white,
+                              ),
+                            )
+                          : StatusWidget(
+                              backgroundColor: warningColor,
+                              child: TextWidget(
+                                text: "unpaid".tr,
+                                color: Colors.white,
+                              ),
+                            );
                     },
                   ),
                 ],
@@ -163,7 +143,13 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                 source: _controller.dataSource,
                 selecteds: _controller.dataSource,
                 autoHeight: false,
+                onSort: (value) {
+                  print(value);
+                },
                 isExpandRows: false,
+                onTabRow: (_) {
+                  Get.toNamed(ReportDetailScreen.routeName, arguments: _);
+                },
                 expanded: [
                   ..._controller.dataSource.map((e) => false),
                 ],

@@ -6,6 +6,7 @@ import 'package:pos/models/document_models/document_model.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/inventory_summary_report_screen.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/overview_screen.dart';
+import 'package:pos/screens/business_report_screens/receipt_report_screens/receipt_report_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
@@ -151,7 +152,7 @@ class SmartHomeController extends GetxController {
   void onInventorySummaryReportPressed() =>
       Get.toNamed(InventorySummaryReportScreen.routeName);
   void onSaleSummaryReportPressed() {}
-  void onReceiptReportPressed() {}
+  void onReceiptReportPressed() => Get.toNamed(ReceiptReportScreen.routeName);
   void onExpenseReportPressed() {}
   void onPurchaseOrderPressed() {}
   void onAdjustmentInventoryPressed() {}

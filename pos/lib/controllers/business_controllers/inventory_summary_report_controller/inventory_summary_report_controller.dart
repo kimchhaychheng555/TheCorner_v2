@@ -98,6 +98,12 @@ class InventorySummaryReportController extends GetxController {
                   st.type == "adjustment" && st.product_id == stock.product_id)
               .toList()
               .sum((p) => p.quantity ?? 0),
+          qty_ordered: tempStockTransactionList
+              .where((st) =>
+                  st.type == "purchase_order" &&
+                  st.product_id == stock.product_id)
+              .toList()
+              .sum((p) => p.quantity ?? 0),
         ),
       );
     }

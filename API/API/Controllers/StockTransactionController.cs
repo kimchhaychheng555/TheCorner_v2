@@ -76,6 +76,11 @@ namespace API.Controllers
                         si.quantity_stock = si.quantity_stock + st.quantity;
 
                     }
+                    else if (st.type == "hold_purchase_order")
+                    {
+                        // Add Stock from edit while sold
+
+                    }
 
                     db.StockInventories.Update(si);
                 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pos/controllers/business_controllers/inventory_summary_report_controller/inventory_summary_report_controller.dart';
 import 'package:pos/controllers/business_controllers/overview_controller/overview_controller.dart';
+import 'package:pos/controllers/business_controllers/receipt_report_controller/receipt_report_controller.dart';
 import 'package:pos/controllers/login_controllers/login_controller.dart';
 import 'package:pos/controllers/main_controller.dart';
 import 'package:pos/controllers/product_controllers/category_controller.dart';
@@ -34,5 +35,6 @@ class AppBindings extends Bindings {
     Get.lazyPut<OverviewController>(() => OverviewController());
     Get.lazyPut<InventorySummaryReportController>(
         () => InventorySummaryReportController());
+    Get.lazyPut<ReceiptReportController>(() => ReceiptReportController());
   }
 }
