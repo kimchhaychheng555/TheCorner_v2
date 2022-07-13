@@ -9,6 +9,7 @@ import 'package:pos/services/app_service.dart';
 import 'package:pos/widgets/avatar_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/dropdown_button_form_field_widget.dart';
+import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:responsive_table/responsive_table.dart';
 
@@ -64,11 +65,23 @@ class ProductTablePageWidget extends StatelessWidget {
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: row["name"],
-                        fontFamily: "Siemreap",
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
+                      return Column(
+                        children: [
+                          TextWidget(
+                            text: row["name"],
+                            fontFamily: "Siemreap",
+                            color: Colors.black,
+                            textAlign: TextAlign.center,
+                          ),
+                          if (row["stockable"])
+                            StatusWidget(
+                              backgroundColor: successColor,
+                              child: TextWidget(
+                                text: "stock".tr,
+                                fontSize: 11,
+                              ),
+                            ),
+                        ],
                       );
                     },
                   ),

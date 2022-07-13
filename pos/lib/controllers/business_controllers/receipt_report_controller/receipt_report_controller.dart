@@ -102,4 +102,11 @@ class ReceiptReportController extends GetxController {
   String get getResultPageInfo {
     return "${"show".tr}: ${((currentPage.value - 1) * pager.value) + 1} - ${(currentPage.value * pager.value)} ${"show".tr} ${totalRecords.value}";
   }
+
+  String get getDateFilterText {
+    if (firstDate.value == lastDate.value) {
+      return DateFormat("dd/MMM/yyyy").format(firstDate.value);
+    }
+    return "${DateFormat("dd/MMM/yyyy").format(firstDate.value)} - ${DateFormat("dd/MMM/yyyy").format(lastDate.value)}";
+  }
 }

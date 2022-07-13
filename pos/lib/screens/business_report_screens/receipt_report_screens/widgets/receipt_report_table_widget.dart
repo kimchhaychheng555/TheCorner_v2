@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/business_controllers/receipt_report_controller/receipt_report_controller.dart';
 import 'package:pos/screens/report_screens/report_detail_screen.dart';
@@ -96,6 +97,35 @@ class ReceiptReportTableWidget extends StatelessWidget {
                     sourceBuilder: (value, row) {
                       return TextWidget(
                         text: AppService.currencyFormat(value),
+                        fontFamily: "Siemreap",
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "sale_date".tr,
+                    value: "sale_date",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: DateFormat("dd-MM-yyyy")
+                            .format(DateTime.parse(value)),
+                        fontFamily: "Siemreap",
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: "by".tr,
+                    value: "created_by",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: value,
                         fontFamily: "Siemreap",
                         color: Colors.black,
                         textAlign: TextAlign.center,
