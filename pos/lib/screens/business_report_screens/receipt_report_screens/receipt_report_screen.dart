@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/business_controllers/receipt_report_controller/receipt_report_controller.dart';
-import 'package:pos/screens/report_screens/widgets/report_table_widget.dart';
+import 'package:pos/screens/business_report_screens/receipt_report_screens/widgets/receipt_report_table_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
@@ -42,13 +43,23 @@ class ReceiptReportScreen extends GetResponsiveView<dynamic> {
               children: [
                 Row(
                   children: [
-                    SizedBox(
-                      width: 500,
-                      child: ButtonWidget(
-                        onPressed: () => _controller.onFilterDatePressed(
-                          context: Get.context!,
-                        ),
-                        child: const TextWidget(text: "Pressed"),
+                    ButtonWidget(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      onPressed: () => _controller.onFilterDatePressed(
+                        context: Get.context!,
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.calendar_today_rounded),
+                          const SizedBox(width: 10),
+                          TextWidget(
+                            text:
+                                "${DateFormat("dd/MMM/yyyy").format(_controller.firstDate.value)} - ${DateFormat("dd/MMM/yyyy").format(_controller.lastDate.value)}",
+                            color: Colors.black,
+                          ),
+                        ],
                       ),
                     ),
                     const Spacer(),
@@ -103,7 +114,7 @@ class ReceiptReportScreen extends GetResponsiveView<dynamic> {
                 ),
                 const SizedBox(height: 15),
                 const Expanded(
-                  child: ReportTableWidget(),
+                  child: ReceiptReportTableWidget(),
                 ),
               ],
             ),

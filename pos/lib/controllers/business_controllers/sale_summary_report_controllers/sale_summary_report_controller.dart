@@ -2,19 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/services/api_service.dart';
-import 'package:pos/widgets/date_range_picker_widget.dart' as datePicker;
 
-class ReceiptReportController extends GetxController {
+class SaleSummaryReportController extends GetxController {
   var keywordCtrl = TextEditingController();
   var isLoading = false.obs;
-  RxList<SaleModel> reportList = (<SaleModel>[]).obs;
+  //
 
-  // Filter
-  var firstDate = (DateTime.now().subtract(const Duration(days: 7))).obs;
-  var lastDate = (DateTime.now()).obs;
+  RxList<SaleModel> saleSummaryList = (<SaleModel>[]).obs;
 
   //Pagination
   var totalPage = 0.obs;
@@ -31,22 +27,6 @@ class ReceiptReportController extends GetxController {
     super.onInit();
   }
 
-  Future<void> onFilterDatePressed({required BuildContext context}) async {
-    List<DateTime>? picked = [firstDate.value, lastDate.value];
-
-    picked = await datePicker.showDatePicker(
-      context: context,
-      initialFirstDate: picked.first,
-      initialLastDate: picked.last,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2050),
-    );
-
-    firstDate(picked?.first);
-    lastDate(picked?.last);
-    onLoad();
-  }
-
   void onInitPagerList() {
     var _temp = [10, 15, 25, 50];
     pagerList.assignAll(_temp);
@@ -57,8 +37,7 @@ class ReceiptReportController extends GetxController {
     isLoading(true);
     var _offset = ((currentPage.value - 1) * pager.value);
     var _pagingation = "\$count=true&\$skip=$_offset&\$top=${pager.value}";
-    var _filter =
-        "&\$filter=is_deleted eq false and sale_date ge '${DateFormat('yyyy-MM-dd').format(firstDate.value)}' and sale_date le '${DateFormat('yyyy-MM-dd').format(lastDate.value)}'";
+    var _filter = "&\$filter=is_deleted eq false";
     var _query =
         "sale?keyword=${keywordCtrl.text}&$_pagingation&\$expand=table$_filter&\$orderby=created_date desc";
 
@@ -70,7 +49,7 @@ class ReceiptReportController extends GetxController {
       List<dynamic> _dyn = [];
       _dyn = jsonDecode(_resp.content);
       var _dataList = _dyn.map((e) => SaleModel.fromJson(e)).toList();
-      reportList.assignAll(_dataList);
+      saleSummaryList.assignAll(_dataList);
     }
     isLoading(false);
   }
@@ -87,7 +66,7 @@ class ReceiptReportController extends GetxController {
 
   List<Map<String, dynamic>> get dataSource {
     List<Map<String, dynamic>> temp = [];
-    for (var report in reportList) {
+    for (var report in saleSummaryList) {
       Map<String, dynamic> p = jsonDecode(jsonEncode(report));
       temp.add(p);
     }
