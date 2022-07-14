@@ -17,6 +17,7 @@ import 'package:pos/screens/users_screens/users_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -85,6 +86,11 @@ class SmartHomeController extends GetxController {
       AppService.currentStartSale = _ss;
       isStartSale(AppService.currentStartSale?.isStart);
       //
+      LogService.sendLog(
+        user: AppService.currentUser?.fullname ?? "",
+        logAction:
+            "This user Start Sale at: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+      );
       AppAlert.successAlert(title: "start_sale_success".tr);
     }
   }
@@ -140,11 +146,18 @@ class SmartHomeController extends GetxController {
       AppService.currentStartSale = _ss;
       isStartSale(AppService.currentStartSale?.isStart);
       //
+
+      LogService.sendLog(
+        user: AppService.currentUser?.fullname ?? "",
+        logAction:
+            "This user Stop Sale at: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+      );
       AppAlert.successAlert(title: "stop_sale_success".tr);
     }
   }
 
   void onProductPressed() => Get.toNamed(ProductScren.routeName);
+
   void onReportPressed() => Get.toNamed(ReportScreen.routeName);
   void onPermissionPressed() => Get.toNamed(PermissionScreen.routeName);
   void onOverviewBusinessReportPressed() =>

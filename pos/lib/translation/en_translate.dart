@@ -180,5 +180,6 @@ Map<String, String> get enTranslate {
     "total": "Total",
     "no_internet_connection_found": "No Internet Connection Found",
     "check_your_connection": "Check Your Connection",
+    "stock": "Stock",
   };
 }

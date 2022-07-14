@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/business_controllers/receipt_report_controller/receipt_report_controller.dart';
 import 'package:pos/screens/business_report_screens/receipt_report_screens/widgets/receipt_report_table_widget.dart';
@@ -55,8 +54,7 @@ class ReceiptReportScreen extends GetResponsiveView<dynamic> {
                           const Icon(Icons.calendar_today_rounded),
                           const SizedBox(width: 10),
                           TextWidget(
-                            text:
-                                "${DateFormat("dd/MMM/yyyy").format(_controller.firstDate.value)} - ${DateFormat("dd/MMM/yyyy").format(_controller.lastDate.value)}",
+                            text: _controller.getDateFilterText,
                             color: Colors.black,
                           ),
                         ],
