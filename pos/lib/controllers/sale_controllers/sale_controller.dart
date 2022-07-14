@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
@@ -17,6 +18,7 @@ import 'package:pos/screens/sale_screens/widgets/sale_product_item_modify_widget
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -155,6 +157,11 @@ class SaleController extends GetxController {
     isLoading(true);
     if ((sale.value?.sale_products?.length ?? 0) > 0) {
       await _onHoldProcess();
+      //
+      LogService.sendLog(
+          user: AppService.currentUser?.fullname ?? "",
+          logAction:
+              "This user start HoldBild Product at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
     } else {
       AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
     }
@@ -176,6 +183,11 @@ class SaleController extends GetxController {
           sale.value?.discount = double.tryParse(_discountValue) ?? 0;
           Get.back();
           sale.refresh();
+          //
+          LogService.sendLog(
+              user: AppService.currentUser?.fullname ?? "",
+              logAction:
+                  "This user Discount on Product at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
         },
       ),
     );

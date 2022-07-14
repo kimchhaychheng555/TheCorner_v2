@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
@@ -9,6 +10,7 @@ import 'package:pos/screens/sale_table_screens/widgets/sale_table_modal_widget.d
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -71,6 +73,11 @@ class SaleTableController extends GetxController {
           var _table = table;
           _table.is_deleted = true;
           onTableSubmited(tempTable: _table);
+          //
+          LogService.sendLog(
+              user: AppService.currentUser?.fullname ?? "",
+              logAction:
+                  "This user start delete table at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
         },
         onConfirmPressed: (_) {
           var _table = table;
@@ -114,6 +121,11 @@ class SaleTableController extends GetxController {
         name: addTableText.text,
         created_by: AppService.currentUser?.fullname,
       );
+      //
+      LogService.sendLog(
+          user: AppService.currentUser?.fullname ?? "",
+          logAction:
+              "This user start create table at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
     }
 
     var _resp = await APIService.post(
