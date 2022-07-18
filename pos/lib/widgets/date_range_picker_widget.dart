@@ -1087,11 +1087,11 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
   }
 
   void _handleOk() {
-    List<DateTime?> result = [];
+    List<DateTime>? result = [];
     if (_selectedFirstDate != null) {
-      result.add(_selectedFirstDate);
+      result.add(_selectedFirstDate ?? DateTime.now());
       if (_selectedLastDate != null) {
-        result.add(_selectedLastDate);
+        result.add(_selectedLastDate ?? DateTime.now());
       }
     }
     Navigator.pop(context, result);

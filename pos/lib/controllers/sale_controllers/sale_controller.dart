@@ -196,7 +196,6 @@ class SaleController extends GetxController {
   void onPrintInvoicePressed() async {
     isLoading(true);
     if ((sale.value?.sale_products?.length ?? 0) > 0) {
-      await _onHoldProcess();
       var printData = PrintModel(
         created_by: AppService.currentUser?.fullname,
         id: Uuid.NAMESPACE_NIL,
@@ -206,10 +205,13 @@ class SaleController extends GetxController {
 
       var _resp = await APIService.post("print/save", jsonEncode(printData));
       if (_resp.isSuccess) {
+        Get.back();
         AppAlert.successAlert(title: "print_success".tr);
       } else {
         AppAlert.errorAlert(title: "print_error".tr);
       }
+      await Future.delayed(const Duration(seconds: 1));
+      await _onHoldProcess();
     } else {
       AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
     }

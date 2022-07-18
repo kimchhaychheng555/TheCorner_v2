@@ -46,9 +46,7 @@ class ReceiptReportScreen extends GetResponsiveView<dynamic> {
                       border: Border.all(
                         color: Colors.black,
                       ),
-                      onPressed: () => _controller.onFilterDatePressed(
-                        context: Get.context!,
-                      ),
+                      onPressed: () => _controller.onFilterDatePressed(),
                       child: Row(
                         children: [
                           const Icon(Icons.calendar_today_rounded),

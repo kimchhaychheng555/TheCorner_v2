@@ -31,11 +31,11 @@ class ReceiptReportController extends GetxController {
     super.onInit();
   }
 
-  Future<void> onFilterDatePressed({required BuildContext context}) async {
+  Future<void> onFilterDatePressed() async {
     List<DateTime>? picked = [firstDate.value, lastDate.value];
 
     picked = await datePicker.showDatePicker(
-      context: context,
+      context: Get.context!,
       initialFirstDate: picked.first,
       initialLastDate: picked.last,
       firstDate: DateTime(2000),
@@ -44,7 +44,7 @@ class ReceiptReportController extends GetxController {
 
     firstDate(picked?.first);
     lastDate(picked?.last);
-    onLoad();
+    await onLoad();
   }
 
   void onInitPagerList() {

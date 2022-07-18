@@ -13,7 +13,7 @@ class SalePaymentController extends GetxController {
   }
 
   void _onLoadPaymentMethod() async {
-    paymentMethodList(AppService.paymentMethodList);
+    paymentMethodList.assignAll(AppService.paymentMethodList);
   }
 
   void onPaymentMethodPressed(PaymentMethodModel pm) {

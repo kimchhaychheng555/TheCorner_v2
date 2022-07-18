@@ -132,19 +132,6 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                       );
                     },
                   ),
-                  DatatableHeader(
-                    text: "balance".tr,
-                    value: "item_name",
-                    show: true,
-                    textAlign: TextAlign.center,
-                    sourceBuilder: (value, row) {
-                      return TextWidget(
-                        text: value,
-                        color: Colors.black,
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
                 ],
                 footers: [
                   if (_controller.dataSource.isEmpty)
