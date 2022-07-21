@@ -91,16 +91,11 @@ class SaleController extends GetxController {
   }
 
   Future<void> _onLoadProduct() async {
-    var _query = "product?\$filter=is_deleted eq false";
     if (categorySelected.value?.id != Uuid.NAMESPACE_NIL) {
-      _query += " and category_id eq ${categorySelected.value?.id}";
-    }
-
-    var _resp = await APIService.oDataGet(_query);
-    if (_resp.isSuccess) {
-      List<dynamic> _products = jsonDecode(_resp.content) ?? [];
-      var _datas = _products.map((p) => ProductModel.fromJson(p)).toList();
-      productList.assignAll(_datas);
+      productList.assignAll(AppService.productList
+          .where((p) => p.category_id == categorySelected.value?.id));
+    } else {
+      productList.assignAll(AppService.productList);
     }
   }
 
@@ -184,10 +179,12 @@ class SaleController extends GetxController {
           Get.back();
           sale.refresh();
           //
+
           LogService.sendLog(
               user: AppService.currentUser?.fullname ?? "",
               logAction:
-                  "This user Discount on Product at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
+                  "This user Discount on Product at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())} \nDiscount on bill Table ${table.value?.name}"
+                  "\nDiscount value = $getDiscountSummary");
         },
       ),
     );
@@ -312,6 +309,13 @@ class SaleController extends GetxController {
         onFreePressed: () {
           if (tempSp.isNotEmpty) {
             tempSp.first.is_free = true;
+
+            LogService.sendLog(
+                user: AppService.currentUser?.fullname ?? "",
+                logAction: "Free on ${tempSp.first.product_name}"
+                    "\nQty = ${tempSp.first.quantity}"
+                    "\nPrice = ${AppService.currencyFormat((tempSp.first.price ?? 1) * (tempSp.first.quantity ?? 1))}");
+
             sale.refresh();
             Get.back();
           }
@@ -444,7 +448,7 @@ class SaleController extends GetxController {
     var jsonStr = jsonEncode(_listStockTransaction);
 
     // print("\x1B[32m =================================================");
-    var _resp = await APIService.post("StockTransaction/Save", jsonStr);
+    await APIService.post("StockTransaction/Save", jsonStr);
 
     // print(jsonStr);
   }

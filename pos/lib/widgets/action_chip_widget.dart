@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos/widgets/button_widget.dart';
+import 'package:pos/constants/constants.dart';
 
 class ActionChipWidget extends StatelessWidget {
   final double radius;
@@ -25,14 +25,23 @@ class ActionChipWidget extends StatelessWidget {
     return Center(
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 5),
-        child: ButtonWidget(
-          radius: radius,
-          child: child,
-          padding: padding,
-          border: border,
-          onPressed: onPressed,
-          backgroundColor: backgroundColor,
-          margin: margin,
+        child: Material(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(radius),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(radius),
+            radius: radius,
+            onTap: onPressed,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(radius),
+                border: border ?? Border.all(color: secondaryColor),
+              ),
+              padding: padding ??
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+              child: child,
+            ),
+          ),
         ),
       ),
     );

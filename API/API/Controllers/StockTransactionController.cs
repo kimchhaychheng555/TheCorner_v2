@@ -67,7 +67,6 @@ namespace API.Controllers
                     {
                         // Adjustment or Take from stock
                         si.quantity_stock = si.quantity_stock - st.quantity;
-
                     }
                     else if (st.type == "add")
                     {

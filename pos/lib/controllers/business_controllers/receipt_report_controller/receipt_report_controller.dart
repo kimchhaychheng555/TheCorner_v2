@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/services/api_service.dart';
-import 'package:pos/widgets/date_range_picker_widget.dart' as datePicker;
+import 'package:pos/widgets/date_range_picker_widget.dart' as date_picker;
 
 class ReceiptReportController extends GetxController {
   var keywordCtrl = TextEditingController();
@@ -34,7 +34,7 @@ class ReceiptReportController extends GetxController {
   Future<void> onFilterDatePressed() async {
     List<DateTime>? picked = [firstDate.value, lastDate.value];
 
-    picked = await datePicker.showDatePicker(
+    picked = await date_picker.showDatePicker(
       context: Get.context!,
       initialFirstDate: picked.first,
       initialLastDate: picked.last,

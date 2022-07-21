@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
 import 'package:pos/models/permission_models/permission_model.dart';
+import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
@@ -23,6 +24,7 @@ class AppService {
   static GetStorage storage = GetStorage("setting");
   static StartSaleModel? currentStartSale;
   static List<PaymentMethodModel> paymentMethodList = [];
+  static List<ProductModel> productList = [];
 
   static Locale get getLanguage {
     switch (currentLanguage) {
@@ -86,6 +88,18 @@ class AppService {
     await _onAPIUrlLoadStartUp();
     await _onLoadLoginUserStartUp();
     await _onLoadPaymentMethod();
+    await _onLoadProduct();
+  }
+
+  static Future<void> _onLoadProduct() async {
+    var _query = "product?\$filter=is_deleted eq false";
+
+    var _resp = await APIService.oDataGet(_query);
+    if (_resp.isSuccess) {
+      List<dynamic> _products = jsonDecode(_resp.content) ?? [];
+      var _datas = _products.map((p) => ProductModel.fromJson(p)).toList();
+      productList.assignAll(_datas);
+    }
   }
 
   static Future<void> _onLoadPaymentMethod() async {
