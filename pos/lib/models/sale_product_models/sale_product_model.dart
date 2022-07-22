@@ -11,6 +11,8 @@ class SaleProductModel {
   String? product_name;
   double old_quantity;
   double? quantity;
+  String? discount_type;
+  double discount;
   double? price;
   bool is_free;
   bool is_remove_stock_done;
@@ -31,6 +33,8 @@ class SaleProductModel {
   SaleProductModel({
     this.id,
     this.product_name,
+    this.discount_type,
+    this.discount = 0,
     this.old_quantity = 0,
     this.firstChanged = false,
     this.quantity,

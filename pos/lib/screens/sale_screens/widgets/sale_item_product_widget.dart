@@ -19,6 +19,30 @@ class SaleProductItemWidget extends StatelessWidget {
     this.onDeletePressed,
   }) : super(key: key);
 
+  String get _getDiscountSummary {
+    if (saleProduct.discount_type == "percent") {
+      return "${saleProduct.discount} %";
+    } else {
+      return AppService.currencyFormat(saleProduct.discount);
+    }
+  }
+
+  double get _getSubTotal {
+    var getSubTotal = ((saleProduct.price ?? 0) * (saleProduct.quantity ?? 1));
+
+    var _grandTotal = 0.0;
+    if (saleProduct.discount_type == "percent") {
+      _grandTotal =
+          getSubTotal - (getSubTotal * ((saleProduct.discount) / 100));
+    } else if (saleProduct.discount_type == "amount") {
+      _grandTotal = getSubTotal - (saleProduct.discount);
+    } else {
+      _grandTotal = getSubTotal;
+    }
+
+    return _grandTotal;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,12 +99,24 @@ class SaleProductItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: TextWidget(
-              text: (saleProduct.is_free)
-                  ? "free".tr
-                  : AppService.currencyFormat(
-                      ((saleProduct.price ?? 0) * (saleProduct.quantity ?? 1))),
-              color: (saleProduct.is_free) ? successColor : Colors.black,
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextWidget(
+                  text: (saleProduct.is_free)
+                      ? "free".tr
+                      : AppService.currencyFormat(_getSubTotal),
+                  color: (saleProduct.is_free) ? successColor : Colors.black,
+                  fontSize: 15,
+                ),
+                if (!saleProduct.is_free) const SizedBox(height: 5),
+                if (!saleProduct.is_free && saleProduct.discount != 0)
+                  TextWidget(
+                    text: "${"dis".tr}. $_getDiscountSummary",
+                    color: Colors.red,
+                    fontSize: 13,
+                  ),
+              ],
             ),
           ),
         ),

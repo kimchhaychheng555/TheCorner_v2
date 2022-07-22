@@ -97,6 +97,7 @@ class SaleController extends GetxController {
     } else {
       productList.assignAll(AppService.productList);
     }
+    productList.refresh();
   }
 
   Future<void> _onLoadCategory() async {
@@ -291,7 +292,7 @@ class SaleController extends GetxController {
       radius: 5,
       content: SaleProductItemModifyWidget(
         sp: sp,
-        onAccept: (qty, price) {
+        onAccept: (qty, price, discountType, discountValue) {
           if (tempSp.isNotEmpty) {
             if ((sale.value?.id ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
               if (tempSp.first.firstChanged == false &&
@@ -302,9 +303,18 @@ class SaleController extends GetxController {
             }
             tempSp.first.quantity = double.parse(qty);
             tempSp.first.price = double.parse(price);
+            tempSp.first.discount_type = discountType ?? "";
+            tempSp.first.discount = double.tryParse(discountValue) ?? 0;
             sale.refresh();
             Get.back();
           }
+        },
+        onRemoveDiscountPressed: () {
+          if (tempSp.isNotEmpty) {
+            tempSp.first.discount = 0;
+            tempSp.first.discount_type = "";
+          }
+          Get.back();
         },
         onFreePressed: () {
           if (tempSp.isNotEmpty) {
@@ -390,8 +400,8 @@ class SaleController extends GetxController {
       }
     }
 
-    var _json = jsonEncode(saleProcess);
-    var _resp = await APIService.post("sale/save", _json);
+    var _json = saleProcess.toJson();
+    var _resp = await APIService.post("sale/save", jsonEncode(saleProcess));
     if (_resp.isSuccess) {
       sale(SaleModel.fromJson(jsonDecode(_resp.content)));
       Get.back();
@@ -477,7 +487,18 @@ class SaleController extends GetxController {
       if (sp.is_deleted || sp.is_free) {
         _subTotal += 0;
       } else {
-        _subTotal += (sp.quantity ?? 1) * (sp.price ?? 1);
+        var getSubTotal = ((sp.price ?? 0) * (sp.quantity ?? 1));
+
+        var _grandTotal = 0.0;
+        if (sp.discount_type == "percent") {
+          _grandTotal = getSubTotal - (getSubTotal * ((sp.discount) / 100));
+        } else if (sp.discount_type == "amount") {
+          _grandTotal = getSubTotal - (sp.discount);
+        } else {
+          _grandTotal = getSubTotal;
+        }
+
+        _subTotal += _grandTotal;
       }
     }
     return _subTotal;
