@@ -47,13 +47,30 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                             children: <Widget>[
                               const SizedBox(height: 30),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextWidget(
                                     text: "Logo".tr,
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                     color: HexColor("#005FF2"),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 15,
+                                        horizontal: 50,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: HexColor("#FC9403"),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: TextWidget(
+                                        text: "unpaid".tr,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -331,22 +348,6 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                 ),
                               ),
                               const SizedBox(height: 50),
-                              Center(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 15,
-                                    horizontal: 50,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: HexColor("#FC9403"),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: TextWidget(
-                                    text: "unpaid".tr,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
                               const SizedBox(height: 50),
                             ],
                           )
