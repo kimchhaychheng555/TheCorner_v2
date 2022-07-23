@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/sale_controllers/sale_discount_controller.dart';
+import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/services/app_alert.dart';
+import 'package:pos/services/app_service.dart';
+import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/text_widget.dart';

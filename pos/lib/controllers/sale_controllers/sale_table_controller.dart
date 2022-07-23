@@ -76,8 +76,7 @@ class SaleTableController extends GetxController {
           //
           LogService.sendLog(
               user: AppService.currentUser?.fullname ?? "",
-              logAction:
-                  "This user start delete table at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
+              logAction: "This User Delete Table : ${table.name}");
         },
         onConfirmPressed: (_) {
           var _table = table;
@@ -124,8 +123,7 @@ class SaleTableController extends GetxController {
       //
       LogService.sendLog(
           user: AppService.currentUser?.fullname ?? "",
-          logAction:
-              "This user start create table at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
+          logAction: "This User Create Table : ${addTableText.text}");
     }
 
     var _resp = await APIService.post(

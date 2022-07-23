@@ -26,7 +26,10 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
         isLoading: _controller.isLoading.value,
         child: Center(
           child: Container(
-            constraints: const BoxConstraints(minWidth: 600),
+            constraints: const BoxConstraints(
+              minWidth: 800,
+              maxWidth: 1000,
+            ),
             height: double.infinity,
             alignment: Alignment.center,
             child: Container(
@@ -50,12 +53,6 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  TextWidget(
-                                    text: "Logo".tr,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                    color: HexColor("#005FF2"),
-                                  ),
                                   Center(
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
@@ -71,6 +68,12 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                                         color: Colors.white,
                                       ),
                                     ),
+                                  ),
+                                  TextWidget(
+                                    text: "Logo".tr,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
+                                    color: HexColor("#005FF2"),
                                   ),
                                 ],
                               ),
