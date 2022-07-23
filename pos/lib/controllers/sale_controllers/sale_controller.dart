@@ -157,7 +157,7 @@ class SaleController extends GetxController {
       LogService.sendLog(
           user: AppService.currentUser?.fullname ?? "",
           logAction:
-              "This user start HoldBild Product at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())}");
+              "This User is HoldBild Product at Table : ${table.value?.name}");
     } else {
       AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
     }
@@ -184,7 +184,7 @@ class SaleController extends GetxController {
           LogService.sendLog(
               user: AppService.currentUser?.fullname ?? "",
               logAction:
-                  "This user Discount on Product at : ${DateFormat("dd-mm-yyyy").format(DateTime.now())} \nDiscount on bill Table ${table.value?.name}"
+                  "This User Discount On Bill Table : ${table.value?.name}"
                   "\nDiscount value = $getDiscountSummary");
         },
       ),
@@ -322,7 +322,7 @@ class SaleController extends GetxController {
 
             LogService.sendLog(
                 user: AppService.currentUser?.fullname ?? "",
-                logAction: "Free on ${tempSp.first.product_name}"
+                logAction: "Free on = ${tempSp.first.product_name}"
                     "\nQty = ${tempSp.first.quantity}"
                     "\nPrice = ${AppService.currencyFormat((tempSp.first.price ?? 1) * (tempSp.first.quantity ?? 1))}");
 
@@ -406,6 +406,11 @@ class SaleController extends GetxController {
       sale(SaleModel.fromJson(jsonDecode(_resp.content)));
       Get.back();
       AppAlert.successAlert(title: "save_sale_successfully".tr);
+      //
+      LogService.sendLog(
+          user: AppService.currentUser?.fullname ?? "",
+          logAction: "This User Payment at Table : ${table.value?.name}"
+              "\n");
     } else {
       AppAlert.errorAlert(title: "save_sale_error".tr);
     }

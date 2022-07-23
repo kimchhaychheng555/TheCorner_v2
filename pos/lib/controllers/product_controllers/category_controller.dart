@@ -6,6 +6,8 @@ import 'package:pos/constants/constants.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
+import 'package:pos/services/app_service.dart';
+import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -144,6 +146,10 @@ class CategoryController extends GetxController {
         await APIService.post("category/save", jsonEncode(_tempCategory));
     if (_resp.isSuccess) {
       AppAlert.successAlert(title: "save_category_success".tr);
+      //
+      LogService.sendLog(
+          user: AppService.currentUser?.fullname ?? "",
+          logAction: "This User Add Category : ${category.name}");
     } else {
       AppAlert.errorAlert(title: "save_category_error".tr);
     }
