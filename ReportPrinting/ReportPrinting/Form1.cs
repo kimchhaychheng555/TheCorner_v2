@@ -24,11 +24,15 @@ namespace ReportPrinting
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            this.Hide();
+            notifyIcon1.Visible = true;
             apiUrl = System.Configuration.ConfigurationManager.AppSettings["apiKey"];
             _ = onFormLoadAsync();
             //
             notifyIcon1.Icon = SystemIcons.Application;
             notifyIcon1.Text = "Report Printing";
+
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -56,12 +60,17 @@ namespace ReportPrinting
             {
                 await Task.Delay(1000);
                 await onFunctionProcessingAsync();
+
+                if(DateTime.Now.ToString("HH:mm") == System.Configuration.ConfigurationManager.AppSettings["shutDownTime"])
+                {
+                    this.Close();
+                }
+
             } 
         }
 
         private async Task onFunctionProcessingAsync()
         {
-            Console.WriteLine("This event will happen every 5 seconds");
             await executeDataAsync();
         }
 
@@ -75,9 +84,9 @@ namespace ReportPrinting
                 if (printList.Any())
                 {
                     var print = printList.FirstOrDefault();
-
+                    var exchangeRate = System.Configuration.ConfigurationManager.AppSettings["exchangeRate"];
                     // Send To Print
-                    PrintingService.printReceipt(print.sale);
+                    PrintingService.printReceipt(print.sale, exchangeRate);
 
                     // Update Printing UI
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
@@ -400,8 +399,8 @@ class SaleController extends GetxController {
       }
     }
 
-    var _json = saleProcess.toJson();
-    var _resp = await APIService.post("sale/save", jsonEncode(saleProcess));
+    var _jsonStr = jsonEncode(saleProcess.toJson());
+    var _resp = await APIService.post("sale/save", _jsonStr);
     if (_resp.isSuccess) {
       sale(SaleModel.fromJson(jsonDecode(_resp.content)));
       Get.back();

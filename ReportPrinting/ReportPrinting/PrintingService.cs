@@ -13,25 +13,18 @@ namespace ReportPrinting
 {
     class PrintingService
     {
-        public static void printReceipt(SaleModel sale)
+        public static void printReceipt(SaleModel sale, string exchange)
         {
-            DataTable saleData = new DataTable();
-            saleData.Columns.Add("invoice_number", typeof(string));
-            saleData.Columns.Add("sub_total", typeof(decimal));
-            saleData.Columns.Add("grand_total", typeof(decimal));
-
-
-            saleData.Rows.Add(sale.invoice_number, sale.sub_total, sale.grand_total);
-
             DataTable saleTable = getDataTableSale(sale);
             DataTable saleProductTable = getDataTableSaleProduct(sale.sale_products);
-
+            string exchangeRate = exchange;
 
             ReportDocument report = new ReportDocument();
             report.Load(Application.StartupPath + "\\Report\\CrystalReport1.rpt");
             report.PrintOptions.PrinterName = "Sale Printer";
-            report.Database.Tables["data_sale"].SetDataSource(saleData);
+            report.Database.Tables["data_sale"].SetDataSource(saleTable);
             report.Database.Tables["data_sale_product"].SetDataSource(saleProductTable);
+            report.SetParameterValue("exchangeRate", exchangeRate);
             report.PrintToPrinter(1, false, 0, 0);
 
         }
@@ -68,8 +61,7 @@ namespace ReportPrinting
                 }
             }
 
-            dynamic[] dynArr = values.ToArray();
-            dataSale.Rows.Add(dynArr[0], dynArr[1]);
+            dataSale.Rows.Add(values.ToArray());
 
             return dataSale;
         }

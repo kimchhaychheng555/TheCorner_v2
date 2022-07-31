@@ -12,7 +12,7 @@ namespace API.Models
         public decimal? vat { get; set; }
         public decimal? sub_total { get; set; }
         public string discount_type { get; set; }
-        public decimal? discount { get; set; }
+        public decimal? discount { get; set; } = 0;
         public decimal? grand_total { get; set; }
         public bool? is_paid { get; set; } = false;
         public bool? status { get; set; } = false;
