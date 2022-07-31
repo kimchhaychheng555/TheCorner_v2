@@ -14,6 +14,8 @@ namespace ReportPrinting
 {
     public partial class Form1 : Form
     {
+        private string timeShutDown;
+        private string exchangeRate;
         private string apiUrl; 
         private static readonly HttpClient client = new HttpClient();
 
@@ -24,10 +26,16 @@ namespace ReportPrinting
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            var text = System.IO.File.ReadAllText(Application.StartupPath + @"\appConfig.json");
+            dynamic array = Newtonsoft.Json.JsonConvert.DeserializeObject(text);
+
+            apiUrl = array.apiKey;
+            timeShutDown = array.shutDownTime;
+            exchangeRate = array.exchangeRate;
+
 
             this.Hide();
             notifyIcon1.Visible = true;
-            apiUrl = System.Configuration.ConfigurationManager.AppSettings["apiKey"];
             _ = onFormLoadAsync();
             //
             notifyIcon1.Icon = SystemIcons.Application;
@@ -61,7 +69,7 @@ namespace ReportPrinting
                 await Task.Delay(1000);
                 await onFunctionProcessingAsync();
 
-                if(DateTime.Now.ToString("HH:mm") == System.Configuration.ConfigurationManager.AppSettings["shutDownTime"])
+                if(DateTime.Now.ToString("HH:mm") == timeShutDown)
                 {
                     this.Close();
                 }
@@ -84,18 +92,18 @@ namespace ReportPrinting
                 if (printList.Any())
                 {
                     var print = printList.FirstOrDefault();
-                    var exchangeRate = System.Configuration.ConfigurationManager.AppSettings["exchangeRate"];
                     // Send To Print
                     PrintingService.printReceipt(print.sale, exchangeRate);
 
                     // Update Printing UI
 
                     await updatePrintedData(print);
+                    label1.Text = label1.Text += "\nSuccess Execute";
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                label1.Text = label1.Text += "\n" + ex.Message;
                 throw;
             }
 
