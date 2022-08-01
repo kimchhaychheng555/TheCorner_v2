@@ -107,6 +107,7 @@ namespace API
             odataBuilder.EntitySet<PermissionModel>("Permission");
             odataBuilder.EntitySet<PrintModel>("Print");
             odataBuilder.EntitySet<ProductModel>("Product");
+            odataBuilder.EntitySet<ProductGroupModel>("ProductGroup");
             odataBuilder.EntitySet<RoleModel>("Role");
             odataBuilder.EntitySet<SaleModel>("Sale");
             odataBuilder.EntitySet<SaleProductModel>("SaleProduct");

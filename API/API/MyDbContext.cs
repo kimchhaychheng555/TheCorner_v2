@@ -74,6 +74,7 @@ namespace API
         public DbSet<PrintModel> Prints { get; set; }
         public DbSet<PaymentMethodModel> PaymentMethods { get; set; }
         public DbSet<ProductModel> Products { get; set; }
+        public DbSet<ProductGroupModel> ProductGroups { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
         public DbSet<SaleModel> Sales { get; set; }
         public DbSet<SalePaymentModel> SalePayments { get; set; }
