@@ -5,6 +5,7 @@ import 'package:pos/controllers/sale_controllers/sale_table_controller.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
 import 'package:pos/models/print_models/print_model.dart';
+import 'package:pos/models/product_group_models/product_group_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_payment_models/sale_payment_model.dart';
@@ -32,6 +33,7 @@ class SaleController extends GetxController {
   //
   RxList<ProductModel> productList = (<ProductModel>[]).obs;
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
+  RxList<ProductGroupModel> productGroupList = (<ProductGroupModel>[]).obs;
 
   @override
   void onInit() {
@@ -48,6 +50,7 @@ class SaleController extends GetxController {
     _onSaleCrossAxisCount();
     await _onLoadCategory();
     await _onLoadProduct();
+    await _onLoadProductGroup();
     await _onInitController();
     if (table.value?.isActive == false) {
       _onSaleInitValue();
@@ -65,6 +68,18 @@ class SaleController extends GetxController {
     if (AppService.storage.hasData("saleCount")) {
       var _saleCount = AppService.storage.read("saleCount");
       saleCrossAxisCount(_saleCount);
+    }
+  }
+
+  Future<void> _onLoadProductGroup() async {
+    var _query = "productGroup?\$filter=is_deleted eq false";
+    var _resp = await APIService.oDataGet(_query);
+    if (_resp.isSuccess) {
+      List<dynamic> _data = jsonDecode(_resp.content);
+      var _dataSale = _data.map((s) => ProductGroupModel.fromJson(s)).toList();
+      if (_dataSale.isNotEmpty) {
+        productGroupList.assignAll(_dataSale);
+      }
     }
   }
 
@@ -100,17 +115,8 @@ class SaleController extends GetxController {
   }
 
   Future<void> _onLoadCategory() async {
-    var _resp =
-        await APIService.oDataGet("category?\$filter=is_deleted eq false");
-    if (_resp.isSuccess) {
-      List<dynamic> _categories = jsonDecode(_resp.content) ?? [];
-      var _datas = _categories.map((c) => CategoryModel.fromJson(c)).toList();
-
-      var _category = CategoryModel(id: Uuid.NAMESPACE_NIL, name: "all".tr);
-      _datas.insert(0, _category);
-      categoryList.assignAll(_datas);
-      categorySelected(_datas.first);
-    }
+    categoryList(AppService.categoryList);
+    categorySelected(AppService.categoryList.first);
   }
 
   void _onSaleInitValue() {
@@ -270,6 +276,7 @@ class SaleController extends GetxController {
         product_id: product.id,
         product_name: product.name,
         created_by: AppService.currentUser?.fullname,
+        product_group_id: product.product_group_id,
       );
       (sale.value?.sale_products ?? []).add(_tempSp);
     }

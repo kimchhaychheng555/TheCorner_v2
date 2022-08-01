@@ -31,13 +31,18 @@ SaleProductModel _$SaleProductModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['deleted_date'] as String),
       deleted_by: json['deleted_by'] as String?,
+      product_group_id: json['product_group_id'] as String?,
     )
       ..sale = json['sale'] == null
           ? null
           : SaleModel.fromJson(json['sale'] as Map<String, dynamic>)
       ..product = json['product'] == null
           ? null
-          : ProductModel.fromJson(json['product'] as Map<String, dynamic>);
+          : ProductModel.fromJson(json['product'] as Map<String, dynamic>)
+      ..productGroup = json['productGroup'] == null
+          ? null
+          : ProductGroupModel.fromJson(
+              json['productGroup'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$SaleProductModelToJson(SaleProductModel instance) =>
     <String, dynamic>{
@@ -60,6 +65,8 @@ Map<String, dynamic> _$SaleProductModelToJson(SaleProductModel instance) =>
       'deleted_date': instance.deleted_date?.toIso8601String(),
       'deleted_by': instance.deleted_by,
       'firstChanged': instance.firstChanged,
+      'product_group_id': instance.product_group_id,
       'sale': instance.sale,
       'product': instance.product,
+      'productGroup': instance.productGroup,
     };

@@ -24,9 +24,15 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
           ? null
           : DateTime.parse(json['deleted_date'] as String),
       deleted_by: json['deleted_by'] as String?,
-    )..category = json['category'] == null
-        ? null
-        : CategoryModel.fromJson(json['category'] as Map<String, dynamic>);
+    )
+      ..product_group_id = json['product_group_id'] as String?
+      ..category = json['category'] == null
+          ? null
+          : CategoryModel.fromJson(json['category'] as Map<String, dynamic>)
+      ..product_group = json['product_group'] == null
+          ? null
+          : ProductGroupModel.fromJson(
+              json['product_group'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
     <String, dynamic>{
@@ -38,10 +44,12 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'image': instance.image,
       'stockable': instance.stockable,
       'category_id': instance.category_id,
+      'product_group_id': instance.product_group_id,
       'created_date': instance.created_date?.toIso8601String(),
       'created_by': instance.created_by,
       'is_deleted': instance.is_deleted,
       'deleted_date': instance.deleted_date?.toIso8601String(),
       'deleted_by': instance.deleted_by,
       'category': instance.category,
+      'product_group': instance.product_group,
     };

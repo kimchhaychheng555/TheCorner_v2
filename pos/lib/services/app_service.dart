@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
+import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
 import 'package:pos/models/permission_models/permission_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
@@ -13,6 +14,7 @@ import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/encrypter_service.dart';
+import 'package:uuid/uuid.dart';
 
 class AppService {
   static String apiApp = "http://localhost:9090/api/";
@@ -25,6 +27,7 @@ class AppService {
   static StartSaleModel? currentStartSale;
   static List<PaymentMethodModel> paymentMethodList = [];
   static List<ProductModel> productList = [];
+  static List<CategoryModel> categoryList = [];
 
   static Locale get getLanguage {
     switch (currentLanguage) {
@@ -88,6 +91,7 @@ class AppService {
     await _onAPIUrlLoadStartUp();
     await _onLoadLoginUserStartUp();
     await _onLoadPaymentMethod();
+    await _onLoadCategory();
     await _onLoadProduct();
   }
 
@@ -99,6 +103,19 @@ class AppService {
       List<dynamic> _products = jsonDecode(_resp.content) ?? [];
       var _datas = _products.map((p) => ProductModel.fromJson(p)).toList();
       productList.assignAll(_datas);
+    }
+  }
+
+  static Future<void> _onLoadCategory() async {
+    var _resp =
+        await APIService.oDataGet("category?\$filter=is_deleted eq false");
+    if (_resp.isSuccess) {
+      List<dynamic> _categories = jsonDecode(_resp.content) ?? [];
+      var _datas = _categories.map((c) => CategoryModel.fromJson(c)).toList();
+
+      var _category = CategoryModel(id: Uuid.NAMESPACE_NIL, name: "all".tr);
+      _datas.insert(0, _category);
+      categoryList.assignAll(_datas);
     }
   }
 

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pos/models/category_models/category_model.dart';
+import 'package:pos/models/product_group_models/product_group_model.dart';
 part 'product_model.g.dart';
 
 @JsonSerializable()
@@ -13,6 +14,7 @@ class ProductModel {
   String? image;
   bool? stockable;
   String? category_id;
+  String? product_group_id;
   DateTime? created_date;
   String? created_by;
   bool? is_deleted;
@@ -20,6 +22,7 @@ class ProductModel {
   String? deleted_by;
 
   CategoryModel? category;
+  ProductGroupModel? product_group;
   ProductModel({
     this.id,
     this.name,

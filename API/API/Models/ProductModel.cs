@@ -25,7 +25,8 @@ namespace API.Models
         [ForeignKey("category_id")]
         public CategoryModel category { get; set; }
 
-        public Guid product_group_id { get; set; }
+
+        public Guid? product_group_id { get; set; }
         [ForeignKey("product_group_id")]
         public ProductGroupModel product_group { get; set; }
     }

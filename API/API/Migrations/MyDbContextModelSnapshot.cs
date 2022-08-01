@@ -366,7 +366,7 @@ namespace API.Migrations
                     b.Property<decimal?>("price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("product_group_id")
+                    b.Property<Guid?>("product_group_id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("stockable")
@@ -590,6 +590,9 @@ namespace API.Migrations
                     b.Property<decimal?>("price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid>("product_group_id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("product_id")
                         .HasColumnType("uniqueidentifier");
 
@@ -607,6 +610,8 @@ namespace API.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("id");
+
+                    b.HasIndex("product_group_id");
 
                     b.HasIndex("product_id");
 
@@ -848,9 +853,7 @@ namespace API.Migrations
 
                     b.HasOne("API.Models.ProductGroupModel", "product_group")
                         .WithMany("products")
-                        .HasForeignKey("product_group_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("product_group_id");
 
                     b.Navigation("category");
 
@@ -889,6 +892,12 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.SaleProductModel", b =>
                 {
+                    b.HasOne("API.Models.ProductGroupModel", "product_group")
+                        .WithMany()
+                        .HasForeignKey("product_group_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API.Models.ProductModel", "product")
                         .WithMany()
                         .HasForeignKey("product_id")
@@ -902,6 +911,8 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("product");
+
+                    b.Navigation("product_group");
 
                     b.Navigation("sale");
                 });

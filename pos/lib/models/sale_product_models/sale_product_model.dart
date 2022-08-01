@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pos/models/product_group_models/product_group_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 part 'sale_product_model.g.dart';
@@ -27,9 +28,11 @@ class SaleProductModel {
 
   //
   bool firstChanged;
+  String? product_group_id;
 
   SaleModel? sale;
   ProductModel? product;
+  ProductGroupModel? productGroup;
   SaleProductModel({
     this.id,
     this.product_name,
@@ -50,6 +53,7 @@ class SaleProductModel {
     this.is_deleted = false,
     this.deleted_date,
     this.deleted_by,
+    this.product_group_id,
   });
 
   factory SaleProductModel.fromJson(Map<String, dynamic> json) =>

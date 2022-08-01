@@ -133,6 +133,8 @@ class ProductController extends GetxController {
     );
   }
 
+  void onProductGroupPressed() {}
+
   void onAddProductPressed() {
     Get.toNamed(
       ProductDetailScreen.routeName,
