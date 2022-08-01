@@ -139,7 +139,27 @@ class ProductDetailScreen extends GetResponsiveView<dynamic> {
                         ),
                       ],
                       label: "category".tr,
-                      onChanged: (_) => _controller.onDropdownValueChanged(_),
+                      onChanged: (_) => _controller.onCategoryValueChanged(_),
+                    ),
+                    const SizedBox(height: 10),
+                    DropdownButtonFormFieldWidget<String>(
+                      readOnly: !_controller.isEditable.value,
+                      value: _controller.productDetail.value.product_group_id,
+                      items: [
+                        ..._controller.productGroupList.map(
+                          (pg) => DropdownMenuItem(
+                            value: pg.id,
+                            child: TextWidget(
+                              text: pg.group_name ?? "",
+                              color: textColor,
+                              fontFamily: "Siemreap",
+                            ),
+                          ),
+                        ),
+                      ],
+                      label: "product_group".tr,
+                      onChanged: (_) =>
+                          _controller.onProductGroupValueChanged(_),
                     ),
                     const SizedBox(height: 10),
                     Visibility(

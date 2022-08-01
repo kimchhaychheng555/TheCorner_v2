@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:pos/controllers/product_controllers/product_controller.dart';
 import 'package:pos/models/api_models/response_model.dart';
 import 'package:pos/models/category_models/category_model.dart';
+import 'package:pos/models/product_group_models/product_group_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
@@ -27,6 +28,7 @@ class ProductDetailController extends GetxController {
   var productDetail = ProductModel().obs;
   var tempProductDetail = ProductModel().obs;
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
+  RxList<ProductGroupModel> productGroupList = (<ProductGroupModel>[]).obs;
   //
   var productNameCtrl = TextEditingController();
   var minQuantityCtrl = TextEditingController();
@@ -37,6 +39,7 @@ class ProductDetailController extends GetxController {
   void onInit() async {
     super.onInit();
     await onLoadCategory();
+    await onLoadProductGroup();
     onGetArgument();
   }
 
@@ -61,6 +64,26 @@ class ProductDetailController extends GetxController {
       titleScreen("add_product");
       isEditable(true);
     }
+  }
+
+  Future<void> onLoadProductGroup() async {
+    isLoading(true);
+
+    var _resp =
+        await APIService.oDataGet("productGroup?\$filter=is_deleted eq false");
+    if (_resp.isSuccess) {
+      List<dynamic> _dynamic = [];
+      _dynamic = jsonDecode(_resp.content);
+      var _dataList =
+          _dynamic.map((e) => ProductGroupModel.fromJson(e)).toList();
+      _dataList.insert(
+          0,
+          ProductGroupModel(
+              id: Uuid.NAMESPACE_NIL, group_name: "unselected".tr));
+      productGroupList.assignAll(_dataList);
+    }
+
+    isLoading(false);
   }
 
   Future<void> onLoadCategory() async {
@@ -160,8 +183,16 @@ class ProductDetailController extends GetxController {
     );
   }
 
-  void onDropdownValueChanged(String? value) {
+  void onCategoryValueChanged(String? value) {
     tempProductDetail.value.category_id = value;
+  }
+
+  void onProductGroupValueChanged(String? value) {
+    if (value == Uuid.NAMESPACE_NIL) {
+      tempProductDetail.value.product_group_id = null;
+      return;
+    }
+    tempProductDetail.value.product_group_id = value;
   }
 
   void onCancelProductDetail() => Get.back();

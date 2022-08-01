@@ -134,7 +134,7 @@ Map<String, String> get enTranslate {
     "delete_product_error": "Delete Product Unsuccessful",
     "restore_product_success": "Restore Product Successful",
     "restore_product_error": "Restore Product Unsuccessful",
-    "save_product_success": "Restore Product Unsuccessful",
+    "save_product_success": "Save Product Successful",
     "save_product_error": "Save Product Unsuccessful",
     "restore_role_success": "Restore Role Unsuccessful",
     "restore_role_error": "Restore Role Error",

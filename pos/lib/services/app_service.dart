@@ -95,6 +95,11 @@ class AppService {
     await _onLoadProduct();
   }
 
+  static Future<void> onRefreshSale() async {
+    await _onLoadCategory();
+    await _onLoadProduct();
+  }
+
   static Future<void> _onLoadProduct() async {
     var _query = "product?\$filter=is_deleted eq false";
 

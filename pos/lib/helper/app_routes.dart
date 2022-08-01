@@ -7,6 +7,7 @@ import 'package:pos/screens/business_report_screens/receipt_report_screens/recei
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
+import 'package:pos/screens/products_screens/product_group_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/screens/report_screens/report_detail_screen.dart';
@@ -105,6 +106,11 @@ class AppRoute {
         GetPage(
           page: () => ReceiptReportScreen(),
           name: ReceiptReportScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => ProductGroupScreen(),
+          name: ProductGroupScreen.routeName,
           binding: AppBindings(),
         ),
       ];

@@ -41,8 +41,11 @@ class SaleController extends GetxController {
     super.onInit();
   }
 
-  void onRefreshPressed() {
+  void onRefreshPressed() async {
+    isLoading(true);
+    await AppService.onRefreshSale();
     onInitLoad();
+    isLoading(false);
   }
 
   void onInitLoad() async {

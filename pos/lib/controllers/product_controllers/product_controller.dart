@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pos/models/category_models/category_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
+import 'package:pos/screens/products_screens/product_group_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
@@ -133,7 +134,12 @@ class ProductController extends GetxController {
     );
   }
 
-  void onProductGroupPressed() {}
+  void onProductGroupPressed() {
+    Get.toNamed(
+      ProductGroupScreen.routeName,
+      preventDuplicates: true,
+    );
+  }
 
   void onAddProductPressed() {
     Get.toNamed(
