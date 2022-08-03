@@ -209,6 +209,22 @@ class SaleController extends GetxController {
         key: "invoice",
       );
 
+      if (sale.value?.id == Uuid.NAMESPACE_NIL) {
+        await _onHoldProcess();
+        printData = PrintModel(
+          created_by: AppService.currentUser?.fullname,
+          id: Uuid.NAMESPACE_NIL,
+          sale_id: sale.value?.id,
+          key: "invoice",
+        );
+        var _resp = await APIService.post("print/save", jsonEncode(printData));
+        if (_resp.isSuccess) {
+          AppAlert.successAlert(title: "print_success".tr);
+        } else {
+          AppAlert.errorAlert(title: "print_error".tr);
+        }
+        return;
+      }
       var _resp = await APIService.post("print/save", jsonEncode(printData));
       if (_resp.isSuccess) {
         Get.back();
@@ -392,7 +408,7 @@ class SaleController extends GetxController {
     _saleProcess.sub_total = getSubTotal;
     _saleProcess.grand_total = getGrandTotal;
 
-    _onSaleSave(_saleProcess, saleType: "hold");
+    await _onSaleSave(_saleProcess, saleType: "hold");
   }
 
   Future<void> _onSaleSave(
@@ -413,6 +429,7 @@ class SaleController extends GetxController {
     var _resp = await APIService.post("sale/save", _jsonStr);
     if (_resp.isSuccess) {
       sale(SaleModel.fromJson(jsonDecode(_resp.content)));
+      sale.refresh();
       Get.back();
       AppAlert.successAlert(title: "save_sale_successfully".tr);
       //

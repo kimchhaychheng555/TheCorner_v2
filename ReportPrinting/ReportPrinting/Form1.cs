@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace ReportPrinting
 {
@@ -66,11 +67,19 @@ namespace ReportPrinting
 
             while (true)
             {
-                await Task.Delay(1000);
+                await Task.Delay(500);
                 await onFunctionProcessingAsync();
 
-                if(DateTime.Now.ToString("HH:mm") == timeShutDown)
+                if (DateTime.Now.ToString("HH:mm") == timeShutDown)
                 {
+                    string path = "Log";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    string timeStr = DateTime.Now.ToString("MM/dd/yyyy-HH:mm");
+                    string newPath = String.Format("Log\\{0}.txt", timeStr);
+                    File.WriteAllText(newPath, label1.Text);
                     this.Close();
                 }
 
@@ -79,14 +88,9 @@ namespace ReportPrinting
 
         private async Task onFunctionProcessingAsync()
         {
-            await executeDataAsync();
-        }
-
-        private async Task executeDataAsync()
-        {
             try
             {
-                var printResp = await client.GetAsync($"{apiUrl}print?$orderby=created_date desc&$filter=is_deleted eq false&$expand=sale($expand=sale_products)");
+                var printResp = await client.GetAsync($"{apiUrl}print?$orderby=created_date desc&$filter=is_deleted eq false&$expand=sale($expand=sale_products($filter=is_deleted eq false))");
                 var str = await printResp.Content.ReadAsStringAsync();
                 var printList = odataGetValue<List<PrintModel>>(str);
                 if (printList.Any())
@@ -106,9 +110,7 @@ namespace ReportPrinting
                 label1.Text = label1.Text += "\n" + ex.Message;
                 throw;
             }
-
-
-        }
+        } 
 
         private async Task updatePrintedData(PrintModel print)
         {
