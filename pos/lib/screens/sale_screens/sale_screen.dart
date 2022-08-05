@@ -186,80 +186,54 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                     Divider(
                       color: Colors.black.withOpacity(0.3),
                     ),
-                    // Expanded(
-                    //   child: (_controller.sale.value?.sale_products ?? [])
-                    //           .isNotEmpty
-                    //       ? ListView.builder(
-                    //           scrollDirection: Axis.vertical,
-                    //           controller:
-                    //               ScrollController(keepScrollOffset: true),
-                    //           itemCount:
-                    //               (_controller.sale.value?.sale_products ?? [])
-                    //                   .length,
-                    //           itemBuilder: (c, index) {
-                    //             var _sp =
-                    //                 (_controller.sale.value?.sale_products ??
-                    //                     [])[index];
-
-                    //             if (_sp.is_deleted == false) {
-                    //               return SaleProductItemWidget(
-                    //                 keyValue: index,
-                    //                 saleProduct: _sp,
-                    //                 onPressed: () => _controller
-                    //                     .onSaleProductItemPressed(_sp),
-                    //                 onDeletePressed: () => _controller
-                    //                     .onSaleProductItemDeletePressed(_sp),
-                    //               );
-                    //             }
-                    //             return Container();
-                    //           },
-                    //         )
-                    //       : Center(
-                    //           child: TextWidget(
-                    //             text: "empty".tr,
-                    //             color: Colors.black38,
-                    //           ),
-                    //         ),
-                    // ),
                     Expanded(
-                      child: GroupedListView<SaleProductModel, String>(
-                        elements: _controller.sale.value?.sale_products ?? [],
-                        groupBy: (sp) => sp.product_group_id ?? "",
-                        groupSeparatorBuilder: (String groupId) {
-                          var existPg = _controller.productGroupList
-                              .where((pg) => pg.id == groupId);
-                          if (existPg.isNotEmpty) {
-                            return StatusWidget(
+                      child: (_controller.sale.value?.sale_products ?? [])
+                              .isNotEmpty
+                          ? GroupedListView<SaleProductModel, String>(
+                              elements:
+                                  _controller.sale.value?.sale_products ?? [],
+                              groupBy: (sp) => sp.product_group_id ?? "",
+                              groupSeparatorBuilder: (String groupId) {
+                                var existPg = _controller.productGroupList
+                                    .where((pg) => pg.id == groupId);
+                                if (existPg.isNotEmpty) {
+                                  return StatusWidget(
+                                    child: TextWidget(
+                                      text: existPg.first.group_name ?? "",
+                                    ),
+                                    backgroundColor: Colors.deepPurple[400],
+                                  );
+                                }
+
+                                return StatusWidget(
+                                  child: TextWidget(text: "other".tr),
+                                  backgroundColor: Colors.deepPurple[400],
+                                );
+                              },
+
+                              indexedItemBuilder:
+                                  (context, SaleProductModel _sp, index) {
+                                if (_sp.is_deleted == false) {
+                                  return SaleProductItemWidget(
+                                    keyValue: index,
+                                    saleProduct: _sp,
+                                    onPressed: () => _controller
+                                        .onSaleProductItemPressed(_sp),
+                                    onDeletePressed: () => _controller
+                                        .onSaleProductItemDeletePressed(_sp),
+                                  );
+                                }
+                                return Container();
+                              },
+                              floatingHeader: true, // optional
+                              order: GroupedListOrder.DESC, // optional
+                            )
+                          : Center(
                               child: TextWidget(
-                                text: existPg.first.group_name ?? "",
+                                text: "empty".tr,
+                                color: Colors.black,
                               ),
-                              backgroundColor: Colors.deepPurple[400],
-                            );
-                          }
-
-                          return StatusWidget(
-                            child: TextWidget(text: "other".tr),
-                            backgroundColor: Colors.deepPurple[400],
-                          );
-                        },
-
-                        indexedItemBuilder:
-                            (context, SaleProductModel _sp, index) {
-                          if (_sp.is_deleted == false) {
-                            return SaleProductItemWidget(
-                              keyValue: index,
-                              saleProduct: _sp,
-                              onPressed: () =>
-                                  _controller.onSaleProductItemPressed(_sp),
-                              onDeletePressed: () => _controller
-                                  .onSaleProductItemDeletePressed(_sp),
-                            );
-                          }
-                          return Container();
-                        },
-                        floatingHeader: true, // optional
-                        order: GroupedListOrder.DESC, // optional
-                      ),
+                            ),
                     ),
                     const Divider(),
                     Column(

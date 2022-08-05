@@ -182,9 +182,12 @@ class SaleController extends GetxController {
       content: SaleDiscountWidget(
         type: _discountType,
         value: _discountValue,
-        onAccept: (_discountType, _discountValue) {
-          sale.value?.discount_type = _discountType;
-          sale.value?.discount = double.tryParse(_discountValue) ?? 0;
+        onAccept: (_discountType, _discountValue, pgList) {
+          _onDiscountByProductGroup(
+            discountType: _discountType,
+            discountValue: _discountValue,
+            pgList: pgList,
+          );
           Get.back();
           sale.refresh();
           //
@@ -197,6 +200,36 @@ class SaleController extends GetxController {
         },
       ),
     );
+  }
+
+  void _onDiscountByProductGroup({
+    List<ProductGroupModel>? pgList,
+    String? discountType,
+    String? discountValue,
+  }) {
+    bool discountSaleExist = (pgList?.length == productGroupList.length);
+
+    if ((pgList ?? []).isEmpty || discountSaleExist) {
+      sale.value?.discount_type = discountType;
+      sale.value?.discount = double.tryParse(discountValue ?? "0") ?? 0;
+      for (SaleProductModel sp in (sale.value?.sale_products ?? [])) {
+        sp.discount_type = "";
+        sp.discount = 0;
+      }
+    } else {
+      sale.value?.discount_type = "";
+      sale.value?.discount = 0;
+      for (SaleProductModel sp in (sale.value?.sale_products ?? [])) {
+        bool discountSpExist = (pgList ?? [])
+            .where((pg) => pg.id == sp.product_group_id)
+            .isNotEmpty;
+
+        if (discountSpExist) {
+          sp.discount_type = discountType;
+          sp.discount = double.tryParse(discountValue ?? "0") ?? 0;
+        }
+      }
+    }
   }
 
   void onPrintInvoicePressed() async {
