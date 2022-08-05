@@ -243,11 +243,10 @@ class ProductDetailController extends GetxController {
       _product.price = double.tryParse(priceCtrl.text) ?? 0;
       _product.image = imageName;
       _product.category = null;
-
       tempProductDetail(_product);
       productDetail(tempProductDetail.value);
     }
-
+    print(jsonEncode(productDetail.value));
     var _resp =
         await APIService.post("product/save", jsonEncode(productDetail.value));
     if (_resp.isSuccess) {

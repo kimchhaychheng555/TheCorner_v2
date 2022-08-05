@@ -6,8 +6,6 @@ import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/screens/users_screens/user_detail_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
-import 'package:pos/services/app_service.dart';
-import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/button_action_widget.dart';
 
 class UserController extends GetxController {

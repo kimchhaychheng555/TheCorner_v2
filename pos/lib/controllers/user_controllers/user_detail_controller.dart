@@ -13,7 +13,6 @@ import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
-import 'package:pos/services/log_service.dart';
 import 'package:pos/widgets/avatar_widget.dart';
 import 'package:uuid/uuid.dart';
 
