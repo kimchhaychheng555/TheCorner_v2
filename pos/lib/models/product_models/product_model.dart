@@ -27,7 +27,7 @@ class ProductModel {
     this.id,
     this.name,
     this.price,
-    this.min_quantity,
+    this.min_quantity = 0,
     this.cost,
     this.image,
     this.stockable = false,

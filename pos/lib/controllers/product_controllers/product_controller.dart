@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/category_models/category_model.dart';
+import 'package:pos/models/product_group_models/product_group_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
 import 'package:pos/screens/products_screens/product_group_screen.dart';
@@ -16,9 +17,13 @@ class ProductController extends GetxController {
   var keywordCtrl = TextEditingController();
   var isLoading = false.obs;
   var isDeletedFilter = false.obs;
+
   var currentCategoryId = Rxn<String>();
+  var currentProductGroupId = Rxn<String>();
+
   RxList<ProductModel> productList = (<ProductModel>[]).obs;
   RxList<CategoryModel> categoryList = (<CategoryModel>[]).obs;
+  RxList<ProductGroupModel> productGroup = (<ProductGroupModel>[]).obs;
 
   //Pagination
   var totalPage = 0.obs;
@@ -33,6 +38,7 @@ class ProductController extends GetxController {
     super.onInit();
     isLoading(true);
     onInitCategory();
+    await onInitProductGroup();
     onInitPagerList();
     await onLoadProduct();
     isLoading(false);
@@ -52,6 +58,25 @@ class ProductController extends GetxController {
             id: Uuid.NAMESPACE_NIL, is_deleted: false, name: "all".tr),
       );
       currentCategoryId(categoryList.first.id);
+    }
+    isLoading(false);
+  }
+
+  Future<void> onInitProductGroup() async {
+    isLoading(true);
+    var _resp =
+        await APIService.oDataGet("productGroup?\$filter=is_deleted eq false");
+    if (_resp.isSuccess) {
+      List<dynamic> _listDyn = jsonDecode(_resp.content);
+      var _dataList =
+          _listDyn.map((e) => ProductGroupModel.fromJson(e)).toList();
+      productGroup.assignAll(_dataList);
+      productGroup.insert(
+        0,
+        ProductGroupModel(
+            id: Uuid.NAMESPACE_NIL, is_deleted: false, group_name: "all".tr),
+      );
+      currentProductGroupId(productGroup.first.id);
     }
     isLoading(false);
   }
@@ -78,6 +103,11 @@ class ProductController extends GetxController {
     _tempCategoryId = value;
   }
 
+  String? _tempProductGroupId;
+  void onProductGroupFilterChanged(String? value) {
+    _tempProductGroupId = value;
+  }
+
   void onFilterPressed() {
     Get.back();
     if (tempStatus == "active") {
@@ -87,6 +117,7 @@ class ProductController extends GetxController {
     }
 
     currentCategoryId(_tempCategoryId);
+    currentProductGroupId(_tempProductGroupId);
     onLoadProduct();
   }
 
@@ -102,6 +133,10 @@ class ProductController extends GetxController {
         "product?keyword=${keywordCtrl.text}&$_pagingation&\$expand=category&\$filter=is_deleted eq ${isDeletedFilter.value}";
     if ((currentCategoryId.value ?? Uuid.NAMESPACE_NIL) != Uuid.NAMESPACE_NIL) {
       _query += " and category_id eq ${currentCategoryId.value}";
+    }
+    if ((currentProductGroupId.value ?? Uuid.NAMESPACE_NIL) !=
+        Uuid.NAMESPACE_NIL) {
+      _query += " and product_group_id eq ${currentProductGroupId.value}";
     }
 
     var _resp = await APIService.oDataGet(_query);

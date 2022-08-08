@@ -68,7 +68,26 @@ class ProductDrawerWidget extends StatelessWidget {
                         ),
                       ],
                       onChanged: (_) => _controller.onCategoryFilterChanged(_),
-                    )
+                    ),
+                    const SizedBox(height: 20),
+                    DropdownButtonFormFieldWidget<String>(
+                      value: _controller.currentProductGroupId.value,
+                      label: "product_group".tr,
+                      items: [
+                        ..._controller.productGroup.map(
+                          (pg) => DropdownMenuItem(
+                            child: TextWidget(
+                              text: pg.group_name ?? "",
+                              color: textColor,
+                              fontFamily: "Siemreap",
+                            ),
+                            value: pg.id,
+                          ),
+                        ),
+                      ],
+                      onChanged: (_) =>
+                          _controller.onProductGroupFilterChanged(_),
+                    ),
                   ],
                 ),
               ),

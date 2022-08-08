@@ -220,9 +220,6 @@ class SaleController extends GetxController {
       sale.value?.discount_type = "";
       sale.value?.discount = 0;
       for (SaleProductModel sp in (sale.value?.sale_products ?? [])) {
-        sp.discount_type = "";
-        sp.discount = 0;
-
         bool discountSpExist = (pgList ?? [])
             .where((pg) => pg.id == sp.product_group_id)
             .isNotEmpty;
