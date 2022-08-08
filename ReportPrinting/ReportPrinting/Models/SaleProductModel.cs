@@ -17,6 +17,8 @@ namespace API.Models
         public bool? is_free { get; set; } = false;
         public bool? is_remove_stock_done { get; set; } = false;
 
+        public string product_group_id { get; set; }
+
         public Guid sale_id { get; set; } 
         public SaleModel sale { get; set; }
         public Guid product_id { get; set; } 

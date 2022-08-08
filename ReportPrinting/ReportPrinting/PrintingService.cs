@@ -16,7 +16,10 @@ namespace ReportPrinting
         public static void printReceipt(SaleModel sale, string exchange)
         {
             DataTable saleTable = getDataTableSale(sale);
-            DataTable saleProductTable = getDataTableSaleProduct(sale.sale_products);
+
+            List<SaleProductModel> tempSaleProducts = new List<SaleProductModel>();
+            tempSaleProducts = sale.sale_products.OrderByDescending(sp => sp.product_group_id).ToList();
+            DataTable saleProductTable = getDataTableSaleProduct(tempSaleProducts);
             string exchangeRate = exchange;
 
             ReportDocument report = new ReportDocument();
