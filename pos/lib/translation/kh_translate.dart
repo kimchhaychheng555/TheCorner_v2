@@ -159,7 +159,7 @@ Map<String, String> get khTranslate {
     "per_month": "ក្នុងមួយខែ",
     "invoice_number": "លេខវិក្កយបត្រ",
     "name": "ឈ្មោះ",
-    "User": "អ្នកប្រើប្រាស់",
+    "user": "អ្នកប្រើប្រាស់",
     "action": "សកម្មភាព",
     "min_quantity": "ចំនួនទាបបំផុត",
     "created": "បានបង្កើត",

@@ -161,7 +161,7 @@ Map<String, String> get enTranslate {
     "per_month": "Per Month",
     "invoice_number": "Invoice Number",
     "name": "Name",
-    "User": "User",
+    "user": "User",
     "action": "Action",
     "min_quantity": "Minimum Quantity",
     "created": "Created",
