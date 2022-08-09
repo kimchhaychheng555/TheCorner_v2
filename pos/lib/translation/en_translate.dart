@@ -181,5 +181,9 @@ Map<String, String> get enTranslate {
     "no_internet_connection_found": "No Internet Connection Found",
     "check_your_connection": "Check Your Connection",
     "stock": "Stock",
+    "other": "Other",
+    "dis": "Discount",
+    "remove_discount": "Remove Discount",
+    "edit": "Edit",
   };
 }
