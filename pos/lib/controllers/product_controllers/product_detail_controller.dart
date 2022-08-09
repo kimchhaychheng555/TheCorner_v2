@@ -224,7 +224,7 @@ class ProductDetailController extends GetxController {
       var _product = ProductModel(
         id: Uuid.NAMESPACE_NIL,
         name: productNameCtrl.text,
-        min_quantity: double.tryParse(minQuantityCtrl.text),
+        min_quantity: double.tryParse(minQuantityCtrl.text) ?? 0,
         cost: double.tryParse(costCtrl.text) ?? 0,
         price: double.tryParse(priceCtrl.text) ?? 0,
         category_id: tempProductDetail.value.category_id,
@@ -238,7 +238,7 @@ class ProductDetailController extends GetxController {
           jsonDecode(jsonEncode(tempProductDetail.value)));
       _product.name = productNameCtrl.text;
 
-      _product.min_quantity = double.tryParse(minQuantityCtrl.text);
+      _product.min_quantity = double.tryParse(minQuantityCtrl.text) ?? 0;
       _product.cost = double.tryParse(costCtrl.text) ?? 0;
       _product.price = double.tryParse(priceCtrl.text) ?? 0;
       _product.image = imageName;
@@ -246,7 +246,6 @@ class ProductDetailController extends GetxController {
       tempProductDetail(_product);
       productDetail(tempProductDetail.value);
     }
-    print(jsonEncode(productDetail.value));
     var _resp =
         await APIService.post("product/save", jsonEncode(productDetail.value));
     if (_resp.isSuccess) {

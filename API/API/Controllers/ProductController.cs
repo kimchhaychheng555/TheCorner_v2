@@ -108,7 +108,6 @@ namespace API.Controllers
                     _tempStockInventory.product_id = product.id;
                     _tempStockInventory.min_quantity = product.min_quantity;
                     _tempStockInventory.created_by = product.created_by;
-
                     db.StockInventories.Add(_tempStockInventory);
                 }
                 

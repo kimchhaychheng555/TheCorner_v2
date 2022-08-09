@@ -86,7 +86,9 @@ class InventorySummaryReportScreen extends GetResponsiveView<dynamic> {
                     ),
                     const Spacer(),
                     IconTextButtonWidget(
-                      onPressed: () => _controller.onExportPressed(),
+                      onPressed: () async {
+                        _controller.onExportPressed();
+                      },
                       label: TextWidget(text: "export_to_excel".tr),
                       backgroundColor: primaryColor,
                       icon: const Icon(Icons.file_download_rounded),

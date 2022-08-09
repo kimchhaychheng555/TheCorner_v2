@@ -56,7 +56,8 @@ dependencies:
   responsive_table: ^0.2.0+2
   file_picker: ^4.6.1
   translations_loader: ^1.0.2 
-  grouped_list: ^5.1.2
+  grouped_list: ^5.1.2 
+  file_saver: ^0.1.1
 
   syncfusion_flutter_charts: ^20.1.61
   fl_chart: ^0.55.0
