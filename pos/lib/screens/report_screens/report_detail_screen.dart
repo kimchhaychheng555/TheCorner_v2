@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/report_controllers/report_detail_controller.dart';
+import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
@@ -26,7 +27,6 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
         isLoading: _controller.isLoading.value,
         child: Center(
           child: Container(
-            color: Colors.grey,
             constraints: const BoxConstraints(maxWidth: 900, minWidth: 900),
             width: 1000,
             height: 800,
@@ -45,7 +45,9 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                         const Spacer(),
                         TextWidget(
                           text: "invoice".tr.toUpperCase(),
-                          fontSize: 20,
+                          fontSize: 30,
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
                         )
                       ],
                     ),
@@ -64,332 +66,81 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TextWidget(
-                              text: "${"invoice".tr}# ",
+                              text:
+                                  "${"invoice".tr}# ${_controller.saleModel.value?.invoice_number}",
                               fontSize: 15,
+                              color: Colors.black,
                             ),
                             TextWidget(
-                              text: "${"date".tr} ",
+                              text:
+                                  "${"date".tr}: ${_controller.saleModel.value?.sale_date}",
                               fontSize: 15,
+                              color: Colors.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     const SizedBox(height: 20),
-                    //     Column(
-                    //       mainAxisSize: MainAxisSize.min,
-                    //       children: <Widget>[
-                    //         const SizedBox(height: 30),
-                    //         Row(
-                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             Center(
-                    //               child: Container(
-                    //                 padding: const EdgeInsets.symmetric(
-                    //                   vertical: 15,
-                    //                   horizontal: 50,
-                    //                 ),
-                    //                 decoration: BoxDecoration(
-                    //                   color: HexColor("#FC9403"),
-                    //                   borderRadius: BorderRadius.circular(5),
-                    //                 ),
-                    //                 child: TextWidget(
-                    //                   text: "unpaid".tr,
-                    //                   color: Colors.white,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             TextWidget(
-                    //               text: "Logo".tr,
-                    //               fontSize: 25,
-                    //               fontWeight: FontWeight.w500,
-                    //               color: HexColor("#005FF2"),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //         const SizedBox(height: 50),
-                    //         Row(
-                    //           mainAxisAlignment: MainAxisAlignment.end,
-                    //           children: [
-                    //             Column(
-                    //               crossAxisAlignment: CrossAxisAlignment.end,
-                    //               children: [
-                    //                 Row(
-                    //                   children: [
-                    //                     Row(
-                    //                       children: [
-                    //                         TextWidget(
-                    //                           text: "invoice_#".tr,
-                    //                           fontSize: 20,
-                    //                           fontWeight: FontWeight.w500,
-                    //                           color: HexColor("#333440"),
-                    //                         ),
-                    //                       ],
-                    //                     ),
-                    //                     const SizedBox(width: 20),
-                    //                     Row(
-                    //                       crossAxisAlignment:
-                    //                           CrossAxisAlignment.end,
-                    //                       children: [
-                    //                         TextWidget(
-                    //                           text: "124578".tr,
-                    //                           fontSize: 20,
-                    //                           fontWeight: FontWeight.w500,
-                    //                           color: HexColor("#333440"),
-                    //                         ),
-                    //                       ],
-                    //                     )
-                    //                   ],
-                    //                 ),
-                    //                 const SizedBox(height: 20),
-                    //                 Row(
-                    //                   children: [
-                    //                     TextWidget(
-                    //                       text: "invoice_date".tr,
-                    //                       fontSize: 20,
-                    //                       fontWeight: FontWeight.w500,
-                    //                       color: HexColor("#333440"),
-                    //                     ),
-                    //                     const SizedBox(width: 20),
-                    //                     TextWidget(
-                    //                       text: "july-09-2022".tr,
-                    //                       fontSize: 20,
-                    //                       fontWeight: FontWeight.w500,
-                    //                       color: HexColor("#333440"),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ],
-                    //             )
-                    //           ],
-                    //         ),
-                    //         const SizedBox(height: 50),
-                    //         Column(
-                    //           crossAxisAlignment: CrossAxisAlignment.center,
-                    //           children: [
-                    //             TextWidget(
-                    //               text: "invoice_bold".tr,
-                    //               fontSize: 30,
-                    //               fontWeight: FontWeight.bold,
-                    //               color: HexColor("#333440"),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //         const SizedBox(height: 50),
-                    //         Container(
-                    //           height: 50,
-                    //           decoration: BoxDecoration(
-                    //             color: Colors.grey.withOpacity(0.10),
-                    //           ),
-                    //           child: Row(
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             children: [
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "description".tr,
-                    //                   fontSize: 18,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "qty".tr,
-                    //                   fontSize: 18,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "sub_table".tr,
-                    //                   fontSize: 18,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "discount".tr,
-                    //                   fontSize: 18,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "grand_total".tr,
-                    //                   fontSize: 18,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         const SizedBox(height: 30),
-                    //         const ReportDetailWidget(
-                    //           description: "ឆាក្ដៅសាច់គោ",
-                    //           qty: 2,
-                    //           subTable: "1.20\$",
-                    //           discount: "0\$",
-                    //           grandTotal: "10.00\$",
-                    //         ),
-                    //         const SizedBox(height: 20),
-                    //         const ReportDetailWidget(
-                    //           description: "ឆាក្ដៅសាច់គោ",
-                    //           qty: 2,
-                    //           subTable: "1.20\$",
-                    //           discount: "0\$",
-                    //           grandTotal: "10.00\$",
-                    //         ),
-                    //         const SizedBox(height: 20),
-                    //         const ReportDetailWidget(
-                    //           description: "ឆាក្ដៅសាច់គោ",
-                    //           qty: 2,
-                    //           subTable: "1.20\$",
-                    //           discount: "0\$",
-                    //           grandTotal: "10.00\$",
-                    //         ),
-                    //         const SizedBox(height: 20),
-                    //         const ReportDetailWidget(
-                    //           description: "ឆាក្ដៅសាច់គោ",
-                    //           qty: 2,
-                    //           subTable: "1.20\$",
-                    //           discount: "0\$",
-                    //           grandTotal: "10.00\$",
-                    //         ),
-                    //         const SizedBox(height: 20),
-                    //         const ReportDetailWidget(
-                    //           description: "ឆាក្ដៅសាច់គោ",
-                    //           qty: 2,
-                    //           subTable: "1.20\$",
-                    //           discount: "0\$",
-                    //           grandTotal: "10.00\$",
-                    //         ),
-                    //         const SizedBox(height: 30),
-                    //         Container(
-                    //           width: double.infinity,
-                    //           height: 2,
-                    //           color: HexColor("#9E9E9E"),
-                    //         ),
-                    //         const SizedBox(height: 30),
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(right: 15),
-                    //           child: Row(
-                    //             mainAxisAlignment: MainAxisAlignment.end,
-                    //             children: [
-                    //               Expanded(
-                    //                 flex: 5,
-                    //                 child: TextWidget(
-                    //                   text: "",
-                    //                   color: HexColor("#333440"),
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "total".tr,
-                    //                   color: HexColor("#333440"),
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "\$ 150.00",
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.end,
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         const SizedBox(height: 10),
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(right: 15),
-                    //           child: Row(
-                    //             mainAxisAlignment: MainAxisAlignment.end,
-                    //             children: [
-                    //               Expanded(
-                    //                 flex: 5,
-                    //                 child: TextWidget(
-                    //                   text: "",
-                    //                   color: HexColor("#333440"),
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "discount".tr,
-                    //                   color: HexColor("#333440"),
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "\$ 10.00".tr,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.end,
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         const SizedBox(height: 20),
-                    //         Container(
-                    //           width: double.infinity,
-                    //           height: 3,
-                    //           color: HexColor("#9E9E9E"),
-                    //         ),
-                    //         const SizedBox(height: 20),
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(right: 15),
-                    //           child: Row(
-                    //             mainAxisAlignment: MainAxisAlignment.end,
-                    //             children: [
-                    //               Expanded(
-                    //                 flex: 3,
-                    //                 child: TextWidget(
-                    //                   text: "",
-                    //                   color: HexColor("#333440"),
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "total_amount_due".tr,
-                    //                   fontSize: 20,
-                    //                   color: HexColor("#333440"),
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //               Expanded(
-                    //                 child: TextWidget(
-                    //                   text: "\$ 140.00".tr,
-                    //                   fontSize: 20,
-                    //                   color: HexColor("#333440"),
-                    //                   textAlign: TextAlign.end,
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         const SizedBox(height: 50),
-                    //         const SizedBox(height: 50),
-                    //       ],
-                    //     )
-                    //   ],
-                    // )
+                    const SizedBox(height: 20),
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          color: Colors.black54,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: TextWidget(
+                                  textAlign: TextAlign.center,
+                                  text: "Nº".tr,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: TextWidget(
+                                  textAlign: TextAlign.center,
+                                  text: "description".tr,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: TextWidget(
+                                  textAlign: TextAlign.center,
+                                  text: "qty".tr,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: TextWidget(
+                                  textAlign: TextAlign.center,
+                                  text: "price".tr,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: TextWidget(
+                                  textAlign: TextAlign.center,
+                                  text: "dis".tr,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: TextWidget(
+                                  textAlign: TextAlign.center,
+                                  text: "amount".tr,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        for (var i = 0;
+                            i < (_controller.sale_products).length;
+                            i++)
+                          _item(index: i, sp: _controller.sale_products[i]),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -397,19 +148,64 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
           ),
         ),
       ),
-      // body: Container(
-      //   constraints: const BoxConstraints(maxWidth: 1000, minWidth: 650),
-      //   color: Colors.blueAccent,
-      //   child: Column(
-      //     children: [
-      //       Container(
-      //         width: 600,
-      //         height: 400,
-      //         color: Colors.red,
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
+}
+
+Widget _item({SaleProductModel? sp, int? index}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    child: Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: "$index",
+            color: Colors.black,
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: "description".tr,
+            color: Colors.black,
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: "qty".tr,
+            color: Colors.black,
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: "price".tr,
+            color: Colors.black,
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: "dis".tr,
+            color: Colors.black,
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: TextWidget(
+            textAlign: TextAlign.center,
+            text: "amount".tr,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    ),
+  );
 }
