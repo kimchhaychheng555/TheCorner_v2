@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:io';
 // import 'dart:html';
 import 'package:darq/darq.dart';
-import 'package:file_saver/file_saver.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pos/models/others_models/inventory_summary_report_model.dart';
 import 'package:pos/models/stock_inventory_models/stock_inventory_model.dart';
 import 'package:pos/models/stock_transaction_models/stock_transaction_model.dart';
@@ -169,13 +168,25 @@ class InventorySummaryReportController extends GetxController {
     final List<int> sheets = workbook.saveAsStream();
     workbook.dispose();
 
-    Uint8List data = Uint8List.fromList(sheets);
-    MimeType type = MimeType.MICROSOFTEXCEL;
-    var name =
-        "inventory-summary-report-${DateFormat("yyyy-MM-dd").format(DateTime.now())}";
-    String path =
-        await FileSaver.instance.saveFile(name, data, "xlsx", mimeType: type);
-    print(path);
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save file',
+      lockParentWindow: true,
+      type: FileType.custom,
+      fileName: 'output-file.xlsx',
+      allowedExtensions: ['xlsx'],
+    );
+
+    try {
+      File returnedFile = File('$outputFile');
+      await returnedFile.writeAsBytes(sheets);
+    } catch (e) {}
+    // Uint8List data = Uint8List.fromList(sheets);
+    // MimeType type = MimeType.MICROSOFTEXCEL;
+    // var name =
+    //     "inventory-summary-report-${DateFormat("yyyy-MM-dd").format(DateTime.now())}";
+    // String path =
+    //     await FileSaver.instance.saveFile(name, data, "xlsx", mimeType: type);
+    // print(path);
   }
 
   void onFilterPressed() {}
