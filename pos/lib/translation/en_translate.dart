@@ -182,8 +182,7 @@ Map<String, String> get enTranslate {
     "check_your_connection": "Check Your Connection",
     "stock": "Stock",
     "other": "Other",
-    "dis": "Discount",
+    "dis": "Dis",
     "remove_discount": "Remove Discount",
-    "edit": "Edit",
   };
 }

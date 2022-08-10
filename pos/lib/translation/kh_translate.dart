@@ -173,7 +173,6 @@ Map<String, String> get khTranslate {
     "add_user": "បញ្ចូលអ្នកប្រើប្រាស់",
     "created_by": "បង្កើតឡើងដោយ",
     "connect": "តភ្ជាប់",
-    "invoice_bold": "វិក្កយបត្រ",
     "total_amount_due": "ចំនួនសរុបដែលត្រូវបង់",
     "total": "សរុប",
     "no_internet_connection_found": "រកមិនឃើញការតភ្ជាប់អ៊ីនធឺណិត",
@@ -182,6 +181,5 @@ Map<String, String> get khTranslate {
     "other": "ដទៃ",
     "dis": "បញ្ចុះតម្លៃ",
     "remove_discount": "លុបការបញ្ចុះតម្លៃ",
-    "edit": "កែប្រែ",
   };
 }
