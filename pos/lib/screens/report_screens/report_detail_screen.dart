@@ -24,6 +24,19 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
             onPressed: () => Get.back(),
             icon: const Icon(Icons.keyboard_backspace),
           ),
+          actions: [
+            if (_controller.saleModel.value?.is_paid == false)
+              IconButton(
+                splashRadius: 30,
+                onPressed: _controller.onEditSale,
+                icon: const Icon(Icons.edit),
+              ),
+            IconButton(
+              splashRadius: 30,
+              onPressed: _controller.onPrintInvoicePressed,
+              icon: const Icon(Icons.print),
+            ),
+          ],
         ),
         body: LoadingOverlayWidget(
           isLoading: _controller.isLoading.value,
@@ -58,8 +71,17 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                           Column(
                             children: [
                               StatusWidget(
-                                backgroundColor: warningColor,
-                                child: TextWidget(text: "balance".tr),
+                                backgroundColor:
+                                    (_controller.saleModel.value?.is_paid ??
+                                            false)
+                                        ? successColor
+                                        : warningColor,
+                                child: TextWidget(
+                                  text: (_controller.saleModel.value?.is_paid ??
+                                          false)
+                                      ? "paid".tr
+                                      : "unpaid".tr,
+                                ),
                               ),
                             ],
                           ),
@@ -145,47 +167,72 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                       ),
                       const Divider(),
                       if ((_controller.saleModel.value?.discount ?? 0) > 0)
-                        summaryData(
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: summaryData(
+                            TextWidget(
+                              textAlign: TextAlign.right,
+                              text: "discount".tr,
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            TextWidget(
+                              textAlign: TextAlign.left,
+                              text: discountSummary(
+                                _controller.saleModel.value?.discount ?? 0,
+                                _controller.saleModel.value?.discount_type ??
+                                    "",
+                              ),
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: summaryData(
                           TextWidget(
                             textAlign: TextAlign.right,
-                            text: "discount".tr,
+                            text: "sub_total".tr,
                             color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
                           TextWidget(
-                            textAlign: TextAlign.left,
-                            text: discountSummary(
-                              _controller.saleModel.value?.discount ?? 0,
-                              _controller.saleModel.value?.discount_type ?? "",
+                            textAlign: TextAlign.center,
+                            text: AppService.currencyFormat(
+                              _controller.saleModel.value?.sub_total,
                             ),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
-                      summaryData(
-                        TextWidget(
-                          textAlign: TextAlign.right,
-                          text: "sub_total".tr,
-                          color: Colors.black,
-                        ),
-                        TextWidget(
-                          textAlign: TextAlign.left,
-                          text: AppService.currencyFormat(
-                            _controller.saleModel.value?.sub_total,
-                          ),
-                          color: Colors.black,
-                        ),
                       ),
-                      summaryData(
-                        TextWidget(
-                          textAlign: TextAlign.right,
-                          text: "grand_total".tr,
-                          color: Colors.black,
-                        ),
-                        TextWidget(
-                          textAlign: TextAlign.left,
-                          text: AppService.currencyFormat(
-                            _controller.saleModel.value?.grand_total,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: summaryData(
+                          TextWidget(
+                            textAlign: TextAlign.right,
+                            text: "grand_total".tr,
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                          color: Colors.black,
+                          TextWidget(
+                            textAlign: TextAlign.center,
+                            text: AppService.currencyFormat(
+                              _controller.saleModel.value?.grand_total,
+                            ),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],
@@ -208,11 +255,11 @@ Widget summaryData(Widget label, Widget value) {
         child: label,
       ),
       Expanded(
-        flex: 1,
+        flex: 2,
         child: Container(),
       ),
       Expanded(
-        flex: 3,
+        flex: 2,
         child: value,
       ),
     ],

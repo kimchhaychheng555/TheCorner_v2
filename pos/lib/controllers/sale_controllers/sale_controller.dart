@@ -87,18 +87,30 @@ class SaleController extends GetxController {
   }
 
   Future<void> _onInitController() async {
-    table(TableModel.fromJson(jsonDecode(Get.arguments["table"])));
-    if (table.value?.isActive == true) {
-      var _query =
-          "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products";
-      var _resp = await APIService.oDataGet(_query);
-      if (_resp.isSuccess) {
-        List<dynamic> _data = jsonDecode(_resp.content);
-        var _dataSale = _data.map((s) => SaleModel.fromJson(s)).toList();
-        if (_dataSale.isNotEmpty) {
-          sale(_dataSale.first);
-          sale.refresh();
+    if (Get.arguments["table"] != null) {
+      table(TableModel.fromJson(jsonDecode(Get.arguments["table"])));
+      if (table.value?.isActive == true) {
+        var _query =
+            "sale?\$filter=is_deleted eq false and is_paid eq false and table_id eq ${table.value?.id} &\$expand=sale_products";
+        var _resp = await APIService.oDataGet(_query);
+        if (_resp.isSuccess) {
+          List<dynamic> _data = jsonDecode(_resp.content);
+          var _dataSale = _data.map((s) => SaleModel.fromJson(s)).toList();
+          if (_dataSale.isNotEmpty) {
+            sale(_dataSale.first);
+            sale.refresh();
+          }
         }
+      }
+    } else if (Get.arguments["sale"] != null) {
+      var _tempSaleId = Get.arguments["sale"];
+      var _query = "sale($_tempSaleId)?\$expand=sale_products";
+      var _resp = await APIService.get(_query);
+      if (_resp.isSuccess) {
+        dynamic _data = jsonDecode(_resp.content);
+        var _dataSale = SaleModel.fromJson(_data);
+        sale(_dataSale);
+        sale.refresh();
       }
     }
   }
