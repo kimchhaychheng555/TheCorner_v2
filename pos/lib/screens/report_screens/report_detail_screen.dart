@@ -25,12 +25,6 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
             icon: const Icon(Icons.keyboard_backspace),
           ),
           actions: [
-            if (_controller.saleModel.value?.is_paid == false)
-              IconButton(
-                splashRadius: 30,
-                onPressed: _controller.onEditSale,
-                icon: const Icon(Icons.edit),
-              ),
             IconButton(
               splashRadius: 30,
               onPressed: _controller.onPrintInvoicePressed,

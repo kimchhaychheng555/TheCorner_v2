@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:pos/models/print_models/print_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
-import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
@@ -41,15 +40,6 @@ class ReportDetailController extends GetxController {
     }
 
     isLoading(false);
-  }
-
-  void onEditSale() {
-    Get.toNamed(
-      SaleScreen.routeName,
-      arguments: {
-        "sale": saleModel.value?.id,
-      },
-    );
   }
 
   Future<void> _onLoad() async {
