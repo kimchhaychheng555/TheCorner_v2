@@ -58,17 +58,12 @@ namespace API.Controllers
                         // Sold from Sale
                         si.quantity_stock = si.quantity_stock - st.quantity;
                     }
-                    else if (st.type == "purchase_order")
-                    {
-                        //  Purchase Order
-                        si.quantity_stock = si.quantity_stock + st.quantity;
-                    }
                     else if (st.type == "adjustment")
                     {
                         // Adjustment or Take from stock
                         si.quantity_stock = si.quantity_stock - st.quantity;
                     }
-                    else if (st.type == "add")
+                    else if (st.type == "add" || st.type == "purchase_order")
                     {
                         // Add Stock from edit while sold
 

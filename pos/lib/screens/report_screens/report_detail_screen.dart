@@ -173,7 +173,7 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                               fontWeight: FontWeight.bold,
                             ),
                             TextWidget(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: discountSummary(
                                 _controller.saleModel.value?.discount ?? 0,
                                 _controller.saleModel.value?.discount_type ??

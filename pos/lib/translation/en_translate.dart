@@ -184,5 +184,8 @@ Map<String, String> get enTranslate {
     "other": "Other",
     "dis": "Dis",
     "remove_discount": "Remove Discount",
+    "current_sale_date": "Current Sale Date",
+    "product_group": "Product Group",
+    "add_product_group": "Add Product Group",
   };
 }

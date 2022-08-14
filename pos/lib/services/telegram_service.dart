@@ -7,6 +7,7 @@ class TelegramService {
   static String channel = "-1001104294906";
 
   static Future<bool> sendMessage(String message) async {
+    return false;
     var res = await http.post(
       Uri.parse('https://api.telegram.org/bot$chatBot/sendMessage'),
       headers: <String, String>{

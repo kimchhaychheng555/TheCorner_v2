@@ -10,7 +10,7 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       id: json['id'] as String?,
       name: json['name'] as String?,
       price: (json['price'] as num?)?.toDouble(),
-      min_quantity: (json['min_quantity'] as num?)?.toDouble(),
+      min_quantity: (json['min_quantity'] as num?)?.toDouble() ?? 0,
       cost: (json['cost'] as num?)?.toDouble(),
       image: json['image'] as String?,
       stockable: json['stockable'] as bool? ?? false,

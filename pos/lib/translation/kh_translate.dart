@@ -181,5 +181,8 @@ Map<String, String> get khTranslate {
     "other": "ដទៃ",
     "dis": "បញ្ចុះតម្លៃ",
     "remove_discount": "លុបការបញ្ចុះតម្លៃ",
+    "current_sale_date": "កាលបរិច្ឆេទការលក់",
+    "product_group": "ក្រុមទំនិញ",
+    "add_product_group": "បង្កើតក្រុមទំនិញ",
   };
 }

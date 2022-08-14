@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/models/category_models/category_model.dart';
+import 'package:pos/models/excel_export_models/excel_export_model.dart';
 import 'package:pos/models/payment_method_models/payment_method_model.dart';
 import 'package:pos/models/permission_models/permission_model.dart';
 import 'package:pos/models/product_models/product_model.dart';
@@ -13,7 +16,9 @@ import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/models/user_models/login_model.dart';
 import 'package:pos/models/user_models/user_model.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/encrypter_service.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:uuid/uuid.dart';
 
 class AppService {
@@ -218,5 +223,57 @@ class AppService {
       );
     }
     return MaterialColor(color.value, swatch);
+  }
+
+  //
+  static Future<void> onExportProcess({
+    required String fileName,
+    required List<ExcelExportModel> excelExportList,
+  }) async {
+    final Workbook workbook = Workbook();
+    final Worksheet sheet = workbook.worksheets[0];
+
+    // Loop Header
+    for (var i = 0; i < excelExportList.length; i++) {
+      var header = excelExportList[i].header;
+      sheet.getRangeByName('${colNumToLetter(i + 1)}1').setText(header);
+      sheet.getRangeByName('${colNumToLetter(i + 1)}1').cellStyle.bold = true;
+
+      // Loop Content
+      List<String> contentList = (excelExportList[i].contentList) ?? [];
+      for (var j = 0; j < contentList.length; j++) {
+        sheet
+            .getRangeByName('${colNumToLetter(i + 1)}${j + 2}')
+            .setText(contentList[j]);
+      }
+    }
+
+    final List<int> sheets = workbook.saveAsStream();
+    workbook.dispose();
+
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save file',
+      lockParentWindow: true,
+      type: FileType.custom,
+      fileName: '$fileName.xlsx',
+      allowedExtensions: ['xlsx'],
+    );
+
+    try {
+      File returnedFile = File('$outputFile');
+      await returnedFile.writeAsBytes(sheets);
+    } catch (e) {
+      AppAlert.errorAlert(title: e.toString());
+    }
+  }
+
+  static String colNumToLetter(dynamic columnNu) {
+    var temp, letter = '';
+    while (columnNu > 0) {
+      temp = (columnNu - 1) % 26;
+      letter = String.fromCharCode(temp + 65) + letter;
+      columnNu = (columnNu - temp - 1) / 26;
+    }
+    return letter;
   }
 }

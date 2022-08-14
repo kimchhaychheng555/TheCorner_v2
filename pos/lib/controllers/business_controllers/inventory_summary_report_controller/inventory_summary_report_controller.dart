@@ -1,15 +1,14 @@
 import 'dart:convert';
-import 'dart:io';
 // import 'dart:html';
 import 'package:darq/darq.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos/models/excel_export_models/excel_export_model.dart';
 import 'package:pos/models/others_models/inventory_summary_report_model.dart';
 import 'package:pos/models/stock_inventory_models/stock_inventory_model.dart';
 import 'package:pos/models/stock_transaction_models/stock_transaction_model.dart';
 import 'package:pos/services/api_service.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart';
+import 'package:pos/services/app_service.dart';
 
 class InventorySummaryReportController extends GetxController {
   var isLoading = false.obs;
@@ -144,49 +143,19 @@ class InventorySummaryReportController extends GetxController {
   }
 
   Future<void> onExportPressed() async {
-    final Workbook workbook = Workbook();
-    final Worksheet sheet = workbook.worksheets[0];
-    sheet.getRangeByName('A1').setText('Name');
-    sheet.getRangeByName('A1').cellStyle.bold = true;
-    sheet.getRangeByName('A2').setText('Amy');
-    sheet.getRangeByName('A3').setText('Jack');
-    sheet.getRangeByName('A4').setText('Tiya');
-    sheet.getRangeByName('A5').setText('Tiya');
-    sheet.getRangeByName('A6').setText('Tiya');
-    sheet.getRangeByName('B1').setText('Age');
-    sheet.getRangeByName('B1').cellStyle.bold = true;
-    sheet.getRangeByName('B2').setNumber(12);
-    sheet.getRangeByName('B3').setNumber(20);
-    sheet.getRangeByName('B4').setNumber(21);
-    sheet.getRangeByName('B5').setNumber(21);
-    sheet.getRangeByName('C1').setText('Year');
-    sheet.getRangeByName('C1').cellStyle.bold = true;
-    sheet.getRangeByName('C2').setNumber(2022);
-    sheet.getRangeByName('C3').setNumber(2022);
-    sheet.getRangeByName('C4').setNumber(2022);
-    sheet.getRangeByName('C5').setNumber(2022);
-    final List<int> sheets = workbook.saveAsStream();
-    workbook.dispose();
+    List<ExcelExportModel> export = [
+      ExcelExportModel(
+        header: "Name",
+        contentList: ["Name1", "Name2"],
+      ),
+      ExcelExportModel(
+        header: "Age",
+        contentList: ["20", "14"],
+      ),
+    ];
 
-    String? outputFile = await FilePicker.platform.saveFile(
-      dialogTitle: 'Save file',
-      lockParentWindow: true,
-      type: FileType.custom,
-      fileName: 'output-file.xlsx',
-      allowedExtensions: ['xlsx'],
-    );
-
-    try {
-      File returnedFile = File('$outputFile');
-      await returnedFile.writeAsBytes(sheets);
-    } catch (e) {}
-    // Uint8List data = Uint8List.fromList(sheets);
-    // MimeType type = MimeType.MICROSOFTEXCEL;
-    // var name =
-    //     "inventory-summary-report-${DateFormat("yyyy-MM-dd").format(DateTime.now())}";
-    // String path =
-    //     await FileSaver.instance.saveFile(name, data, "xlsx", mimeType: type);
-    // print(path);
+    await AppService.onExportProcess(
+        fileName: "inventory-summary-report", excelExportList: export);
   }
 
   void onFilterPressed() {}

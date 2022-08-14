@@ -23,10 +23,12 @@ import 'package:uuid/uuid.dart';
 
 class SmartHomeController extends GetxController {
   var isStartSale = false.obs;
+  var stopStart = false.obs;
 
   @override
   void onInit() async {
     await _onInitStartSaleChecking();
+    stopStart(true);
     super.onInit();
   }
 
@@ -181,7 +183,7 @@ class SmartHomeController extends GetxController {
   }
 
   Stream<void> stream() async* {
-    while (true) {
+    while (stopStart.value == true) {
       await Future<void>.delayed(const Duration(milliseconds: 100));
       _onInitStartSaleChecking();
     }
