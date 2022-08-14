@@ -242,31 +242,20 @@ class SaleController extends GetxController {
         key: "invoice",
       );
 
-      if (sale.value?.id == Uuid.NAMESPACE_NIL) {
-        await _onHoldProcess();
-        printData = PrintModel(
-          created_by: AppService.currentUser?.fullname,
-          id: Uuid.NAMESPACE_NIL,
-          sale_id: sale.value?.id,
-          key: "invoice",
-        );
-        var _resp = await APIService.post("print/save", jsonEncode(printData));
-        if (_resp.isSuccess) {
-          AppAlert.successAlert(title: "print_success".tr);
-        } else {
-          AppAlert.errorAlert(title: "print_error".tr);
-        }
-        return;
-      }
+      await _onHoldProcess();
+      printData = PrintModel(
+        created_by: AppService.currentUser?.fullname,
+        id: Uuid.NAMESPACE_NIL,
+        sale_id: sale.value?.id,
+        key: "invoice",
+      );
       var _resp = await APIService.post("print/save", jsonEncode(printData));
       if (_resp.isSuccess) {
-        Get.back();
         AppAlert.successAlert(title: "print_success".tr);
       } else {
         AppAlert.errorAlert(title: "print_error".tr);
       }
-      await Future.delayed(const Duration(seconds: 1));
-      await _onHoldProcess();
+      return;
     } else {
       AppAlert.errorAlert(title: "this_sale_have_no_product".tr);
     }
