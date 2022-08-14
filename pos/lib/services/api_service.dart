@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:pos/models/api_models/response_model.dart';
+import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:path/path.dart' as p;
 
@@ -94,6 +95,27 @@ class APIService {
     } on SocketException {
       POSTResponse _resp = POSTResponse(600);
       return _resp;
+    }
+  }
+
+  static Future<String?> storeProcedure({
+    required String procedureName,
+    List<String>? parameterName,
+    List<dynamic>? parameterValue,
+  }) async {
+    Map<String, dynamic> _body = {
+      "procedureName": procedureName,
+      "parameterName": parameterName ?? [],
+      "parameterValue": parameterValue ?? [],
+    };
+
+    var _json = jsonEncode(_body);
+    var _resp = await post("StoreProcedure", _json);
+    if (_resp.isSuccess) {
+      return _resp.content;
+    } else {
+      AppAlert.errorAlert(title: "error");
+      return null;
     }
   }
 

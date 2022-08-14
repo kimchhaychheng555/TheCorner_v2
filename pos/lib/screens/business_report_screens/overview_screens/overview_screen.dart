@@ -6,6 +6,7 @@ import 'package:pos/screens/business_report_screens/overview_screens/widgets/ove
 import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_screen_widget.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/widgets/overview_table_widets.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -21,6 +22,30 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
       () => Scaffold(
         appBar: AppBar(
           title: Text("business_overview".tr),
+          actions: [
+            Center(
+              child: ButtonWidget(
+                border: Border.all(
+                  color: Colors.black,
+                ),
+                onPressed: () => _controller.onFilterDatePressed(),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today_rounded,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(width: 10),
+                    TextWidget(
+                      text: _controller.getDateFilterText,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+          ],
         ),
         body: LoadingOverlayWidget(
           isLoading: _controller.isLoading.value,
