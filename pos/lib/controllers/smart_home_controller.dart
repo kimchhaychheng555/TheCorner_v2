@@ -181,11 +181,4 @@ class SmartHomeController extends GetxController {
     AppService.storage.remove("account_store");
     Get.offAllNamed(LoginScreen.routeName);
   }
-
-  Stream<void> stream() async* {
-    while (stopStart.value == true) {
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      _onInitStartSaleChecking();
-    }
-  }
 }

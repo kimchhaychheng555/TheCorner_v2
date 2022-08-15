@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:pos/models/api_models/response_model.dart';
-import 'package:pos/services/app_alert.dart';
 import 'package:pos/services/app_service.dart';
 import 'package:path/path.dart' as p;
 
@@ -98,7 +97,7 @@ class APIService {
     }
   }
 
-  static Future<String?> storeProcedure({
+  static Future<POSTResponse> storeProcedure({
     required String procedureName,
     List<String>? parameterName,
     List<dynamic>? parameterValue,
@@ -111,12 +110,8 @@ class APIService {
 
     var _json = jsonEncode(_body);
     var _resp = await post("StoreProcedure", _json);
-    if (_resp.isSuccess) {
-      return _resp.content;
-    } else {
-      AppAlert.errorAlert(title: "error");
-      return null;
-    }
+
+    return _resp;
   }
 
   static Future<POSTResponse> uploadFile({

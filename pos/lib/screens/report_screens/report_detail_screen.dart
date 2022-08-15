@@ -156,7 +156,8 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                           for (var i = 0;
                               i < (_controller.saleProducts).length;
                               i++)
-                            _item(index: i, sp: _controller.saleProducts[i]),
+                            _item(
+                                index: i + 1, sp: _controller.saleProducts[i]),
                         ],
                       ),
                       const Divider(),

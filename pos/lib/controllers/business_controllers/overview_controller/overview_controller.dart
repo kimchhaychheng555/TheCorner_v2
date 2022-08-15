@@ -1,114 +1,146 @@
 import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/services/api_service.dart';
+import 'package:pos/services/app_alert.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:pos/widgets/date_range_picker_widget.dart' as date_picker;
 
 class OverviewController extends GetxController {
   var isLoading = false.obs;
+  var showPieChartPercent = true.obs;
   var firstDate = (DateTime.now().subtract(const Duration(days: 7))).obs;
   var lastDate = (DateTime.now()).obs;
+  RxList<SaleModel> receiptList = (<SaleModel>[]).obs;
 
   //
   var totalSale = 0.obs;
   var totalOrder = 0.obs;
   var totalRevenue = (0.0).obs;
-  var totalProfit = (0.0).obs;
+  var totalExpense = (0.0).obs;
 
   // Chart
-  RxList<ChartData> data = (<ChartData>[]).obs;
+  RxList<ChartData> dataBarChart = (<ChartData>[]).obs;
+  var maxBarChartValue = (0.0).obs;
+  var intervalBarChart = (0.0).obs;
   var tooltip = TooltipBehavior();
-  var tooltipBehavior = TooltipBehavior();
+  var tooltipBehavior = TooltipBehavior(
+      textStyle: const TextStyle(fontFamily: "Roboto"), enable: true);
 
   // get dataSource => null;
-  RxList<PiaData> dataSource = (<PiaData>[]).obs;
+  RxList<PieData> dataPieChart = (<PieData>[]).obs;
+  RxList<SummaryData> dataSummaryList = (<SummaryData>[]).obs;
 
   @override
   void onInit() async {
     onLoad();
+
     super.onInit();
   }
 
   void onLoad() async {
     isLoading(true);
-
-    print(DateFormat("yyyy-MM-dd").format(firstDate.value));
-    print(DateFormat("yyyy-MM-dd").format(lastDate.value));
-
-    await _onLoadKPI();
-    await _onLoadChartData();
-    await _onLoadTotalInvoice();
+    await _onLoadDataOverview();
+    await _onReceiptLoad();
     isLoading(false);
   }
 
-  Future<void> _onLoadKPI() async {
-    await _onLoadTotalSale();
-    await _onLoadTotalOrder();
-    await _onLoadRevenue();
-  }
+  Future<void> _onReceiptLoad() async {
+    var _pagingation = "\$top=10";
+    var _filter =
+        "&\$filter=is_deleted eq false and sale_date ge '${DateFormat("yyyy-MM-dd").format(firstDate.value)}' AND sale_date le '${DateFormat("yyyy-MM-dd").format(lastDate.value)}'";
+    var _query =
+        "sale?$_pagingation&\$expand=table$_filter&\$orderby=created_date desc";
 
-  Future<void> _onLoadTotalSale() async {
-    var thisMonthDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
-    var thisMonthStr = DateFormat("yyyy-MM-dd").format(thisMonthDate);
-    var _resp = await APIService.oDataGet(
-        "sale?\$count=true&\$filter=sale_date ge '$thisMonthStr' and is_paid eq true");
+    var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {
-      totalSale(_resp.count);
+      List<dynamic> _dyn = [];
+      _dyn = jsonDecode(_resp.content);
+      var _dataList = _dyn.map((e) => SaleModel.fromJson(e)).toList();
+      receiptList.assignAll(_dataList);
     }
   }
 
-  Future<void> _onLoadTotalOrder() async {
-    var thisMonthDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
-    var thisMonthStr = DateFormat("yyyy-MM-dd").format(thisMonthDate);
-    var _resp = await APIService.oDataGet(
-        "sale?\$count=true&\$filter=sale_date ge '$thisMonthStr' and is_paid eq false");
-    if (_resp.isSuccess) {
-      totalOrder(_resp.count);
+  List<Map<String, dynamic>> get dataSource {
+    List<Map<String, dynamic>> temp = [];
+    for (var report in receiptList) {
+      Map<String, dynamic> p = jsonDecode(jsonEncode(report));
+      temp.add(p);
     }
+    return temp;
   }
 
-  Future<void> _onLoadRevenue() async {
-    var thisMonthDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
-    var thisMonthStr = DateFormat("yyyy-MM-dd").format(thisMonthDate);
-    var _resp = await APIService.oDataGet(
-        "sale?\$count=true&\$filter=sale_date ge '$thisMonthStr' and is_paid eq true&\$select=grand_total");
+  Future<void> _onLoadDataOverview() async {
+    var _resp = await APIService.storeProcedure(
+      procedureName: "spGetOverviewData",
+      parameterName: ["@startDate", "@endDate"],
+      parameterValue: [
+        DateFormat("yyyy-MM-dd").format(firstDate.value),
+        DateFormat("yyyy-MM-dd").format(lastDate.value),
+      ],
+    );
+
     if (_resp.isSuccess) {
-      List<dynamic> _dyn = jsonDecode(_resp.content);
-      double _total = 0;
-      for (var a in _dyn) {
-        _total += a["grand_total"];
+      dynamic dyn = jsonDecode(_resp.content);
+
+      // ASSIGN KPI VALUE
+      var _kpiData = jsonDecode(dyn["KPI"]);
+      totalSale(_kpiData["total_sale"]);
+      totalOrder(_kpiData["total_order"]);
+      totalRevenue(_kpiData["total_revenue"]);
+      totalExpense(_kpiData["total_expense"]);
+
+      // ASSIGN CHART VALUE
+      List<dynamic> _saleOverview = jsonDecode(dyn["saleOverview"] ?? "[]");
+      List<ChartData> _chartData = [];
+      List<dynamic> _topSaleProduct = jsonDecode(dyn["topSaleProduct"] ?? "[]");
+      List<PieData> _pieChart = [];
+      _saleOverview.forEach(((e) => _chartData.add(
+            ChartData(e['label'], e['value']),
+          )));
+      _topSaleProduct.forEach(((e) => _pieChart.add(
+            PieData(e['name'], e['quantity']),
+          )));
+      _onLoadChartData(
+        barChart: _chartData,
+        pieChart: _pieChart,
+      );
+
+      // ASSIGN SUMMARY VALUE
+      List<dynamic> _summaryData = jsonDecode(dyn["summary"]);
+      List<SummaryData> _tempList = [];
+      for (var e in _summaryData) {
+        _tempList.add(SummaryData(e["name"], e["value"]));
       }
-      totalRevenue(_total);
+      dataSummaryList.assignAll(_tempList);
+
+      // ASSIGN MAX VALUE CHART
+      maxBarChartValue(dyn["maxBarChartValue"]);
+      intervalBarChart(maxBarChartValue.value / 10);
+    } else {
+      AppAlert.errorAlert(
+          title: "${"error".tr} storePrcedure: spGetOverviewData");
     }
   }
 
-  Future<void> _onLoadTotalInvoice() async {}
-
-  Future<void> _onLoadChartData() async {
-    data([
-      ChartData('Jan', 34),
-      ChartData('Feb', 43),
-      ChartData('Mar', 45),
-      ChartData('Apr', 50),
-      ChartData('May', 52),
-      ChartData('Jun', 45),
-      ChartData('Jul', 73),
-      ChartData('Aug', 35),
-      ChartData('Sep', 82),
-      ChartData('Oct', 86),
-      ChartData('Nov', 90),
-      ChartData('Dec', 98),
-    ]);
-    dataSource([
-      // Bind data source
-      PiaData('ងាវឆាអំពិលទំ', 35),
-      PiaData('ខាត់ណាទឹកភ្នែក', 28),
-      PiaData('Angkor Beer', 34),
-      PiaData('ឆាក្ដៅមាន់', 3),
-    ]);
-    tooltipBehavior = TooltipBehavior(enable: true);
-    tooltip = TooltipBehavior(enable: true);
+  Future<void> _onLoadChartData({
+    required List<ChartData> barChart,
+    required List<PieData> pieChart,
+  }) async {
+    dataBarChart(barChart);
+    dataPieChart(pieChart);
+    tooltipBehavior = TooltipBehavior(
+      enable: true,
+      textStyle: const TextStyle(fontFamily: "Roboto"),
+    );
+    tooltip = TooltipBehavior(
+      enable: true,
+      textStyle: const TextStyle(fontFamily: "Roboto"),
+    );
   }
 
   Future<void> onFilterDatePressed() async {
@@ -133,6 +165,16 @@ class OverviewController extends GetxController {
     }
     return "${DateFormat("dd/MMM/yyyy").format(firstDate.value)} - ${DateFormat("dd/MMM/yyyy").format(lastDate.value)}";
   }
+
+  Map<String, double> get getDataPieChart {
+    Map<String, double> _map = {};
+    dataPieChart.toList().forEach((customer) => _map[customer.x] = customer.y);
+    return _map;
+  }
+
+  List<SummaryData> get getSummaryData {
+    return dataSummaryList.toList();
+  }
 }
 
 class ChartData {
@@ -142,9 +184,16 @@ class ChartData {
   final double y;
 }
 
-class PiaData {
+class PieData {
   final String x;
   final double y;
 
-  PiaData(this.x, this.y);
+  PieData(this.x, this.y);
+}
+
+class SummaryData {
+  final String name;
+  final int value;
+
+  SummaryData(this.name, this.value);
 }
