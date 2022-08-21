@@ -70,17 +70,19 @@ namespace ReportPrinting
                 await Task.Delay(500);
                 await onFunctionProcessingAsync();
 
-                if (DateTime.Now.ToString("HH:mm") == timeShutDown)
-                {
-                    string path = "Log";
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    string timeStr = DateTime.Now.ToString("MM/dd/yyyy-HH:mm");
-                    string newPath = String.Format("Log\\{0}.txt", timeStr);
-                    File.WriteAllText(newPath, label1.Text);
-                    this.Close();
+                var dateTimeString = DateTime.Now.ToString("HH:mm");
+                if (dateTimeString == timeShutDown)
+                { 
+                        string path = "Log";
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        string timeStr = DateTime.Now.ToString("MM-dd-yyyy");
+                        string newPath = String.Format(@"Log\log-{0}.txt", timeStr);
+                        File.WriteAllText(newPath, label1.Text);
+                        this.Close(); 
+                    
                 }
 
             } 
