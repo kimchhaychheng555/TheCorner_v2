@@ -89,6 +89,10 @@ namespace API.Migrations
                     b.Property<double?>("amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("attachments")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
                     b.Property<string>("created_by")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
@@ -111,9 +115,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
-                    b.Property<double?>("exchange_rate")
-                        .HasColumnType("float");
-
                     b.Property<bool?>("is_deleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -124,6 +125,10 @@ namespace API.Migrations
                         .UseCollation("Khmer_100_BIN");
 
                     b.Property<string>("payment_method_name")
+                        .HasColumnType("nvarchar(max)")
+                        .UseCollation("Khmer_100_BIN");
+
+                    b.Property<string>("ref_number")
                         .HasColumnType("nvarchar(max)")
                         .UseCollation("Khmer_100_BIN");
 
@@ -590,7 +595,7 @@ namespace API.Migrations
                     b.Property<decimal?>("price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("product_group_id")
+                    b.Property<Guid?>("product_group_id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("product_id")
@@ -894,9 +899,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.ProductGroupModel", "product_group")
                         .WithMany()
-                        .HasForeignKey("product_group_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("product_group_id");
 
                     b.HasOne("API.Models.ProductModel", "product")
                         .WithMany()

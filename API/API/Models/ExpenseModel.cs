@@ -12,12 +12,13 @@ namespace API.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid id { get; set; }
-        public double? amount { get; set; }
-        public double? exchange_rate { get; set; }
-        public string description { get; set; }
-        public string note { get; set; }
-        public string payment_method_name { get; set; }
 
+        public Guid id { get; set; }
+        public string ref_number { get; set; }
+        public string description { get; set; }
+        public double? amount { get; set; }
+        public string payment_method_name { get; set; }
+        public string note { get; set; }
+        public string attachments { get; set; }
     }
 }
