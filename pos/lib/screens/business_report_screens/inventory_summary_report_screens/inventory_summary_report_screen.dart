@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/constants/constants.dart';
 import 'package:pos/controllers/business_controllers/inventory_summary_report_controller/inventory_summary_report_controller.dart';
+import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/widgets/inventory_filter_widget.dart';
 import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/widgets/inventory_summary_report_table_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
 import 'package:pos/widgets/icon_text_button_widget.dart';
@@ -16,14 +17,30 @@ class InventorySummaryReportScreen extends GetResponsiveView<dynamic> {
   @override
   Widget builder() {
     InventorySummaryReportController _controller = Get.find();
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Obx(
       () => Scaffold(
+        key: _key,
+        endDrawer: const InventoryFilterWidget(),
         appBar: AppBar(
           title: Text("inventory_summary_report".tr),
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(Icons.keyboard_backspace),
+          ),
           actions: [
             IconButton(
               splashRadius: 30,
-              onPressed: _controller.onFilterPressed,
+              onPressed: () {
+                _controller.onLoad();
+              },
+              icon: const Icon(Icons.refresh_outlined),
+            ),
+            IconButton(
+              splashRadius: 30,
+              onPressed: () {
+                _key.currentState!.openEndDrawer();
+              },
               icon: const Icon(Icons.filter_list_rounded),
             ),
           ],

@@ -21,5 +21,6 @@ namespace API.Models
         public Guid product_id { get; set; }
         [ForeignKey("product_id")]
         public ProductModel product { get; set; }
+        public string sale_date { get; set; }
     }
 }

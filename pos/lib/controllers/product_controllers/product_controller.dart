@@ -33,6 +33,8 @@ class ProductController extends GetxController {
   var pager = 5.obs;
   RxList<int> pagerList = (<int>[]).obs;
 
+  ScrollController scrollCtrl = ScrollController(initialScrollOffset: 0);
+
   @override
   void onInit() async {
     super.onInit();
@@ -221,6 +223,7 @@ class ProductController extends GetxController {
   }
 
   void onPagePressed(int page) {
+    scrollCtrl = ScrollController(initialScrollOffset: 0);
     currentPage(page);
     onLoadProduct();
   }

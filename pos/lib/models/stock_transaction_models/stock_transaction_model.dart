@@ -15,6 +15,8 @@ class StockTransactionModel {
   bool? is_deleted;
   DateTime? deleted_date;
   String? deleted_by;
+  String? sale_date;
+  String? description;
 
   ProductModel? product;
   StockTransactionModel({
@@ -28,6 +30,8 @@ class StockTransactionModel {
     this.is_deleted,
     this.deleted_date,
     this.deleted_by,
+    this.sale_date,
+    this.description,
   });
 
   factory StockTransactionModel.fromJson(Map<String, dynamic> json) =>

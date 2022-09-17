@@ -27,8 +27,15 @@ namespace API.Controllers
         public async Task<OkResult> Post(string folder = "")
         {
 
-            //===============================Note
-            string directory_path = this.environment.ContentRootPath + "\\uploads\\";
+            string directory_path = "";
+            if (folder == "")
+            {
+                directory_path = this.environment.ContentRootPath + "\\uploads\\";
+            }
+            else
+            {
+                directory_path = this.environment.ContentRootPath + "\\uploads\\" + folder;
+            }
 
 
             if (!Directory.Exists(directory_path))
