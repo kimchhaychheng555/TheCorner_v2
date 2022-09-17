@@ -20,7 +20,7 @@ class InventorySummaryReportController extends GetxController {
       (<StockTransactionModel>[]).obs;
 
   // FIlter
-  var groupBy = RxnString();
+  var groupBy = "group_by_product".obs;
   var startDate = (DateTime.now().subtract(const Duration(days: 7))).obs;
   var endDate = (DateTime.now()).obs;
 
