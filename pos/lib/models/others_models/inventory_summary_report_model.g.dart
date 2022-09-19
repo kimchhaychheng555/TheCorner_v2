@@ -9,7 +9,8 @@ part of 'inventory_summary_report_model.dart';
 InventorySummaryReportModel _$InventorySummaryReportModelFromJson(
         Map<String, dynamic> json) =>
     InventorySummaryReportModel(
-      item_name: json['item_name'] as String?,
+      no: json['no'] as int?,
+      description: json['description'] as String?,
       cost: (json['cost'] as num?)?.toDouble(),
       qty_ordered: (json['qty_ordered'] as num?)?.toDouble(),
       qty_on_hold: (json['qty_on_hold'] as num?)?.toDouble(),
@@ -23,7 +24,8 @@ InventorySummaryReportModel _$InventorySummaryReportModelFromJson(
 Map<String, dynamic> _$InventorySummaryReportModelToJson(
         InventorySummaryReportModel instance) =>
     <String, dynamic>{
-      'item_name': instance.item_name,
+      'no': instance.no,
+      'description': instance.description,
       'cost': instance.cost,
       'qty_ordered': instance.qty_ordered,
       'qty_on_hold': instance.qty_on_hold,

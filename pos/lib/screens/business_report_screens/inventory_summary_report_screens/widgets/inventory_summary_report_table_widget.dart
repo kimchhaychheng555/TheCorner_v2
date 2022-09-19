@@ -26,8 +26,23 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                 reponseScreenSizes: const [ScreenSize.xs],
                 headers: [
                   DatatableHeader(
-                    text: "item_name".tr,
-                    value: "item_name",
+                    text: "no".tr,
+                    value: "no",
+                    show: true,
+                    textAlign: TextAlign.center,
+                    sourceBuilder: (value, row) {
+                      return TextWidget(
+                        text: "$value",
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+                  DatatableHeader(
+                    text: _controller.groupBy.value == "group_by_product"
+                        ? "item_name".tr
+                        : "date".tr,
+                    value: "description",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
@@ -41,7 +56,9 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                   DatatableHeader(
                     text: "cost".tr,
                     value: "cost",
-                    show: true,
+                    show: _controller.groupBy.value == "group_by_product"
+                        ? true
+                        : false,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(
@@ -121,7 +138,9 @@ class InventorySummaryReportTablewidget extends StatelessWidget {
                   DatatableHeader(
                     text: "price".tr,
                     value: "price",
-                    show: true,
+                    show: _controller.groupBy.value == "group_by_product"
+                        ? true
+                        : false,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
                       return TextWidget(

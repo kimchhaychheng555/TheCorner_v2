@@ -47,9 +47,12 @@ class InventorySummaryReportController extends GetxController {
 
   Future<void> _onLoadInventorySummary() async {
     var _offset = ((currentPage.value - 1) * pager.value);
+    var _startDate = (DateFormat("yyyy-MM-dd").format(startDate.value));
+    var _endDate = (DateFormat("yyyy-MM-dd").format(endDate.value));
     var _resp = await APIService.storeProcedure(
         procedureName: "spGetInventorySummaryReport",
         parameterName: [
+          "@groupBy",
           "@keyword",
           "@startDate",
           "@endDate",
@@ -57,9 +60,10 @@ class InventorySummaryReportController extends GetxController {
           "@limit"
         ],
         parameterValue: [
+          groupBy.value,
           keywordCtrl.text,
-          (DateFormat("yyyy-MM-dd").format(startDate.value)),
-          (DateFormat("yyyy-MM-dd").format(endDate.value)),
+          _startDate,
+          _endDate,
           "$_offset",
           "${pager.value}",
         ]);
@@ -69,12 +73,14 @@ class InventorySummaryReportController extends GetxController {
       totalRecords(_data["totalRecords"]);
       totalPage((_data["totalRecords"] / pager.value).ceil());
 
-      List<dynamic> _reportDecode = _data["records"];
-      List<InventorySummaryReportModel> _reports = _reportDecode
-          .map((e) => InventorySummaryReportModel.fromJson(e))
-          .toList();
+      if (totalRecords.value > 0) {
+        List<dynamic> _reportDecode = _data["records"];
+        List<InventorySummaryReportModel> _reports = _reportDecode
+            .map((e) => InventorySummaryReportModel.fromJson(e))
+            .toList();
 
-      inventorySummaryReportList.assignAll(_reports);
+        inventorySummaryReportList.assignAll(_reports);
+      }
     }
   }
 
@@ -130,23 +136,30 @@ class InventorySummaryReportController extends GetxController {
   }
 
   void onFilterPressed() {
-    groupBy(_tempGroupBy);
-    startDate(tempStartdate);
-    endDate(tempEnddate);
+    if (_tempGroupBy != "") {
+      groupBy(_tempGroupBy);
+    }
+    startDate(tempStartdate.value);
+    endDate(tempEnddate.value);
     Get.back();
     onLoad();
   }
 
   String _tempGroupBy = "";
   void onGroupByFilterPressed(String? _val) {
-    _tempGroupBy = _val ?? "";
+    if ((_val ?? "") == "") {
+      _tempGroupBy = groupBy.value;
+    } else {
+      _tempGroupBy = _val!;
+    }
   }
 
-  DateTime? tempStartdate = DateTime.now();
-  DateTime? tempEnddate = DateTime.now();
-
+  var tempStartdate = (DateTime.now().subtract(const Duration(days: 7))).obs;
+  var tempEnddate = (DateTime.now()).obs;
   Future<void> onFilterDatePressed() async {
-    List<DateTime>? picked = [startDate.value, endDate.value];
+    tempStartdate(startDate.value);
+    tempEnddate(endDate.value);
+    List<DateTime>? picked = [tempStartdate.value, tempEnddate.value];
 
     picked = await date_picker.showDatePicker(
       context: Get.context!,
@@ -156,8 +169,8 @@ class InventorySummaryReportController extends GetxController {
       lastDate: DateTime(2050),
     );
 
-    tempStartdate = picked?.first;
-    tempEnddate = picked?.last;
+    tempStartdate(picked?.first);
+    tempEnddate(picked?.last);
     onLoad();
   }
 

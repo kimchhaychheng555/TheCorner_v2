@@ -4,7 +4,8 @@ part 'inventory_summary_report_model.g.dart';
 
 @JsonSerializable()
 class InventorySummaryReportModel {
-  String? item_name;
+  int? no;
+  String? description;
   double? cost;
   double? qty_ordered;
   double? qty_on_hold;
@@ -15,7 +16,8 @@ class InventorySummaryReportModel {
   double? balance;
 
   InventorySummaryReportModel({
-    this.item_name,
+    this.no,
+    this.description,
     this.cost,
     this.qty_ordered,
     this.qty_on_hold,
