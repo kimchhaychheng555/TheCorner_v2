@@ -21,6 +21,7 @@ namespace ReportPrinting
             tempSaleProducts = sale.sale_products.OrderByDescending(sp => sp.product_group_id).ToList();
             DataTable saleProductTable = getDataTableSaleProduct(tempSaleProducts);
             string exchangeRate = exchange;
+            string dateTime = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss tt");
 
             ReportDocument report = new ReportDocument();
             report.Load(Application.StartupPath + "\\Report\\CrystalReport1.rpt");
@@ -28,6 +29,7 @@ namespace ReportPrinting
             report.Database.Tables["data_sale"].SetDataSource(saleTable);
             report.Database.Tables["data_sale_product"].SetDataSource(saleProductTable);
             report.SetParameterValue("exchangeRate", exchangeRate);
+            report.SetParameterValue("DateTime", dateTime);
             report.PrintToPrinter(1, false, 0, 0);
 
         }
