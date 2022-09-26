@@ -5,7 +5,6 @@ import 'package:pos/controllers/business_controllers/inventory_summary_report_co
 import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/widgets/inventory_filter_widget.dart';
 import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/widgets/inventory_summary_report_table_widget.dart';
 import 'package:pos/widgets/button_pagintaion_widget.dart';
-import 'package:pos/widgets/icon_text_button_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
@@ -102,13 +101,38 @@ class InventorySummaryReportScreen extends GetResponsiveView<dynamic> {
                       ),
                     ),
                     const Spacer(),
-                    IconTextButtonWidget(
-                      onPressed: () async {
-                        _controller.onExportPressed();
-                      },
-                      label: TextWidget(text: "export_to_excel".tr),
-                      backgroundColor: primaryColor,
-                      icon: const Icon(Icons.file_download_rounded),
+                    PopupMenuButton(
+                      color: primaryColor,
+                      tooltip: "export".tr,
+                      onSelected: (item) => _controller.onExportPressed(item),
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<String>>[
+                        PopupMenuItem<String>(
+                          value: "pdf",
+                          child: TextWidget(
+                            text: 'pdf'.tr,
+                            color: Colors.white,
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: "excel",
+                          child: TextWidget(
+                            text: 'excel'.tr,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: primaryColor,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
+                        child: TextWidget(text: "export".tr),
+                      ),
                     ),
                   ],
                 ),

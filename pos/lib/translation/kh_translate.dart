@@ -184,5 +184,6 @@ Map<String, String> get khTranslate {
     "current_sale_date": "កាលបរិច្ឆេទការលក់",
     "product_group": "ក្រុមទំនិញ",
     "add_product_group": "បង្កើតក្រុមទំនិញ",
+    "export": "Export",
   };
 }

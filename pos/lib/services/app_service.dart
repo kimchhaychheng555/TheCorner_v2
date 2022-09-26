@@ -229,21 +229,39 @@ class AppService {
   static Future<void> onExportProcess({
     required String fileName,
     required List<ExcelExportModel> excelExportList,
+    required String title,
+    required String description,
   }) async {
     final Workbook workbook = Workbook();
     final Worksheet sheet = workbook.worksheets[0];
-
+    final Style style = workbook.styles.add('Style1');
+    style.bold = true;
+    style.hAlign = HAlignType.center;
+    sheet.getRangeByName("A1").setText(title);
+    sheet.getRangeByName("A1").cellStyle = style;
+    // Title
+    sheet
+        .getRangeByName(
+            '${colNumToLetter(1)}1:${colNumToLetter(excelExportList.length)}1')
+        .merge();
+    sheet.getRangeByName("A2").setText(description);
+    sheet.getRangeByName("A2").cellStyle = style;
+    // Title
+    sheet
+        .getRangeByName(
+            '${colNumToLetter(1)}2:${colNumToLetter(excelExportList.length)}2')
+        .merge();
     // Loop Header
     for (var i = 0; i < excelExportList.length; i++) {
       var header = excelExportList[i].header;
-      sheet.getRangeByName('${colNumToLetter(i + 1)}1').setText(header);
-      sheet.getRangeByName('${colNumToLetter(i + 1)}1').cellStyle.bold = true;
+      sheet.getRangeByName('${colNumToLetter(i + 1)}3').setText(header);
+      sheet.getRangeByName('${colNumToLetter(i + 1)}3').cellStyle.bold = true;
 
       // Loop Content
       List<String> contentList = (excelExportList[i].contentList) ?? [];
       for (var j = 0; j < contentList.length; j++) {
         sheet
-            .getRangeByName('${colNumToLetter(i + 1)}${j + 2}')
+            .getRangeByName('${colNumToLetter(i + 1)}${j + 4}')
             .setText(contentList[j]);
       }
     }

@@ -119,20 +119,105 @@ class InventorySummaryReportController extends GetxController {
     return "${"show".tr}: ${((currentPage.value - 1) * pager.value) + 1} - ${(currentPage.value * pager.value)} ${"show".tr} ${totalRecords.value}";
   }
 
-  Future<void> onExportPressed() async {
-    List<ExcelExportModel> export = [
-      ExcelExportModel(
-        header: "Name",
-        contentList: ["Name1", "Name2"],
-      ),
-      ExcelExportModel(
-        header: "Age",
-        contentList: ["20", "14"],
-      ),
-    ];
+  Future<void> onExportPressed(dynamic type) async {
+    if (type == "excel") {
+      var _startDate = (DateFormat("yyyy-MM-dd").format(startDate.value));
+      var _endDate = (DateFormat("yyyy-MM-dd").format(endDate.value));
+      var _resp = await APIService.storeProcedure(
+          procedureName: "spGetInventorySummaryReportExport",
+          parameterName: [
+            "@groupBy",
+            "@startDate",
+            "@endDate",
+          ],
+          parameterValue: [
+            groupBy.value,
+            _startDate,
+            _endDate,
+          ]);
 
-    await AppService.onExportProcess(
-        fileName: "inventory-summary-report", excelExportList: export);
+      if (_resp.isSuccess) {
+        var _data = jsonDecode(_resp.content);
+        totalRecords(_data["totalRecords"]);
+        totalPage((_data["totalRecords"] / pager.value).ceil());
+
+        if (totalRecords.value > 0) {
+          List<dynamic> _reportDecode = _data["records"];
+          List<InventorySummaryReportModel> _reports = _reportDecode
+              .map((e) => InventorySummaryReportModel.fromJson(e))
+              .toList();
+
+          List<ExcelExportModel> export = [
+            ExcelExportModel(
+              header: "№",
+              contentList: [
+                ..._reports.map((e) => e.no.toString()),
+              ],
+            ),
+            ExcelExportModel(
+              header: groupBy.value == "group_by_date"
+                  ? "date".tr
+                  : "description".tr,
+              contentList: [
+                ..._reports.map((e) => e.description.toString()),
+              ],
+            ),
+            if (groupBy.value == "group_by_product")
+              ExcelExportModel(
+                header: "cost".tr,
+                contentList: [
+                  ..._reports.map((e) => AppService.currencyFormat(e.cost)),
+                ],
+              ),
+            ExcelExportModel(
+              header: "qty_ordered".tr,
+              contentList: [
+                ..._reports.map((e) => e.qty_ordered.toString()),
+              ],
+            ),
+            ExcelExportModel(
+              header: "qty_hold".tr,
+              contentList: [
+                ..._reports.map((e) => e.qty_on_hold.toString()),
+              ],
+            ),
+            ExcelExportModel(
+              header: "qty_hand".tr,
+              contentList: [
+                ..._reports.map((e) => e.qty_on_hand.toString()),
+              ],
+            ),
+            ExcelExportModel(
+              header: "sold".tr,
+              contentList: [
+                ..._reports.map((e) => e.qty_sold.toString()),
+              ],
+            ),
+            ExcelExportModel(
+              header: "adjustment".tr,
+              contentList: [
+                ..._reports.map((e) => e.adjustment.toString()),
+              ],
+            ),
+            if (groupBy.value == "group_by_product")
+              ExcelExportModel(
+                header: "price".tr,
+                contentList: [
+                  ..._reports.map((e) => AppService.currencyFormat(e.price)),
+                ],
+              ),
+          ];
+
+          await AppService.onExportProcess(
+            title: "Inventory Summary Report",
+            description: getDateFilterText,
+            fileName:
+                "inventory-summary-report_${DateFormat("MM-dd-yyyy_hh-mm-ss").format(DateTime.now())}",
+            excelExportList: export,
+          );
+        }
+      }
+    } else if (type == "pdf") {}
   }
 
   void onFilterPressed() {

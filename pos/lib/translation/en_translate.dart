@@ -187,5 +187,6 @@ Map<String, String> get enTranslate {
     "current_sale_date": "Current Sale Date",
     "product_group": "Product Group",
     "add_product_group": "Add Product Group",
+    "export": "Export",
   };
 }
