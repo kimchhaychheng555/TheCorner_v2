@@ -17,15 +17,25 @@ class SaleSummaryReportScreen extends GetResponsiveView<dynamic> {
       () => Scaffold(
         key: _key,
         appBar: AppBar(
-          title: Text("report".tr),
+          title: Text("sale_summary_report".tr),
           leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(Icons.keyboard_backspace),
           ),
           actions: [
             IconButton(
-              onPressed: () => _controller.onLoad(),
-              icon: const Icon(Icons.refresh_rounded),
+              splashRadius: 30,
+              onPressed: () {
+                _controller.onLoad();
+              },
+              icon: const Icon(Icons.refresh_outlined),
+            ),
+            IconButton(
+              splashRadius: 30,
+              onPressed: () {
+                _key.currentState!.openEndDrawer();
+              },
+              icon: const Icon(Icons.filter_list_rounded),
             ),
           ],
         ),
@@ -45,5 +55,43 @@ class SaleSummaryReportScreen extends GetResponsiveView<dynamic> {
         ),
       ),
     );
+
+    // @override
+    // Widget builder() {
+    //   SaleSummaryReportController _controller = Get.find();
+    //   final GlobalKey<ScaffoldState> _key = GlobalKey();
+    //   return Obx(
+    //     () => Scaffold(
+    //       key: _key,
+    //       appBar: AppBar(
+    //         title: Text("report".tr),
+    //         leading: IconButton(
+    //           onPressed: () => Get.back(),
+    //           icon: const Icon(Icons.keyboard_backspace),
+    //         ),
+    //         actions: [
+    //           IconButton(
+    //             onPressed: () => _controller.onLoad(),
+    //             icon: const Icon(Icons.refresh_rounded),
+    //           ),
+    //         ],
+    //       ),
+    //       body: LoadingOverlayWidget(
+    //         isLoading: _controller.isLoading.value,
+    //         child: Container(
+    //           color: Colors.white,
+    //           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    //           child: Column(
+    //             children: const [
+    //               Expanded(
+    //                 child: SaleSummaryReportTableWidget(),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 }

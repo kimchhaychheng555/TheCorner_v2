@@ -27,8 +27,8 @@ class SaleSummaryReportTableWidget extends StatelessWidget {
                 reponseScreenSizes: const [ScreenSize.xs],
                 headers: [
                   DatatableHeader(
-                    text: "date".tr,
-                    value: "price",
+                    text: "invoice".tr,
+                    value: "invoice_number",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
@@ -41,7 +41,7 @@ class SaleSummaryReportTableWidget extends StatelessWidget {
                   ),
                   DatatableHeader(
                     text: "quantity".tr,
-                    value: "price",
+                    value: "table",
                     show: true,
                     textAlign: TextAlign.center,
                     sourceBuilder: (value, row) {
