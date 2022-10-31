@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TelegramService {
-  static String chatBot = "5392242770:AAEZDJZcO8_dgxddhPOwb2TtjMQNh9SiolM";
-  static String channel = "-1001104294906";
+  static String chatBot = "1447468812:AAF-avVJ89HS888VRf6ZlvDAXbrTWTKjn0I";
+  static String channel = "-1001278261579";
 
   static Future<bool> sendMessage(String message) async {
-    return false;
     var res = await http.post(
       Uri.parse('https://api.telegram.org/bot$chatBot/sendMessage'),
       headers: <String, String>{
