@@ -24,7 +24,7 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:uuid/uuid.dart';
 
 class AppService {
-  static String apiApp = "http://localhost:9090/api/";
+  static String apiApp = "http://192.168.1.126:9090/api/";
   static String baseUrl = apiApp.substring(0, apiApp.length - 4);
   static bool isApiConnected = false;
   static String currentLanguage = "en";
