@@ -140,7 +140,6 @@ class ProductController extends GetxController {
         Uuid.NAMESPACE_NIL) {
       _query += " and product_group_id eq ${currentProductGroupId.value}";
     }
-
     var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {
       totalRecords(_resp.count);

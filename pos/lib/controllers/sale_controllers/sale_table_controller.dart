@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
 import 'package:pos/models/table_models/table_model.dart';
+import 'package:pos/screens/sale_screens/sale_mobile_screen.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/widgets/sale_table_add_table_widget.dart';
 import 'package:pos/screens/sale_table_screens/widgets/sale_table_modal_widget.dart';
@@ -48,12 +49,20 @@ class SaleTableController extends GetxController {
   }
 
   void onTablePressed(TableModel table) async {
-    Get.toNamed(
-      SaleScreen.routeName,
-      arguments: {
-        "table": jsonEncode(table),
-      },
-    );
+    print(Get.width);
+    Get.width > 1000
+        ? Get.toNamed(
+            SaleScreen.routeName,
+            arguments: {
+              "table": jsonEncode(table),
+            },
+          )
+        : Get.toNamed(
+            SaleMobileScreen.routeName,
+            arguments: {
+              "table": jsonEncode(table),
+            },
+          );
   }
 
   void onTableLongPressed(TableModel table) async {

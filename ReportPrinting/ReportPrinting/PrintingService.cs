@@ -13,7 +13,7 @@ namespace ReportPrinting
 {
     class PrintingService
     {
-        public static void printReceipt(SaleModel sale, string exchange)
+        public static void printReceipt(SaleModel sale, string exchange, string printerName, string fileName)
         {
             DataTable saleTable = getDataTableSale(sale);
 
@@ -24,8 +24,8 @@ namespace ReportPrinting
             string dateTime = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss tt");
 
             ReportDocument report = new ReportDocument();
-            report.Load(Application.StartupPath + "\\Report\\CrystalReport1.rpt");
-            report.PrintOptions.PrinterName = "Sale Printer";
+            report.Load(Application.StartupPath + "\\Report\\"+ fileName);
+            report.PrintOptions.PrinterName = printerName;
             report.Database.Tables["data_sale"].SetDataSource(saleTable);
             report.Database.Tables["data_sale_product"].SetDataSource(saleProductTable);
             report.SetParameterValue("exchangeRate", exchangeRate);

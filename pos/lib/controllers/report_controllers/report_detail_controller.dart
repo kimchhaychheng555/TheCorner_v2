@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:pos/models/print_models/print_model.dart';
 import 'package:pos/models/sale_models/sale_model.dart';
+import 'package:pos/models/sale_payment_models/sale_payment_model.dart';
 import 'package:pos/models/sale_product_models/sale_product_model.dart';
 import 'package:pos/services/api_service.dart';
 import 'package:pos/services/app_alert.dart';
@@ -14,6 +15,7 @@ class ReportDetailController extends GetxController {
   var saleModel = Rxn<SaleModel>();
 
   RxList<SaleProductModel> saleProducts = (<SaleProductModel>[]).obs;
+  RxList<SalePaymentModel> salePayments = (<SalePaymentModel>[]).obs;
 
   @override
   void onInit() async {
@@ -44,12 +46,12 @@ class ReportDetailController extends GetxController {
 
   Future<void> _onLoad() async {
     var _resp = await APIService.get(
-        "sale(${saleModel.value?.id})?\$expand=sale_products");
-
+        "sale(${saleModel.value?.id})?\$expand=sale_products,sale_payments");
     if (_resp.isSuccess) {
       var _dyn = jsonDecode(_resp.content);
       var _data = SaleModel.fromJson(_dyn);
       saleProducts.assignAll(_data.sale_products ?? []);
+      salePayments.assignAll(_data.sale_payments ?? []);
     }
   }
 }

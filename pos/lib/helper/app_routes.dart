@@ -13,6 +13,7 @@ import 'package:pos/screens/products_screens/products_screen.dart';
 import 'package:pos/screens/products_screens/widgets/product_detail_screen.dart';
 import 'package:pos/screens/report_screens/report_detail_screen.dart';
 import 'package:pos/screens/report_screens/report_screen.dart';
+import 'package:pos/screens/sale_screens/sale_mobile_screen.dart';
 import 'package:pos/screens/sale_screens/sale_screen.dart';
 import 'package:pos/screens/sale_table_screens/sale_table_screen.dart';
 import 'package:pos/screens/setting_screens/setting_screen.dart';
@@ -24,6 +25,11 @@ class AppRoute {
   static String initialRoute = MainScreen.routeName;
 
   static List<GetPage<dynamic>> get getPages => [
+        GetPage(
+          page: () => SaleMobileScreen(),
+          name: SaleMobileScreen.routeName,
+          binding: AppBindings(),
+        ),
         GetPage(
           page: () => const MainScreen(),
           name: MainScreen.routeName,

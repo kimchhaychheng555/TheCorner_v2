@@ -17,7 +17,9 @@ namespace ReportPrinting
     {
         private string timeShutDown;
         private string exchangeRate;
-        private string apiUrl; 
+        private string apiUrl;
+        private string printerName;
+        private string fileName;
         private static readonly HttpClient client = new HttpClient();
 
         public Form1()
@@ -33,6 +35,8 @@ namespace ReportPrinting
             apiUrl = array.apiKey;
             timeShutDown = array.shutDownTime;
             exchangeRate = array.exchangeRate;
+            printerName = array.printerName;
+            fileName = array.fileName;
 
 
             this.Hide();
@@ -99,7 +103,7 @@ namespace ReportPrinting
                 {
                     var print = printList.FirstOrDefault();
                     // Send To Print
-                    PrintingService.printReceipt(print.sale, exchangeRate);
+                    PrintingService.printReceipt(print.sale, exchangeRate, printerName, fileName);
 
                     // Update Printing UI
 

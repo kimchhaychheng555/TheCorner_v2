@@ -14,10 +14,10 @@ import 'package:pos/widgets/loading_overlay_widget.dart';
 import 'package:pos/widgets/status_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
-class SaleScreen extends GetResponsiveView<dynamic> {
-  SaleScreen({Key? key}) : super(key: key);
+class SaleMobileScreen extends GetResponsiveView<dynamic> {
+  SaleMobileScreen({Key? key}) : super(key: key);
 
-  static const String routeName = "/sale";
+  static const String routeName = "/sale-mobile";
 
   @override
   Widget builder() {
@@ -93,7 +93,7 @@ class SaleScreen extends GetResponsiveView<dynamic> {
                   ),
                 ),
               ),
-              _rightSideWidget(Get.width < 800 ? 250 : 300),
+              // _rightSideWidget(Get.width < 800 ? 250 : 300),
             ],
           ),
         ),
@@ -293,7 +293,7 @@ class SaleScreen extends GetResponsiveView<dynamic> {
   Widget _buttonActionWidget() {
     SaleController _controller = Get.find();
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ActionChipWidget(
           radius: 50,
@@ -321,6 +321,17 @@ class SaleScreen extends GetResponsiveView<dynamic> {
             text: "hold_bill".tr,
           ),
         ),
+        Spacer(),
+        ButtonWidget(
+          backgroundColor: warningColor,
+          onPressed: () {
+            Get.bottomSheet(_rightSideWidget(Get.width));
+          },
+          child: Icon(
+            Icons.shopping_cart,
+            color: Colors.white,
+          ),
+        )
       ],
     );
   }

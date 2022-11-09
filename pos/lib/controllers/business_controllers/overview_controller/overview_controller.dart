@@ -13,8 +13,9 @@ import 'package:pos/widgets/date_range_picker_widget.dart' as date_picker;
 class OverviewController extends GetxController {
   var isLoading = false.obs;
   var showPieChartPercent = true.obs;
-  var firstDate = (DateTime.now().subtract(const Duration(days: 7))).obs;
-  var lastDate = (DateTime.now()).obs;
+  var firstDate = (DateTime(DateTime.now().year, DateTime.now().month, 1)).obs;
+  var lastDate =
+      (DateTime(DateTime.now().year, DateTime.now().month + 1, 0)).obs;
   RxList<SaleModel> receiptList = (<SaleModel>[]).obs;
 
   //

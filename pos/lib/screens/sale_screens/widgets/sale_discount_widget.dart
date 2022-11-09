@@ -31,6 +31,9 @@ class SaleDiscountWidget extends StatelessWidget {
         child: Column(
           children: [
             Wrap(
+              runSpacing: 10,
+              spacing: 10,
+              alignment: WrapAlignment.center,
               children: [
                 _getProductGroupButton(
                   onPressed: () => _controller.onSelectedAllProductGroup(),
@@ -147,7 +150,6 @@ class SaleDiscountWidget extends StatelessWidget {
       bool isActive = false,
       Function()? onPressed}) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1),
       ),
