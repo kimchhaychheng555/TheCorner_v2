@@ -5,6 +5,8 @@ import 'package:pos/screens/business_report_screens/inventory_summary_report_scr
 import 'package:pos/screens/business_report_screens/overview_screens/overview_screen.dart';
 import 'package:pos/screens/business_report_screens/receipt_report_screens/receipt_report_screen.dart';
 import 'package:pos/screens/business_report_screens/sale_summary_report_screens/sale_summary_report_screen.dart';
+import 'package:pos/screens/expense_screens/add_expense_screen.dart';
+import 'package:pos/screens/expense_screens/view_expense_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/category_screen.dart';
@@ -123,6 +125,16 @@ class AppRoute {
         GetPage(
           page: () => SaleSummaryReportScreen(),
           name: SaleSummaryReportScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => AddExpenseScreen(),
+          name: AddExpenseScreen.routeName,
+          binding: AppBindings(),
+        ),
+        GetPage(
+          page: () => ViewExpenseScreen(),
+          name: ViewExpenseScreen.routeName,
           binding: AppBindings(),
         ),
       ];

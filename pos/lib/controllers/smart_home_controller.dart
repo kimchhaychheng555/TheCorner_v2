@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pos/controllers/expense_controllers/add_expense_controller.dart';
 import 'package:pos/models/document_models/document_model.dart';
 import 'package:pos/models/start_sale_modesl/start_sale_model.dart';
 import 'package:pos/screens/business_report_screens/inventory_summary_report_screens/inventory_summary_report_screen.dart';
 import 'package:pos/screens/business_report_screens/overview_screens/overview_screen.dart';
 import 'package:pos/screens/business_report_screens/receipt_report_screens/receipt_report_screen.dart';
 import 'package:pos/screens/business_report_screens/sale_summary_report_screens/sale_summary_report_screen.dart';
+import 'package:pos/screens/expense_screens/add_expense_screen.dart';
+import 'package:pos/screens/expense_screens/view_expense_screen.dart';
 import 'package:pos/screens/login_screens/login_screen.dart';
 import 'package:pos/screens/permission_screens/permission_screen.dart';
 import 'package:pos/screens/products_screens/products_screen.dart';
@@ -174,8 +177,8 @@ class SmartHomeController extends GetxController {
   void onPurchaseOrderPressed() {}
   void onAdjustmentInventoryPressed() {}
   void onInventoryTransactionPressed() {}
-  void onAddExpensePressed() {}
-  void onViewExpensePressed() {}
+  void onAddExpensePressed() => Get.toNamed(AddExpenseScreen.routeName);
+  void onViewExpensePressed() => Get.toNamed(ViewExpenseScreen.routeName);
   void onUsersPressed() => Get.toNamed(UsersScreen.routeName);
   void onSettingPressed() => Get.toNamed(SettingScreen.routeName);
 

@@ -3,6 +3,8 @@ import 'package:pos/controllers/business_controllers/inventory_summary_report_co
 import 'package:pos/controllers/business_controllers/overview_controller/overview_controller.dart';
 import 'package:pos/controllers/business_controllers/receipt_report_controller/receipt_report_controller.dart';
 import 'package:pos/controllers/business_controllers/sale_summary_report_controllers/sale_summary_report_controller.dart';
+import 'package:pos/controllers/expense_controllers/add_expense_controller.dart';
+import 'package:pos/controllers/expense_controllers/view_expense_controller.dart';
 import 'package:pos/controllers/login_controllers/login_controller.dart';
 import 'package:pos/controllers/main_controller.dart';
 import 'package:pos/controllers/product_controllers/category_controller.dart';
@@ -41,5 +43,7 @@ class AppBindings extends Bindings {
     Get.lazyPut<ProductGroupController>(() => ProductGroupController());
     Get.lazyPut<SaleSummaryReportController>(
         () => SaleSummaryReportController());
+    Get.lazyPut<AddExpenseController>(() => AddExpenseController());
+    Get.lazyPut<ViewExpenseController>(() => ViewExpenseController());
   }
 }

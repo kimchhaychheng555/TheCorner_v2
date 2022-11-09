@@ -105,6 +105,7 @@ class DrawerWidget extends StatelessWidget {
                       },
                     ),
                     expandTile(
+                      visible: AppService.hasPermission("business_report"),
                       title: "business_report".tr,
                       icon: Icons.insights,
                       children: [
@@ -146,6 +147,7 @@ class DrawerWidget extends StatelessWidget {
                       ],
                     ),
                     expandTile(
+                      visible: AppService.hasPermission("inventory"),
                       title: "inventory".tr,
                       icon: Icons.storage_outlined,
                       children: [
@@ -173,6 +175,7 @@ class DrawerWidget extends StatelessWidget {
                       ],
                     ),
                     expandTile(
+                      visible: AppService.hasPermission("expense"),
                       title: "expense".tr,
                       icon: Icons.bookmark_added_outlined,
                       children: [
@@ -193,6 +196,7 @@ class DrawerWidget extends StatelessWidget {
                       ],
                     ),
                     tile(
+                      visible: AppService.hasPermission("permission"),
                       icon: Icons.lock_outlined,
                       text: "permission".tr,
                       onPressed: () {
@@ -209,6 +213,7 @@ class DrawerWidget extends StatelessWidget {
                       },
                     ),
                     tile(
+                      visible: AppService.hasPermission("setting"),
                       icon: Icons.settings_rounded,
                       text: "setting".tr,
                       onPressed: () {

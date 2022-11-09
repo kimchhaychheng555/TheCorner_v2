@@ -107,18 +107,17 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                           textColor: Colors.white,
                           borderRadius: 5,
                         ),
-                      if (AppService.hasPermission("sale"))
-                        SmartHomeButtonWidget(
-                          onPressed: _controller.onSalePressed,
-                          icon: Icon(
-                            Icons.shopping_cart_rounded,
-                            size: 30,
-                            color: HexColor("#309398"),
-                          ),
-                          backgroundColor: HexColor("#D5ECEC"),
-                          title: "sale".tr,
-                          borderRadius: 5,
+                      SmartHomeButtonWidget(
+                        onPressed: _controller.onSalePressed,
+                        icon: Icon(
+                          Icons.shopping_cart_rounded,
+                          size: 30,
+                          color: HexColor("#309398"),
                         ),
+                        backgroundColor: HexColor("#D5ECEC"),
+                        title: "sale".tr,
+                        borderRadius: 5,
+                      ),
                       SmartHomeButtonWidget(
                         onPressed: _controller.onProductPressed,
                         icon: Icon(
@@ -141,17 +140,18 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                         title: "report".tr,
                         borderRadius: 5,
                       ),
-                      SmartHomeButtonWidget(
-                        onPressed: _controller.onPermissionPressed,
-                        icon: Icon(
-                          Icons.lock_reset,
-                          size: 30,
-                          color: HexColor("#50B403"),
+                      if (AppService.hasPermission("permission"))
+                        SmartHomeButtonWidget(
+                          onPressed: _controller.onPermissionPressed,
+                          icon: Icon(
+                            Icons.lock_reset,
+                            size: 30,
+                            color: HexColor("#50B403"),
+                          ),
+                          backgroundColor: HexColor("#DCFAC5"),
+                          title: "permission".tr,
+                          borderRadius: 5,
                         ),
-                        backgroundColor: HexColor("#DCFAC5"),
-                        title: "permission".tr,
-                        borderRadius: 5,
-                      ),
                       SmartHomeButtonWidget(
                         onPressed: _controller.onUsersPressed,
                         icon: Icon(
@@ -163,17 +163,18 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                         title: "users".tr,
                         borderRadius: 5,
                       ),
-                      SmartHomeButtonWidget(
-                        onPressed: _controller.onSettingPressed,
-                        icon: Icon(
-                          Icons.tune,
-                          size: 30,
-                          color: HexColor("#E0CD65"),
+                      if (AppService.hasPermission("setting"))
+                        SmartHomeButtonWidget(
+                          onPressed: _controller.onSettingPressed,
+                          icon: Icon(
+                            Icons.tune,
+                            size: 30,
+                            color: HexColor("#E0CD65"),
+                          ),
+                          backgroundColor: HexColor("#FBF6D8"),
+                          title: "setting".tr,
+                          borderRadius: 5,
                         ),
-                        backgroundColor: HexColor("#FBF6D8"),
-                        title: "setting".tr,
-                        borderRadius: 5,
-                      ),
                     ],
                   ),
                 ],

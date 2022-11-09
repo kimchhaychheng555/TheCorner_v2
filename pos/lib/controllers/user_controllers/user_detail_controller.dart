@@ -207,22 +207,15 @@ class UserDetailController extends GetxController {
         _user.password = passwordCtrl.text;
         _user.profile = imageName;
         _user.role_id = tempUserDetail.value.role_id;
-
+        _user.role = null;
         tempUserDetail(_user);
         userDetail(tempUserDetail.value);
       }
-
       var _resp =
           await APIService.post("user/save", jsonEncode(userDetail.value));
       if (_resp.isSuccess) {
         Get.back();
         AppAlert.successAlert(title: "save_user_success".tr);
-        //
-        // LogService.sendLog(
-        //     user: AppService.currentUser?.fullname ?? "",
-        //     logAction: "This User Add New User : ${fullNameCtrl.text}"
-        //         "\n"
-        //         "User Role : ${tempUserDetail.value.role?.name}");
       } else {
         AppAlert.errorAlert(title: _resp.message.tr);
       }

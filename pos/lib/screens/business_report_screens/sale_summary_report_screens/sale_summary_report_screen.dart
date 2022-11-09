@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/business_controllers/sale_summary_report_controllers/sale_summary_report_controller.dart';
+import 'package:pos/models/expense_models/expense_model.dart';
 import 'package:pos/screens/business_report_screens/sale_summary_report_screens/widgets/sale_summary_report_table_widget.dart';
 import 'package:pos/widgets/loading_overlay_widget.dart';
 
@@ -30,13 +33,13 @@ class SaleSummaryReportScreen extends GetResponsiveView<dynamic> {
               },
               icon: const Icon(Icons.refresh_outlined),
             ),
-            IconButton(
-              splashRadius: 30,
-              onPressed: () {
-                _key.currentState!.openEndDrawer();
-              },
-              icon: const Icon(Icons.filter_list_rounded),
-            ),
+            // IconButton(
+            //   splashRadius: 30,
+            //   onPressed: () {
+            //     print(jsonEncode(ExpenseModel()));
+            //   },
+            //   icon: const Icon(Icons.filter_list_rounded),
+            // ),
           ],
         ),
         body: LoadingOverlayWidget(

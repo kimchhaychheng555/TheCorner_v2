@@ -21,7 +21,7 @@ class ReceiptReportScreen extends GetResponsiveView<dynamic> {
       () => Scaffold(
         key: _key,
         appBar: AppBar(
-          title: Text("report".tr),
+          title: Text("receipt_report".tr),
           leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(Icons.keyboard_backspace),
