@@ -23,9 +23,7 @@ class AddExpenseScreen extends GetResponsiveView<dynamic> {
             child: Center(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 600),
-                child: Column(
-                  children: [],
-                ),
+                child: Column(),
               ),
             ),
           ),

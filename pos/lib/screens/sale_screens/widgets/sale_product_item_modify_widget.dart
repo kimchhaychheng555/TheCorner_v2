@@ -135,7 +135,7 @@ class SaleProductItemModifyWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 20),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     SizedBox(
                       width: 300,
                       child: Column(

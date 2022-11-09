@@ -49,7 +49,6 @@ class SaleTableController extends GetxController {
   }
 
   void onTablePressed(TableModel table) async {
-    print(Get.width);
     Get.width > 1000
         ? Get.toNamed(
             SaleScreen.routeName,

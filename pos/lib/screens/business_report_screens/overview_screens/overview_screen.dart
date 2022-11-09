@@ -502,9 +502,6 @@ class OverviewScreen extends GetResponsiveView<dynamic> {
                                             ],
                                             selecteds: _controller.dataSource,
                                             autoHeight: false,
-                                            onSort: (value) {
-                                              print(value);
-                                            },
                                             isExpandRows: false,
                                             sortAscending: false,
                                             sortColumn: "",

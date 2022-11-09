@@ -173,9 +173,6 @@ class ReceiptReportTableWidget extends StatelessWidget {
                 source: _controller.dataSource,
                 selecteds: _controller.dataSource,
                 autoHeight: false,
-                onSort: (value) {
-                  print(value);
-                },
                 isExpandRows: false,
                 onTabRow: (_) {
                   Get.toNamed(ReportDetailScreen.routeName, arguments: _);

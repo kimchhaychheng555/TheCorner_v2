@@ -201,9 +201,7 @@ class ProductTablePageWidget extends StatelessWidget {
                 source: _controller.dataSource,
                 selecteds: _controller.dataSource,
                 autoHeight: false,
-                onSort: (value) {
-                  print(value);
-                },
+                onSort: (value) {},
                 isExpandRows: false,
                 onTabRow: (_) {
                   Get.toNamed(ProductDetailScreen.routeName, arguments: _);

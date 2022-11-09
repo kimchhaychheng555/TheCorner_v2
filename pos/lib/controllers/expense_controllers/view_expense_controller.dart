@@ -59,7 +59,6 @@ class ViewExpenseController extends GetxController {
         "&\$filter=is_deleted eq false and created_date ge ${DateFormat('yyyy-MM-dd').format(firstDate.value)} and created_date le ${DateFormat('yyyy-MM-dd').format(lastDate.value)}";
     var _query = "expense?$_pagingation$_filter&\$orderby=created_date desc";
 
-    print(_query);
     var _resp = await APIService.oDataGet(_query);
     if (_resp.isSuccess) {
       totalRecords(_resp.count);

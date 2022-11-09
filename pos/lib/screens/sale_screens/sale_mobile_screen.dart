@@ -321,13 +321,13 @@ class SaleMobileScreen extends GetResponsiveView<dynamic> {
             text: "hold_bill".tr,
           ),
         ),
-        Spacer(),
+        const Spacer(),
         ButtonWidget(
           backgroundColor: warningColor,
           onPressed: () {
             Get.bottomSheet(_rightSideWidget(Get.width));
           },
-          child: Icon(
+          child: const Icon(
             Icons.shopping_cart,
             color: Colors.white,
           ),
