@@ -89,6 +89,7 @@ class DrawerWidget extends StatelessWidget {
                       },
                     ),
                     tile(
+                      visible: (AppService.hasPermission("product")),
                       icon: Icons.format_list_bulleted,
                       text: "products".tr,
                       onPressed: () {
