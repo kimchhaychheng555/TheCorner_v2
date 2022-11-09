@@ -15,7 +15,7 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
 
   @override
   Widget builder() {
-    ReportDetailController _controller = Get.find();
+    var _controller = Get.find<ReportDetailController>();
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -230,30 +230,31 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: summaryData(
-                          TextWidget(
-                            fontStyle: FontStyle.italic,
-                            textAlign: TextAlign.right,
-                            text: "payment_type".tr,
-                            color: Colors.black38,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          TextWidget(
-                            fontStyle: FontStyle.italic,
-                            textAlign: TextAlign.center,
-                            text: _controller
-                                    .salePayments.first.payment_method_name ??
-                                "",
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black38,
+                      if (_controller.salePayments.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: summaryData(
+                            TextWidget(
+                              fontStyle: FontStyle.italic,
+                              textAlign: TextAlign.right,
+                              text: "payment_type".tr,
+                              color: Colors.black38,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            TextWidget(
+                              fontStyle: FontStyle.italic,
+                              textAlign: TextAlign.center,
+                              text: _controller
+                                      .salePayments.first.payment_method_name ??
+                                  "",
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black38,
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),

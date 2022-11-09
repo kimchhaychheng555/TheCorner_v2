@@ -143,7 +143,6 @@ class ReportTableWidget extends StatelessWidget {
                 source: _controller.dataSource,
                 selecteds: _controller.dataSource,
                 autoHeight: false,
-                onSort: (value) {},
                 isExpandRows: false,
                 onTabRow: (_) {
                   Get.toNamed(ReportDetailScreen.routeName, arguments: _);
@@ -225,7 +224,7 @@ class ReportTableWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 SizedBox(
-                  height: 40,
+                  height: 50,
                   width: 65,
                   child: DropdownButtonFormFieldWidget<int>(
                     items: [
