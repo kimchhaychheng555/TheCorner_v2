@@ -77,9 +77,9 @@ class MainController extends GetxController {
     var _res = await AppService.onTestConnectionApi();
     if (_res) {
       isApiConnected(true);
-      await AppService.onSaveConnectionApi();
       isLoading(false);
       await _onUserAuthLogin();
+      await AppService.onSaveConnectionApi();
     }
     isLoading(false);
   }
