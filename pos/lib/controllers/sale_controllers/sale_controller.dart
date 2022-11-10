@@ -453,6 +453,11 @@ class SaleController extends GetxController {
       sale(SaleModel.fromJson(jsonDecode(_resp.content)));
       sale.refresh();
       Get.back();
+
+      if (Get.width < 1000) {
+        Get.back();
+      }
+
       AppAlert.successAlert(title: "save_sale_successfully".tr);
       //
       LogService.sendLog(
