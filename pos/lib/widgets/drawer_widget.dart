@@ -237,7 +237,6 @@ class DrawerWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              const Spacer(),
               const ChangeLanguageWidget(switchMode: true),
               const SizedBox(height: 10),
             ],
