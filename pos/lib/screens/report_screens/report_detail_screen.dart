@@ -50,7 +50,7 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            "assets/images/logo.png",
+                            "assets/images/logo-black.png",
                             height: 100,
                           ),
                           const Spacer(),
