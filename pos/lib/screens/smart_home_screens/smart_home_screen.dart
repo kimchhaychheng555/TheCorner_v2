@@ -153,17 +153,18 @@ class SmartHomeScreen extends GetResponsiveView<dynamic> {
                           title: "permission".tr,
                           borderRadius: 5,
                         ),
-                      SmartHomeButtonWidget(
-                        onPressed: _controller.onUsersPressed,
-                        icon: Icon(
-                          Icons.supervisor_account,
-                          size: 30,
-                          color: HexColor("#0FCD9E"),
+                      if (AppService.hasPermission("users"))
+                        SmartHomeButtonWidget(
+                          onPressed: _controller.onUsersPressed,
+                          icon: Icon(
+                            Icons.supervisor_account,
+                            size: 30,
+                            color: HexColor("#0FCD9E"),
+                          ),
+                          backgroundColor: HexColor("#D2F6EA"),
+                          title: "users".tr,
+                          borderRadius: 5,
                         ),
-                        backgroundColor: HexColor("#D2F6EA"),
-                        title: "users".tr,
-                        borderRadius: 5,
-                      ),
                       if (AppService.hasPermission("setting"))
                         SmartHomeButtonWidget(
                           onPressed: _controller.onSettingPressed,

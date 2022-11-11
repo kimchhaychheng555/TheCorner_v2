@@ -40,7 +40,9 @@ class ReportDetailScreen extends GetResponsiveView<dynamic> {
               width: 1000,
               height: 800,
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: Get.width < 1000
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.all(20),
                 child: Center(
                   child: ListView(
                     children: [

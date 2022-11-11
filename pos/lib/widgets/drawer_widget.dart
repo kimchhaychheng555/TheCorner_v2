@@ -5,6 +5,7 @@ import 'package:pos/constants/constants.dart';
 import 'package:get/get.dart';
 import 'package:pos/controllers/smart_home_controller.dart';
 import 'package:pos/services/app_service.dart';
+import 'package:pos/widgets/change_language_widget.dart';
 import 'package:pos/widgets/text_widget.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -206,6 +207,7 @@ class DrawerWidget extends StatelessWidget {
                       },
                     ),
                     tile(
+                      visible: AppService.hasPermission("users"),
                       icon: Icons.people,
                       text: "users".tr,
                       onPressed: () {
@@ -235,6 +237,9 @@ class DrawerWidget extends StatelessWidget {
                   ],
                 ),
               ),
+              const Spacer(),
+              const ChangeLanguageWidget(switchMode: true),
+              const SizedBox(height: 10),
             ],
           ),
         ),

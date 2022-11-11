@@ -14,10 +14,8 @@ class ReportScreen extends GetResponsiveView<dynamic> {
   @override
   Widget builder() {
     ReportController _controller = Get.find();
-    final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Obx(
       () => Scaffold(
-        key: _key,
         appBar: AppBar(
           title: Text("report".tr),
           leading: IconButton(
