@@ -27,7 +27,6 @@ class OverviewScreenWidget extends StatelessWidget {
     return Expanded(
         child: Container(
       width: 200,
-      height: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: borderColor ?? HexColor("#50B402")),
@@ -65,6 +64,7 @@ class OverviewScreenWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 20),
                 TextWidget(
                   text: total ?? "",
                   fontSize: 25,
