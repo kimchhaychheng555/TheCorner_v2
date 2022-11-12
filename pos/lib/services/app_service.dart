@@ -24,9 +24,9 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:uuid/uuid.dart';
 
 class AppService {
-  static String apiApp = "http://192.168.1.204:9090/api/";
+  static String apiApp = "http://10.10.9.10:9090/api/";
   static String baseUrl = apiApp.substring(0, apiApp.length - 4);
-  static bool isApiConnected = false;
+  static bool isApiConnected = true;
   static String currentLanguage = "en";
   static UserModel? currentUser;
   static LoginModel? loginUser;
@@ -167,9 +167,6 @@ class AppService {
       } else {
         AppService.isApiConnected = false;
       }
-    } else {
-      AppService.isApiConnected = false;
-      await AppService.storage.write("api", AppService.apiApp);
     }
   }
 
