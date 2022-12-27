@@ -1,8 +1,11 @@
 ﻿using API.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,10 +15,12 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class PrintController : ControllerBase
     {
-        private readonly MyDbContext db;
-        public PrintController(MyDbContext _db)
+        private readonly MyDbContext db; 
+        IConfiguration configuration;
+        public PrintController(MyDbContext _db, IConfiguration _configuration)
         {
             db = _db;
+            configuration = _configuration;
         }
 
 
@@ -30,17 +35,14 @@ namespace API.Controllers
         [HttpPost("Save")]
         public async Task<IActionResult> Post([FromBody] PrintModel print)
         {
-            if (print.id == Guid.Empty)
-            {
-                db.Prints.Add(print);
-                await db.SaveChangesAsync();
-            }
-            else
-            {
-                db.Prints.Update(print);
-                await db.SaveChangesAsync();
-            }
+            var printPath = configuration.GetSection("FileWatcher").Value;
 
+            var json = new
+            {
+                sale_id = print.sale_id
+            };
+
+            System.IO.File.WriteAllText(string.Format("{0}/{1}.json", printPath, Guid.NewGuid().ToString()), JsonConvert.SerializeObject(json));
             return Ok(print);
         }
 
