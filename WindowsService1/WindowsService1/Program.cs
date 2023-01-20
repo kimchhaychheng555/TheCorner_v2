@@ -12,18 +12,18 @@ namespace WindowsService1
         /// </summary>
         static void Main()
         {
-            Service1 service = new Service1();
-            service.onDebug();
-            Thread.Sleep(Timeout.Infinite);
+            //Service1 service = new Service1();
+            //service.onDebug();
+            //Thread.Sleep(Timeout.Infinite);
 
             // Build Run Service
 
-            //ServiceBase[] ServicesToRun;
-            //ServicesToRun = new ServiceBase[]
-            //{
-            //    new Service1()
-            //};
-            //ServiceBase.Run(ServicesToRun);
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[]
+            {
+                new Service1()
+            };
+            ServiceBase.Run(ServicesToRun);
 
         }
     }
